@@ -454,6 +454,15 @@ section {
 .selection-handle.bottom-left { bottom: -6px; left: -8px; }
 .selection-handle.bottom-right { bottom: -6px; right: -8px; }
 
+.selection-cursor {
+  position: absolute;
+  bottom: -20px;  
+  right: -20px;   
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
 .selection-badge {
   position: absolute;
   bottom: -22px;
