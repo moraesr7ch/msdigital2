@@ -12,6 +12,7 @@ if (typeof document !== 'undefined') {
     initFormValidation();
     initNewsletterValidation();
     initCounterAnimation();
+    initHeroParticles();
   });
 }
 
@@ -42,9 +43,9 @@ function initMobileMenu() {
 
   // Fecha o menu se o usuário clicar fora dele
   document.addEventListener('click', (e) => {
-    if (navMenu.classList.contains('active') && 
-        !navMenu.contains(e.target) && 
-        !toggleBtn.contains(e.target)) {
+    if (navMenu.classList.contains('active') &&
+      !navMenu.contains(e.target) &&
+      !toggleBtn.contains(e.target)) {
       toggleBtn.setAttribute('aria-expanded', 'false');
       navMenu.classList.remove('active');
     }
@@ -189,7 +190,7 @@ function initCounterAnimation() {
     function animate(currentTime) {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      
+
       // Easing Out Cubic
       const ease = 1 - Math.pow(1 - progress, 3);
       const currentValue = Math.floor(ease * targetValue);
@@ -234,6 +235,168 @@ function initCounterAnimation() {
   });
 }
 
+function initHeroParticles() {
+  const heroSection = document.getElementById('home');
+  const canvas = document.getElementById('hero-particles-canvas');
+  if (!heroSection || !canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = heroSection.offsetWidth;
+  let height = canvas.height = heroSection.offsetHeight;
+
+  const particles = [];
+  const spacing = 20; // Espaçamento entre os quadradinhos em pixels
+
+  const mouse = {
+    x: null,
+    y: null
+  };
+
+  class GridDot {
+    constructor(baseX, baseY) {
+      this.baseX = baseX;
+      this.baseY = baseY;
+      this.x = baseX;
+      this.y = baseY;
+      this.vx = 0;
+      this.vy = 0;
+      this.size = 3.5; // Tamanho do quadradinho em pixels
+      
+      // Propriedades físicas da mola (sensação de tecido elástico)
+      this.spring = 0.045;
+      this.friction = 0.88;
+      
+      // Opacidade base e oscilação
+      this.baseAlpha = 0.12; // Suave para não competir com os textos
+      this.alpha = this.baseAlpha;
+      
+      // Atraso de fase para a onda luminosa baseado na sua posição
+      this.waveOffset = (this.baseX + this.baseY) * 0.005;
+    }
+
+    update(time) {
+      // 1. Onda sutil de brilho cruzando diagonalmente
+      const wave = Math.sin(time * 0.002 + this.waveOffset);
+      let targetAlpha = this.baseAlpha + (wave + 1) * 0.06; // Flutua suavemente
+
+      // Posição alvo (sua âncora original)
+      const targetX = this.baseX;
+      const targetY = this.baseY;
+
+      // 2. Interação magnética elástica com o mouse
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.hypot(dx, dy);
+        const activeRadius = 130;
+
+        if (distance < activeRadius) {
+          const force = (activeRadius - distance) / activeRadius;
+          
+          // Empurrão físico elástico leve (afastamento sutil de até ~8px)
+          this.vx -= (dx / distance) * force * 0.85;
+          this.vy -= (dy / distance) * force * 0.85;
+          
+          // Brilho iluminado de acordo com a proximidade do cursor
+          targetAlpha += force * 0.5;
+        }
+      }
+
+      // 3. Força elástica de retorno (mola)
+      const dxTarget = targetX - this.x;
+      const dyTarget = targetY - this.y;
+      
+      this.vx += dxTarget * this.spring;
+      this.vy += dyTarget * this.spring;
+      
+      this.vx *= this.friction;
+      this.vy *= this.friction;
+      
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Suaviza a transição da opacidade
+      this.alpha += (targetAlpha - this.alpha) * 0.1;
+    }
+
+    draw() {
+      // Tom cinza neutro (Zinc-400) com opacidade dinâmica
+      ctx.fillStyle = `rgba(161, 161, 170, ${this.alpha})`;
+      ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
+    }
+  }
+
+  function createParticles() {
+    particles.length = 0;
+    
+    // Oculta e não cria quadradinhos em telas pequenas para evitar sobreposição nos textos
+    if (window.innerWidth < 992) {
+      return;
+    }
+
+    // Grade Esquerda: Ocupa de 3% a 20% da largura, e de 15% a 85% da altura
+    const leftMinX = Math.round(width * 0.03);
+    const leftMaxX = Math.round(width * 0.20);
+    const leftMinY = Math.round(height * 0.15);
+    const leftMaxY = Math.round(height * 0.85);
+
+    // Grade Direita: Ocupa de 80% a 97% da largura, e de 15% a 85% da altura
+    const rightMinX = Math.round(width * 0.80);
+    const rightMaxX = Math.round(width * 0.97);
+    const rightMinY = Math.round(height * 0.15);
+    const rightMaxY = Math.round(height * 0.85);
+
+    // Preenche lateral esquerda
+    for (let px = leftMinX; px <= leftMaxX; px += spacing) {
+      for (let py = leftMinY; py <= leftMaxY; py += spacing) {
+        particles.push(new GridDot(px, py));
+      }
+    }
+
+    // Preenche lateral direita
+    for (let px = rightMinX; px <= rightMaxX; px += spacing) {
+      for (let py = rightMinY; py <= rightMaxY; py += spacing) {
+        particles.push(new GridDot(px, py));
+      }
+    }
+  }
+
+  // Monitora redimensionamento
+  window.addEventListener('resize', () => {
+    width = canvas.width = heroSection.offsetWidth;
+    height = canvas.height = heroSection.offsetHeight;
+    createParticles();
+  });
+
+  // Eventos do mouse
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  heroSection.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  let lastTime = 0;
+  function animate(timestamp) {
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach(particle => {
+      particle.update(timestamp);
+      particle.draw();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  createParticles();
+  requestAnimationFrame(animate);
+}
+
 /**
  * 04. Validação Segura e Sanitização de Entradas (Formulário de Proposta)
  * Alinhado com as diretrizes do AppSec Sênior (Zero-Trust / Defesa em Profundidade)
@@ -260,7 +423,7 @@ function initFormValidation() {
   phoneInput?.addEventListener('input', (e) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
     if (value.length > 11) value = value.slice(0, 11);
-    
+
     // Formata o número (XX) XXXXX-XXXX
     if (value.length > 6) {
       e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
@@ -298,7 +461,7 @@ function initFormValidation() {
 
     // Simulação segura de envio (Proteção Zero-Trust - sem vazar dados de endpoints no JS público)
     showFeedback('Enviando solicitação...', 'success');
-    
+
     // Desabilita botões para evitar duplo clique (Race Conditions / DoS de envio)
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
@@ -307,9 +470,9 @@ function initFormValidation() {
       // Sucesso na simulação
       showFeedback('Sua proposta foi solicitada com sucesso! Nossa equipe entrará em contato em até 24 horas.', 'success');
       form.reset();
-      
+
       if (submitBtn) submitBtn.disabled = false;
-      
+
       // Some com a mensagem de feedback após 8 segundos
       setTimeout(() => {
         feedbackBox.style.display = 'none';
@@ -380,7 +543,7 @@ function initNewsletterValidation() {
 
     const emailInput = document.getElementById('newsletter-email');
     const errorSpan = document.getElementById('error-news-email');
-    
+
     if (!emailInput) return;
 
     const emailValue = emailInput.value.trim();
@@ -406,7 +569,7 @@ function initNewsletterValidation() {
     // Simulação de envio da Newsletter
     feedbackSpan.textContent = 'Inscrevendo...';
     feedbackSpan.className = 'newsletter-feedback';
-    
+
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
