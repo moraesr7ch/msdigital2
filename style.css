@@ -4,8 +4,10 @@
 
 :root {
   /* Cores da Marca */
-  --primary-color: #4774D2;     /* Azul MS Digital */
-  --secondary-color: #F5A623;   /* Laranja Ouro */
+  --primary-color: #4774D2;
+  /* Azul MS Digital */
+  --secondary-color: #F5A623;
+  /* Laranja Ouro */
   --primary-glow: rgba(71, 116, 210, 0.15);
   --secondary-glow: rgba(245, 166, 35, 0.15);
 
@@ -25,11 +27,12 @@
   /* Fontes */
   --font-title: 'Outfit', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
 
   /* Medidas de Transição */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -53,7 +56,9 @@
    RESET E CONFIGURAÇÕES BÁSICAS
    ========================================================================== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -62,7 +67,8 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem; /* Evita que o header fixo tape o título das seções */
+  scroll-padding-top: 5.5rem;
+  /* Evita que o header fixo tape o título das seções */
 }
 
 body {
@@ -346,7 +352,7 @@ section {
 .hero-grid-overlay {
   position: absolute;
   inset: 0;
-  background: 
+  background:
     linear-gradient(to right, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px,
     linear-gradient(to bottom, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px;
   mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
@@ -377,6 +383,18 @@ section {
   background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 70%);
   filter: blur(50px);
   pointer-events: none;
+}
+
+.hero-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  /* Fica abaixo dos textos/botões e badges, mas acima da malha de grade */
+  display: block;
 }
 
 .hero-container {
@@ -449,10 +467,34 @@ section {
   z-index: 3;
 }
 
-.selection-handle.top-left { top: -6px; left: -8px; }
-.selection-handle.top-right { top: -6px; right: -8px; }
-.selection-handle.bottom-left { bottom: -6px; left: -8px; }
-.selection-handle.bottom-right { bottom: -6px; right: -8px; }
+.selection-handle.top-left {
+  top: -6px;
+  left: -8px;
+}
+
+.selection-handle.top-right {
+  top: -6px;
+  right: -8px;
+}
+
+.selection-handle.bottom-left {
+  bottom: -6px;
+  left: -8px;
+}
+
+.selection-handle.bottom-right {
+  bottom: -6px;
+  right: -8px;
+}
+
+.selection-cursor {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
 
 .selection-badge {
   position: absolute;
@@ -547,9 +589,17 @@ section {
 
 /* Animação Flutuante dos Badges */
 @keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(1deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
 @keyframes slideUpFade {
@@ -557,6 +607,7 @@ section {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -589,9 +640,20 @@ section {
   animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.proof-item:nth-child(1) { animation-delay: 0.4s; }
-.proof-item:nth-child(3) { animation-delay: 0.6s; } /* O nth-child 2 é o divider */
-.proof-item:nth-child(5) { animation-delay: 0.8s; } /* O nth-child 4 é o divider */
+.proof-item:nth-child(1) {
+  animation-delay: 0.4s;
+}
+
+.proof-item:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+/* O nth-child 2 é o divider */
+.proof-item:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+/* O nth-child 4 é o divider */
 
 
 .proof-number {
@@ -603,12 +665,14 @@ section {
 }
 
 .proof-label {
-  font-size: 0.8125rem;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem; /* Ajustado para 15px para valorizar a leitura da fonte serifada */
   color: var(--zinc-500);
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 0.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: none; /* Em caixa baixa as fontes serifadas ficam muito mais legíveis e sofisticadas */
+  letter-spacing: normal;
+  font-style: italic; /* Itálico na Lora cria um estilo editorial de altíssimo luxo */
 }
 
 .hero-proof-bar .divider {
@@ -1211,8 +1275,15 @@ section {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateX(15px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .testimonial-rating {
@@ -1247,9 +1318,17 @@ section {
   color: white;
 }
 
-.default-avatar-1 { background: linear-gradient(135deg, var(--primary-color), #23d2cb); }
-.default-avatar-2 { background: linear-gradient(135deg, var(--secondary-color), #f52368); }
-.default-avatar-3 { background: linear-gradient(135deg, #a834f4, var(--primary-color)); }
+.default-avatar-1 {
+  background: linear-gradient(135deg, var(--primary-color), #23d2cb);
+}
+
+.default-avatar-2 {
+  background: linear-gradient(135deg, var(--secondary-color), #f52368);
+}
+
+.default-avatar-3 {
+  background: linear-gradient(135deg, #a834f4, var(--primary-color));
+}
 
 .author-info {
   display: flex;
@@ -1510,8 +1589,15 @@ section {
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
@@ -1763,8 +1849,13 @@ section {
   font-weight: 600;
 }
 
-.newsletter-feedback.success { color: #34A853; }
-.newsletter-feedback.error { color: #EA4335; }
+.newsletter-feedback.success {
+  color: #34A853;
+}
+
+.newsletter-feedback.error {
+  color: #EA4335;
+}
 
 .footer-bottom {
   border-top: 1px solid var(--zinc-900);
@@ -1796,18 +1887,20 @@ section {
   .hero-headline {
     font-size: 3rem;
   }
-  
+
   .badge-design {
     left: -6%;
     top: 32%;
   }
-  
+
   .badge-conversion {
     right: -2%;
     top: 62%;
   }
 
-  .solution-grid, .about-container, .results-summary-grid {
+  .solution-grid,
+  .about-container,
+  .results-summary-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
@@ -1819,6 +1912,7 @@ section {
 }
 
 @media (max-width: 768px) {
+
   /* Menu Mobile */
   .mobile-nav-toggle {
     display: flex;
@@ -1856,16 +1950,19 @@ section {
   }
 
   .header-cta-wrapper {
-    display: none; /* CTA fica no menu ou flutuante */
+    display: none;
+    /* CTA fica no menu ou flutuante */
   }
 
   /* Hamburguer ativo */
   .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
     transform: translateY(6px) rotate(45deg);
   }
+
   .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
     opacity: 0;
   }
+
   .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
   }
@@ -1881,7 +1978,8 @@ section {
   }
 
   .floating-badge {
-    display: none; /* Oculta badges flutuantes em telas muito pequenas para focar no conteúdo */
+    display: none;
+    /* Oculta badges flutuantes em telas muito pequenas para focar no conteúdo */
   }
 
   .hero-proof-bar {
@@ -1928,7 +2026,7 @@ section {
     gap: 1rem;
     text-align: center;
   }
-  
+
   .testimonials-carousel-wrapper {
     gap: 1rem;
   }
@@ -1936,7 +2034,7 @@ section {
   .testimonial-card {
     padding: 2rem 1.5rem;
   }
-  
+
   .carousel-control {
     width: 2.75rem;
     height: 2.75rem;
