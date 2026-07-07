@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MS Digital | Agência de Resultados Reais - Sites, Tráfego Pago e Sistemas</title>
+  <meta name="description" content="A MS Digital acelera o crescimento de empresas com a criação de sites profissionais, tráfego pago de alto retorno e desenvolvimento de web apps e sistemas. Peça uma proposta hoje.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 01 Header — Navegação Fixa -->
+  <header class="main-header" id="main-header">
+    <div class="header-container">
+      <a href="#" class="brand-logo" aria-label="MS Digital - Voltar ao topo">
+        <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="url(#logo-grad)"/>
+          <path d="M9 22V10L14 16L19 10V22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M23 13C23 11 21.5 10 20 10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M20 22C21.5 22 23 21 23 19C23 17 21 16 19 16C21 16 23 15 23 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#4774D2"/>
+              <stop offset="1" stop-color="#F5A623"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">MS Digital</span>
+      </a>
+
+      <!-- Hamburguer menu para mobile -->
+      <button class="mobile-nav-toggle clickable" aria-controls="primary-navigation" aria-expanded="false" aria-label="Menu de navegação">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <nav class="nav-menu" id="primary-navigation">
+        <ul class="nav-list">
+          <li><a href="#servicos" class="nav-link clickable">Serviços</a></li>
+          <li><a href="#portfolio" class="nav-link clickable">Portfólio</a></li>
+          <li><a href="#resultados" class="nav-link clickable">Resultados</a></li>
+          <li><a href="#depoimentos" class="nav-link clickable">Depoimentos</a></li>
+          <li><a href="#contato" class="nav-link clickable">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-cta-wrapper">
+        <a href="#contato" class="btn btn-primary btn-header clickable">Solicitar proposta</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 02 Hero — A primeira impressão -->
+    <section class="hero-section" id="home">
+      <!-- Grid de fundo e glow visual CSS -->
+      <div class="hero-grid-overlay" aria-hidden="true"></div>
+      <div class="hero-glow-1" aria-hidden="true"></div>
+      <div class="hero-glow-2" aria-hidden="true"></div>
+
+      <div class="section-container hero-container">
+        <div class="hero-content">
+          <span class="eyebrow fade-in">Agência de resultados reais</span>
+          
+          <!-- Headline com Estética de Design Canvas -->
+          <h1 class="hero-headline fade-in">
+            Criamos 
+            <span class="design-selection-box">
+              <span class="selection-border"></span>
+              <span class="selection-handle top-left"></span>
+              <span class="selection-handle top-right"></span>
+              <span class="selection-handle bottom-left"></span>
+              <span class="selection-handle bottom-right"></span>
+              <span class="text-highlight">sites e sistemas</span>
+            </span>
+            que vendem todos os dias
+          </h1>
+          
+          <p class="hero-subtitle fade-in">
+            Aceleramos o crescimento do seu negócio através de tráfego pago de alta conversão,<br>
+            sites de ultra performance e sistemas personalizados sob medida.
+          </p>
+
+          <div class="hero-actions fade-in">
+            <a href="#contato" class="btn btn-primary btn-lg clickable">Solicitar proposta</a>
+            <a href="#servicos" class="btn btn-secondary btn-lg clickable">Conhecer serviços</a>
+          </div>
+
+          <!-- Badges flutuantes baseados no feedback do Figma/Canvas da Hero de referência -->
+          <div class="floating-badge badge-design" aria-hidden="true">
+            <div class="badge-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+              </svg>
+            </div>
+            <div class="badge-text">
+              <strong>Design</strong>
+              <span>Focado em conversão</span>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-conversion" aria-hidden="true">
+            <div class="badge-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="badge-text">
+              <strong>Conversão</strong>
+              <span>Mais leads e vendas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Números de prova da Hero -->
+        <div class="hero-proof-bar fade-in">
+          <div class="proof-item">
+            <span class="proof-number">+380</span>
+            <span class="proof-label">projetos entregues</span>
+          </div>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="proof-item">
+            <span class="proof-number">97%</span>
+            <span class="proof-label">satisfação de clientes</span>
+          </div>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="proof-item">
+            <span class="proof-number">8x</span>
+            <span class="proof-label">ROI médio alcançado</span>
+          </div>
+        </div>
+
+        <!-- Pontos de prova rápidos inferiores -->
+        <div class="hero-bullets-bar fade-in" aria-label="Benefícios imediatos">
+          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Entrega rápida e planejada</span>
+          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Garantia de satisfação de entrega</span>
+          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Processo de contratação facilitado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Barra de credibilidade -->
+    <section class="credibility-section">
+      <div class="section-container credibility-container">
+        <h2 class="credibility-title">Empresas que confiam na MS Digital</h2>
+        <div class="logos-grid">
+          <!-- Logos simulados em SVG limpos e minimalistas -->
+          <div class="logo-item" aria-label="Logo da empresa OneToOne">
+            <span>ONETOONE</span>
+          </div>
+          <div class="logo-item" aria-label="Logo da empresa Quertrocar">
+            <span>QUERTROCAR</span>
+          </div>
+          <div class="logo-item" aria-label="Logo da empresa Tuba Lyra">
+            <span>TUBA LYRA</span>
+          </div>
+          <div class="logo-item" aria-label="Logo da empresa Fiorelle">
+            <span>Fiorelle</span>
+          </div>
+          <div class="logo-item" aria-label="Logo da empresa Fox On">
+            <span>FOX ON</span>
+          </div>
+          <div class="logo-item" aria-label="Logo da empresa Instituto Elemento">
+            <span>ELEMENTO</span>
+          </div>
+        </div>
+        <div class="partners-badges">
+          <div class="partner-badge" aria-label="Selo Google Partner Certificado">
+            <svg class="partner-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.08H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.92l2.85-2.22.81-.6z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.08l3.66 2.84c.87-2.6 3.3-4.54 6.16-4.54z" fill="#EA4335"/>
+            </svg>
+            <span>Google Partner</span>
+          </div>
+          <div class="partner-badge" aria-label="Selo Meta Business Partner">
+            <svg class="partner-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.5 12a10.5 10.5 0 10-12.13 10.37v-7.33h-2.66V12h2.66V9.45c0-2.63 1.57-4.08 3.96-4.08 1.14 0 2.34.2 2.34.2v2.57h-1.32c-1.3 0-1.7.81-1.7 1.64V12h2.9l-.46 3.04h-2.44v7.33A10.5 10.5 0 0022.5 12z" fill="#1877F2"/>
+            </svg>
+            <span>Meta Business Partner</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Seção de dor — "Você se reconhece?" -->
+    <section class="pain-section" id="dores">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">Você se reconhece nestas situações?</span>
+          <h2 class="section-title">Enquanto você lê isso, um cliente seu está fechando com o concorrente</h2>
+        </div>
+
+        <div class="pain-grid">
+          <!-- Card de Dor 1 -->
+          <div class="pain-card">
+            <div class="pain-icon-wrapper red-alert">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <h3 class="pain-card-title">Investimento sem Retorno</h3>
+            <p class="pain-card-desc">Você gasta dinheiro em anúncios no Google ou Instagram, mas os leads que chegam são desqualificados ou simplesmente não convertem em vendas.</p>
+          </div>
+
+          <!-- Card de Dor 2 -->
+          <div class="pain-card">
+            <div class="pain-icon-wrapper red-alert">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </div>
+            <h3 class="pain-card-title">Site Lento ou Inexistente</h3>
+            <p class="pain-card-desc">Sua empresa não tem um site profissional, ou o site atual é lento, antigo e afasta os potenciais compradores antes mesmo de verem sua oferta.</p>
+          </div>
+
+          <!-- Card de Dor 3 -->
+          <div class="pain-card">
+            <div class="pain-icon-wrapper red-alert">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h3 class="pain-card-title">Sistemas e Processos Manuais</h3>
+            <p class="pain-card-desc">Sua equipe perde horas valiosas com planilhas confusas e processos repetitivos porque a empresa não tem uma plataforma ou sistema web integrado.</p>
+          </div>
+
+          <!-- Card de Dor 4 -->
+          <div class="pain-card">
+            <div class="pain-icon-wrapper red-alert">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <h3 class="pain-card-title">Dependência Indesejada</h3>
+            <p class="pain-card-desc">Suas vendas dependem unicamente de indicações boca a boca, deixando seu faturamento mensal instável e impossibilitando o crescimento previsível.</p>
+          </div>
+        </div>
+
+        <div class="pain-footer">
+          <p class="pain-bridge">Não é azar, é falta de estratégia.</p>
+          <a href="#contato" class="btn btn-secondary clickable">Quero mudar isso</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 Solução — "A MS Digital resolve isso" -->
+    <section class="solution-section dark-bg" id="solucao">
+      <div class="solution-glow" aria-hidden="true"></div>
+      <div class="section-container">
+        <div class="solution-grid">
+          <div class="solution-content">
+            <span class="section-eyebrow accent-color">A virada de chave do seu negócio</span>
+            <h2 class="section-title text-light">É aqui que a MS Digital entra</h2>
+            <p class="solution-text">
+              Substituímos o amadorismo e as tentativas frustradas por uma metodologia científica de crescimento. Unimos design de ponta, código limpo e tráfego pago ultra segmentado para colocar a sua marca no topo.
+            </p>
+            <div class="solution-action-wrapper">
+              <a href="#contato" class="btn btn-primary clickable">Agendar diagnóstico gratuito</a>
+            </div>
+          </div>
+
+          <div class="solution-pillars">
+            <!-- Pilar 1 -->
+            <div class="pillar-card">
+              <div class="pillar-number">01</div>
+              <h3 class="pillar-title">Método Consistente</h3>
+              <p class="pillar-desc">Nenhum projeto é iniciado com achismos. Analisamos seus concorrentes, mapeamos o comportamento do seu cliente ideal e estruturamos funis de vendas validados.</p>
+            </div>
+            
+            <!-- Pilar 2 -->
+            <div class="pillar-card">
+              <div class="pillar-number">02</div>
+              <h3 class="pillar-title">Transparência Total</h3>
+              <p class="pillar-desc">Sem relatórios de métricas de vaidade. Você acompanha o retorno financeiro real do seu investimento por meio de dashboards simples e reuniões de alinhamento mensais.</p>
+            </div>
+
+            <!-- Pilar 3 -->
+            <div class="pillar-card">
+              <div class="pillar-number">03</div>
+              <h3 class="pillar-title">Resultado no Caixa</h3>
+              <p class="pillar-desc">Nosso foco final é o ROI (Retorno sobre o Investimento). Criamos páginas rápidas e campanhas focadas na conversão imediata e sustentável.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Serviços — O que oferecemos -->
+    <section class="services-section" id="servicos">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">Nosso Arsenal de Crescimento</span>
+          <h2 class="section-title">Soluções completas para posicionar e escalar sua marca</h2>
+        </div>
+
+        <div class="services-grid">
+          <!-- Serviço 1: Criação de Sites -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Criação de Sites</h3>
+            <p class="service-card-desc">Landing pages de conversão rápida, sites institucionais modernos e portfólios projetados para reter visitantes e maximizar cliques comerciais.</p>
+            <div class="tech-tags">
+              <span class="tech-tag">HTML5/CSS3</span>
+              <span class="tech-tag">SEO Premium</span>
+              <span class="tech-tag">UX/UI Design</span>
+              <span class="tech-tag">Performance</span>
+            </div>
+          </div>
+
+          <!-- Serviço 2: Tráfego Pago -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Tráfego Pago</h3>
+            <p class="service-card-desc">Campanhas agressivas no Google Ads, Meta Ads e TikTok Ads para colocar sua oferta na frente de compradores prontos para fechar negócio.</p>
+            <div class="tech-tags">
+              <span class="tech-tag">Google Ads</span>
+              <span class="tech-tag">Meta Ads</span>
+              <span class="tech-tag">Analytics</span>
+              <span class="tech-tag">Copywriting</span>
+            </div>
+          </div>
+
+          <!-- Serviço 3: Web Apps & Sistemas -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Web Apps & Sistemas</h3>
+            <p class="service-card-desc">Desenvolvimento de sistemas corporativos, CRMs personalizados e web apps sob medida para digitalizar sua empresa e acelerar seus processos internos.</p>
+            <div class="tech-tags">
+              <span class="tech-tag">React / Node.js</span>
+              <span class="tech-tag">Firebase / Postgres</span>
+              <span class="tech-tag">APIs REST</span>
+              <span class="tech-tag">Segurança</span>
+            </div>
+          </div>
+
+          <!-- Serviço 4: Identidade Visual & Social Media -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Identidade Visual & Branding</h3>
+            <p class="service-card-desc">Consolidação e modernização da sua marca com manuais de identidade visual completos e templates de alto engajamento para as redes sociais.</p>
+            <div class="tech-tags">
+              <span class="tech-tag">Branding Book</span>
+              <span class="tech-tag">Social Media Templates</span>
+              <span class="tech-tag">Figma Asset</span>
+              <span class="tech-tag">Design System</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 Como funciona — O processo -->
+    <section class="process-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">Etapas Sem Enrolação</span>
+          <h2 class="section-title">Simples, transparente e sem enrolação</h2>
+        </div>
+
+        <div class="process-steps">
+          <!-- Passo 1 -->
+          <div class="process-step">
+            <div class="step-header">
+              <span class="step-num">01</span>
+              <h3 class="step-title">Diagnóstico</h3>
+            </div>
+            <p class="step-desc">Analisamos sua atual presença digital, métricas de concorrentes e indicamos de forma clara quais são as prioridades de crescimento.</p>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="process-step">
+            <div class="step-header">
+              <span class="step-num">02</span>
+              <h3 class="step-title">Estratégia</h3>
+            </div>
+            <p class="step-desc">Elaboramos o plano de tráfego, arquitetura das páginas do site ou a modelagem técnica do sistema personalizado sob medida para o seu funil.</p>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="process-step">
+            <div class="step-header">
+              <span class="step-num">03</span>
+              <h3 class="step-title">Execução</h3>
+            </div>
+            <p class="step-desc">Desenvolvemos o código limpo, criamos o layout responsivo e subimos as campanhas de anúncios com monitoramento diário minucioso.</p>
+          </div>
+
+          <!-- Passo 4 -->
+          <div class="process-step">
+            <div class="step-header">
+              <span class="step-num">04</span>
+              <h3 class="step-title">Resultados</h3>
+            </div>
+            <p class="step-desc">Entrega de relatórios, otimização contínua de campanhas para diminuir o custo por lead e ampliação sistemática do faturamento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 Resultados — Números e cases -->
+    <section class="results-section dark-bg" id="portfolio">
+      <div class="results-glow" aria-hidden="true"></div>
+      <div class="section-container">
+        <div class="results-summary-grid">
+          <div class="results-text-content">
+            <span class="section-eyebrow accent-color">Comprovações de Faturamento</span>
+            <h2 class="section-title text-light">Nossos números contam a verdade</h2>
+            <p class="results-desc">
+              Não vendemos promessas ou cliques ilusórios. Entregamos resultados palpáveis no balanço financeiro mensal das empresas parceiras.
+            </p>
+            <div class="results-actions">
+              <a href="#contato" class="btn btn-primary clickable">Quero obter esse resultado</a>
+            </div>
+          </div>
+
+          <!-- Três métricas em destaque -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value">+312%</div>
+              <div class="metric-label">De aumento no tráfego orgânico e pago</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">8x</div>
+              <div class="metric-label">Retorno médio (ROI) sobre investimentos em anúncios</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">+140%</div>
+              <div class="metric-label">De crescimento na captação diária de leads</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-2 Mini Cases -->
+        <h3 class="cases-title">Histórias de Sucesso Reais</h3>
+        <div class="cases-grid">
+          <!-- Case 1 -->
+          <div class="case-card">
+            <span class="case-category">Criação de Site + Tráfego Pago</span>
+            <h4 class="case-card-title">Como a Construtora Fiorelle alcançou 8.4x ROI e zerou estoque em 45 dias</h4>
+            <p class="case-desc">Desenvolvemos uma landing page focada em conversão rápida e integramos campanhas de Google Search e Meta Ads focadas na região metropolitana.</p>
+            <div class="case-metrics">
+              <span class="case-metric-pill">45 Dias de Ações</span>
+              <span class="case-metric-pill">8.4x ROI Garantido</span>
+            </div>
+          </div>
+
+          <!-- Case 2 -->
+          <div class="case-card">
+            <span class="case-category">Web App Corporativo</span>
+            <h4 class="case-card-title">Como a Fox On reduziu 40h de trabalho semanal otimizando seu pipeline</h4>
+            <p class="case-desc">Projetamos e programamos um CRM integrado sob medida para consolidar dados de atendimento e envio automático de propostas comerciais.</p>
+            <div class="case-metrics">
+              <span class="case-metric-pill">40h Salvas / Semana</span>
+              <span class="case-metric-pill">100% de Automação</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 Depoimentos — Prova social -->
+    <section class="testimonials-section" id="depoimentos">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">A Opinião dos Nossos Parceiros</span>
+          <h2 class="section-title">O que dizem os empresários que aceleraram com a MS Digital</h2>
+        </div>
+
+        <!-- Carrossel de depoimentos integrado no JS -->
+        <div class="testimonials-carousel-wrapper">
+          <button class="carousel-control prev clickable" aria-label="Depoimento anterior">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          
+          <div class="testimonials-carousel" role="region" aria-label="Depoimentos de clientes">
+            <!-- Depoimento 1 -->
+            <div class="testimonial-card active">
+              <div class="testimonial-rating" aria-label="Avaliação: 5 de 5 estrelas">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <blockquote class="testimonial-quote">
+                "A MS Digital transformou completamente a forma como captamos leads. Antes nós dependíamos exclusivamente de indicações. Hoje temos um fluxo diário de novos clientes chegando do Google e uma landing page super rápida que converte mais de 22% dos visitantes."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar default-avatar-1" aria-hidden="true">RF</div>
+                <div class="author-info">
+                  <cite class="author-name">Ricardo Fiorelle</cite>
+                  <span class="author-role">Fundador, Construtora Fiorelle</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Depoimento 2 -->
+            <div class="testimonial-card">
+              <div class="testimonial-rating" aria-label="Avaliação: 5 de 5 estrelas">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <blockquote class="testimonial-quote">
+                "O sistema customizado que a MS Digital desenvolveu reduziu drasticamente nossas falhas manuais e economizou horas valiosas da equipe de vendas. A entrega do código ocorreu dentro do cronograma combinado, de forma extremamente profissional."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar default-avatar-2" aria-hidden="true">AM</div>
+                <div class="author-info">
+                  <cite class="author-name">Amanda Mota</cite>
+                  <span class="author-role">Diretora de Operações, Fox On</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Depoimento 3 -->
+            <div class="testimonial-card">
+              <div class="testimonial-rating" aria-label="Avaliação: 5 de 5 estrelas">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <blockquote class="testimonial-quote">
+                "Tivemos um aumento de 8x ROI nas campanhas já no segundo mês de consultoria de tráfego pago. A transparência na prestação de contas foi o ponto alto de toda a nossa jornada com a agência. Super recomendo a contratação."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar default-avatar-3" aria-hidden="true">JS</div>
+                <div class="author-info">
+                  <cite class="author-name">Jonas Silva</cite>
+                  <span class="author-role">CEO, Instituto Elemento</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-control next clickable" aria-label="Próximo depoimento">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="carousel-indicators" aria-hidden="true">
+          <button class="indicator active clickable" data-index="0" aria-label="Mostrar depoimento 1"></button>
+          <button class="indicator clickable" data-index="1" aria-label="Mostrar depoimento 2"></button>
+          <button class="indicator clickable" data-index="2" aria-label="Mostrar depoimento 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 Quem somos — Equipe e história -->
+    <section class="about-section">
+      <div class="section-container about-container">
+        <div class="about-visual" aria-hidden="true">
+          <!-- Representação visual de código/design system premium da agência -->
+          <div class="about-visual-canvas">
+            <div class="visual-circle"></div>
+            <div class="visual-rect"></div>
+            <div class="visual-line-1"></div>
+            <div class="visual-line-2"></div>
+            <div class="visual-badge">MS Digital</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <span class="section-eyebrow">Quem é a MS Digital?</span>
+          <h2 class="section-title">Pessoas focadas em impulsionar o faturamento de outras pessoas</h2>
+          <p class="about-text">
+            Fundada sob o princípio de que o sucesso digital deve ser previsível e mensurável, a MS Digital nasceu para sanar a maior dor dos empresários modernos: a falta de entrega e o desperdício de verbas com agências de vaidade.
+          </p>
+          <p class="about-text">
+            Não somos apenas fornecedores. Nos tornamos parceiros de crescimento dos nossos clientes, projetando e programando cada site, campanha ou web app com a mesma dedicação técnica como se fosse o nosso próprio projeto.
+          </p>
+
+          <!-- Valores da agência -->
+          <div class="about-values">
+            <div class="value-item">
+              <span class="value-icon">✓</span>
+              <strong>Método Científico</strong>
+            </div>
+            <div class="value-item">
+              <span class="value-icon">✓</span>
+              <strong>Transparência Extrema</strong>
+            </div>
+            <div class="value-item">
+              <span class="value-icon">✓</span>
+              <strong>Resultados Financeiros Reais</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 FAQ — Quebra de objeções -->
+    <section class="faq-section">
+      <div class="section-container faq-container">
+        <div class="section-header">
+          <span class="section-eyebrow">Esclarecemos tudo</span>
+          <h2 class="section-title">Respostas diretas e sem enrolação</h2>
+        </div>
+
+        <div class="faq-list">
+          <!-- Pergunta 1 -->
+          <details class="faq-item">
+            <summary class="faq-question clickable">
+              <span>Quanto custa o serviço?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Nossos orçamentos são personalizados com base na complexidade e nos canais necessários para o seu projeto. Criamos desde landing pages e escopos de tráfego pontuais até sistemas web completos. Todos os valores e entregas são formalizados em uma proposta clara após nossa reunião de diagnóstico inicial gratuita.</p>
+            </div>
+          </details>
+
+          <!-- Pergunta 2 -->
+          <details class="faq-item">
+            <summary class="faq-question clickable">
+              <span>Em quanto tempo posso ver resultados reais?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Para campanhas de Tráfego Pago e Landing Pages de conversão, os primeiros resultados (leads e contatos) costumam surgir já nas primeiras duas semanas de anúncios ativos. Projetos de Web Apps e sistemas possuem um tempo maior devido à modelagem de banco de dados e testes rigorosos de segurança.</p>
+            </div>
+          </details>
+
+          <!-- Pergunta 3 -->
+          <details class="faq-item">
+            <summary class="faq-question clickable">
+              <span>Eu realmente preciso ter um site para começar a anunciar?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Sim. Anunciar sem um destino digital estruturado e veloz (como uma Landing Page focada) é uma das principais razões pelas quais as empresas perdem dinheiro na internet. Se você não possui um site, nós o desenvolvemos como parte da nossa estratégia integrada de crescimento.</p>
+            </div>
+          </details>
+
+          <!-- Pergunta 4 -->
+          <details class="faq-item">
+            <summary class="faq-question clickable">
+              <span>Como funciona o formato do contrato de prestação de serviços?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Trabalhamos com contratos claros que garantem a segurança jurídica de ambas as partes. Para criação de sites e sistemas, o escopo é fechado com cronogramas e entregáveis exatos. Para tráfego pago, trabalhamos com fee mensal e foco total em retorno, com transparência e relatórios diretos.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 CTA final — Última chamada -->
+    <section class="cta-final-section dark-bg" id="contato">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="section-container cta-final-container">
+        <span class="section-eyebrow accent-color">Decisão Estratégica</span>
+        <h2 class="section-title text-light">Chega de estar na coluna errada</h2>
+        <p class="cta-subtitle text-light">Primeira conversa gratuita e totalmente sem compromisso.</p>
+
+        <!-- Formulário de proposta seguro, sanitizado e acessível (CWE-601/AppSec Shield) -->
+        <div class="form-card-wrapper">
+          <form class="proposta-form" id="proposta-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="form-name" class="form-label">Nome Completo *</label>
+                <input type="text" id="form-name" class="form-input" placeholder="Ex: Ricardo Fiorelle" required maxlength="100">
+                <span class="form-error-msg" id="error-name" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label for="form-email" class="form-label">E-mail Corporativo *</label>
+                <input type="email" id="form-email" class="form-input" placeholder="Ex: ricardo@fiorelle.com.br" required maxlength="100">
+                <span class="form-error-msg" id="error-email" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="form-phone" class="form-label">WhatsApp de Contato *</label>
+                <input type="tel" id="form-phone" class="form-input" placeholder="Ex: (11) 99999-9999" required maxlength="20">
+                <span class="form-error-msg" id="error-phone" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label for="form-service" class="form-label">Qual a principal necessidade? *</label>
+                <select id="form-service" class="form-input select-input" required>
+                  <option value="" disabled selected>Selecione uma opção...</option>
+                  <option value="site">Criação de Site / Landing Page</option>
+                  <option value="trafego">Gestão de Tráfego Pago</option>
+                  <option value="sistema">Sistemas Web / Apps personalizados</option>
+                  <option value="branding">Identidade Visual / Social Media</option>
+                  <option value="tudo">Estratégia Completa (Todos os Serviços)</option>
+                </select>
+                <span class="form-error-msg" id="error-service" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="form-message" class="form-label">Fale um pouco do seu negócio (Opcional)</label>
+              <textarea id="form-message" class="form-input textarea-input" placeholder="Nos conte qual o seu objetivo comercial..." maxlength="500" rows="3"></textarea>
+              <span class="form-error-msg" id="error-message" role="alert"></span>
+            </div>
+
+            <div class="form-button-wrapper">
+              <button type="submit" class="btn btn-primary btn-block clickable">
+                <span>Quero minha proposta agora</span>
+              </button>
+              <span class="micro-copy text-light">Resposta em até 24 horas</span>
+            </div>
+            
+            <!-- Caixa de resposta de envio segura e acessível -->
+            <div class="form-feedback-box" id="form-feedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 13 Rodapé — Navegação e contato -->
+  <footer class="main-footer dark-bg">
+    <div class="section-container footer-container">
+      <div class="footer-grid">
+        <!-- Logo e Tagline -->
+        <div class="footer-info">
+          <a href="#" class="brand-logo footer-brand" aria-label="MS Digital - Voltar ao topo">
+            <svg class="logo-icon" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="url(#logo-grad-footer)"/>
+              <path d="M9 22V10L14 16L19 10V22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M23 13C23 11 21.5 10 20 10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M20 22C21.5 22 23 21 23 19C23 17 21 16 19 16C21 16 23 15 23 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#4774D2"/>
+                  <stop offset="1" stop-color="#F5A623"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="logo-text text-light">MS Digital</span>
+          </a>
+          <p class="footer-tagline">Construindo presenças digitais inabaláveis e canais de escala de faturamento reais.</p>
+        </div>
+
+        <!-- Links de Navegação -->
+        <div class="footer-links-col">
+          <h3 class="footer-col-title">Navegação</h3>
+          <ul class="footer-links-list">
+            <li><a href="#servicos" class="footer-link clickable">Serviços</a></li>
+            <li><a href="#portfolio" class="footer-link clickable">Portfólio</a></li>
+            <li><a href="#resultados" class="footer-link clickable">Resultados</a></li>
+            <li><a href="#depoimentos" class="footer-link clickable">Depoimentos</a></li>
+            <li><a href="#contato" class="footer-link clickable">Contato</a></li>
+          </ul>
+        </div>
+
+        <!-- Links de Contato e Redes -->
+        <div class="footer-links-col">
+          <h3 class="footer-col-title">Contato & Social</h3>
+          <ul class="footer-links-list">
+            <li><span class="footer-contact-info">contato@msdigital.com.br</span></li>
+            <li><span class="footer-contact-info">(11) 99999-9999</span></li>
+            <li><a href="#" class="footer-link clickable" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="#" class="footer-link clickable" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter segura e acessível -->
+        <div class="footer-newsletter">
+          <h3 class="footer-col-title">Receba insights de escala</h3>
+          <p class="newsletter-text">Inscreva-se para receber estratégias de vendas digitais diretamente no seu e-mail.</p>
+          <form class="newsletter-form" id="newsletter-form" novalidate>
+            <div class="newsletter-input-group">
+              <label for="newsletter-email" class="sr-only">Seu E-mail Corporativo</label>
+              <input type="email" id="newsletter-email" class="form-input newsletter-input" placeholder="Seu melhor e-mail..." required maxlength="100">
+              <button type="submit" class="btn btn-primary btn-newsletter clickable" aria-label="Inscrever-se na newsletter">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+            <span class="form-error-msg" id="error-news-email" role="alert"></span>
+            <div class="newsletter-feedback" id="newsletter-feedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Copyright e Políticas -->
+      <div class="footer-bottom">
+        <p class="copyright-text">&copy; 2026 MS Digital. Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
+        <div class="footer-bottom-links">
+          <a href="#" class="footer-link clickable">Política de Privacidade</a>
+          <a href="#" class="footer-link clickable">Termos de Uso</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
