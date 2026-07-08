@@ -598,29 +598,35 @@ function initNewsletterValidation() {
 
 
 /**
- * 06. Scroll Reveal para os Cards de Pilares
+ * 06. Scroll Reveal para os Cards de Pilares (Bidirecional e Stagger Independente)
  */
 function initScrollReveal() {
-  const pillarsContainer = document.querySelector('.solution-pillars');
+  const cards = document.querySelectorAll('.solution-pillars .pillar-card');
   
-  if (!pillarsContainer) return;
+  if (cards.length === 0) return;
 
   if (typeof IntersectionObserver !== 'undefined') {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          pillarsContainer.classList.add('visible');
-          observer.unobserve(entry.target);
+          entry.target.classList.add('visible');
+        } else {
+          // Remove ao sair da tela para poder re-animar no scroll inverso
+          entry.target.classList.remove('visible');
         }
       });
-    }, { threshold: 0.15 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -40px 0px" // Dispara um pouco antes de entrar totalmente na tela
+    });
 
-    observer.observe(pillarsContainer);
+    cards.forEach(card => observer.observe(card));
   } else {
     // Fallback se não houver suporte
-    pillarsContainer.classList.add('visible');
+    cards.forEach(card => card.classList.add('visible'));
   }
 }
+
 
 // Exportações para fins de Teste Node.js (TDD de Segurança)
 if (typeof module !== 'undefined' && module.exports) {
