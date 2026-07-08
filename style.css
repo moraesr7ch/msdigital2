@@ -1077,7 +1077,7 @@ section {
   transition: color var(--transition-fast), transform var(--transition-normal);
 }
 
-.pillar-card:hover .pillar-icon:not(.icon-spin-hover):not(.icon-blink-hover) {
+.pillar-card:hover .pillar-icon:not(.icon-spin-hover):not(.icon-blink-hover):not(.icon-grow-hover) {
   color: var(--primary-color);
   transform: rotate(10deg); /* Um pequeno feedback divertido e premium */
 }
@@ -1091,6 +1091,18 @@ section {
   color: var(--primary-color);
   animation: blink-eye-double 7s ease-in-out infinite;
   transform-origin: center;
+}
+
+.icon-grow-hover {
+  transform: scale(0.85);
+  transform-origin: left bottom;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              color var(--transition-fast);
+}
+
+.pillar-card:hover .icon-grow-hover {
+  color: var(--primary-color);
+  transform: scale(1.2);
 }
 
 @keyframes spin-clockwise {
