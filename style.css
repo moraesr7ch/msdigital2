@@ -957,14 +957,50 @@ section {
 
 .solution-glow {
   position: absolute;
-  top: 50%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(71, 116, 210, 0.1) 0%, transparent 60%);
-  filter: blur(80px);
+  filter: blur(120px);
   pointer-events: none;
+  opacity: 0.6;
+}
+
+.solution-glow-1 {
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(71, 115, 210, 0.382) 0%, transparent 70%);
+  animation: float-glow-1 25s infinite ease-in-out;
+}
+
+.solution-glow-2 {
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(245, 165, 35, 0.134) 0%, transparent 70%);
+  animation: float-glow-2 30s infinite ease-in-out;
+}
+
+@keyframes float-glow-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(80px, -40px) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes float-glow-2 {
+  0% {
+    transform: translate(0, 0) scale(1.1);
+  }
+  50% {
+    transform: translate(-70px, 60px) scale(0.9);
+  }
+  100% {
+    transform: translate(0, 0) scale(1.1);
+  }
 }
 
 .solution-grid {
@@ -994,38 +1030,108 @@ section {
 }
 
 .pillar-card {
-  background-color: var(--zinc-900);
-  border: 1px solid var(--zinc-800);
+  background-color: rgba(24, 24, 27, 0.65); /* Zinc 900 translúcido */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Borda fina estilo Claude/Vercel */
   border-radius: 16px;
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  transition: border-color var(--transition-fast);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all var(--transition-normal);
 }
 
 .pillar-card:hover {
-  border-color: var(--primary-color);
+  transform: translateY(-4px);
+  border-color: rgba(71, 116, 210, 0.35); /* Borda acende em azul */
+  box-shadow: 0 15px 35px -10px rgba(71, 116, 210, 0.15); /* Glow sutil */
+}
+
+.pillar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.pillar-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .pillar-number {
   font-family: var(--font-title);
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-weight: 800;
-  color: var(--secondary-color);
+  color: var(--secondary-color); /* Laranja */
+  background: rgba(245, 166, 35, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   line-height: 1;
+}
+
+.pillar-icon {
+  color: var(--zinc-400);
+  opacity: 0.8;
+  transition: color var(--transition-fast), transform var(--transition-normal);
+}
+
+.pillar-card:hover .pillar-icon:not(.icon-spin-hover) {
+  color: var(--primary-color);
+  transform: rotate(10deg); /* Um pequeno feedback divertido e premium */
+}
+
+.pillar-card:hover .icon-spin-hover {
+  color: var(--primary-color);
+  animation: spin-clockwise 4s linear infinite;
+}
+
+@keyframes spin-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .pillar-title {
   font-family: var(--font-title);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--zinc-100);
-  margin-bottom: 0.5rem;
+  margin: 0;
 }
 
 .pillar-desc {
   font-size: 0.9375rem;
+  color: var(--zinc-400);
+  line-height: 1.6;
+}
+
+/* Tags Tecnológicas */
+.pillar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pillar-tag {
+  font-size: 0.75rem;
+  font-family: var(--font-title);
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--zinc-500);
+  transition: all var(--transition-fast);
+}
+
+.pillar-card:hover .pillar-tag {
+  border-color: rgba(255, 255, 255, 0.1);
   color: var(--zinc-400);
 }
 
