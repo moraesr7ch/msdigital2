@@ -178,7 +178,7 @@ section {
   text-decoration: none;
   border-radius: 9999px;
   border: 2px solid transparent;
-  line-height: 1.2;
+  line-height: 1.2; 
   text-align: center;
 }
 
@@ -711,8 +711,8 @@ section {
    ========================================================================== */
 
 .credibility-section {
-  padding-top: 3.5rem;
-  padding-bottom: 3.5rem;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
   border-top: 1px solid var(--zinc-200);
   border-bottom: 1px solid var(--zinc-200);
   background-color: white;
@@ -731,26 +731,58 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--zinc-400);
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
-.logos-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
+/* Novo container do carrossel */
+.logos-carousel-container {
+  overflow: hidden;
   width: 100%;
-  margin-bottom: 2.5rem;
+  position: relative;
+  padding: 0.75rem 0;
+  /* Máscaras suaves nas bordas da tela */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
-.logo-item {
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 1.125rem;
-  color: var(--zinc-300);
-  letter-spacing: 0.1em;
+/* O trilho das marcas */
+.logos-carousel-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 5rem;
+  animation: scroll-left 30s linear infinite;
+}
+
+/* Pausar animação ao passar o mouse */
+.logos-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+/* Elemento de logo */
+.logos-carousel-track .logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--zinc-400);
+  transition: color var(--transition-normal), transform var(--transition-normal);
+  cursor: pointer;
   user-select: none;
+}
+
+.logos-carousel-track .logo-item:hover {
+  color: var(--zinc-800);
+  transform: scale(1.05);
+}
+
+/* Feedback de clique conforme a regra do usuário */
+.logos-carousel-track .logo-item:active {
+  transform: scale(0.95);
+  transition: transform 0.05s ease;
+}
+
+.credibility-badges-container {
+  margin-top: 1.5rem;
 }
 
 .partners-badges {
@@ -774,6 +806,16 @@ section {
 
 .partner-icon {
   flex-shrink: 0;
+}
+
+/* Animação infinita fluida */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ==========================================================================
