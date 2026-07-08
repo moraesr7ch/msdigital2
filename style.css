@@ -1077,7 +1077,7 @@ section {
   transition: color var(--transition-fast), transform var(--transition-normal);
 }
 
-.pillar-card:hover .pillar-icon:not(.icon-spin-hover) {
+.pillar-card:hover .pillar-icon:not(.icon-spin-hover):not(.icon-blink-hover) {
   color: var(--primary-color);
   transform: rotate(10deg); /* Um pequeno feedback divertido e premium */
 }
@@ -1087,12 +1087,30 @@ section {
   animation: spin-clockwise 4s linear infinite;
 }
 
+.pillar-card:hover .icon-blink-hover {
+  color: var(--primary-color);
+  animation: blink-eye-double 7s ease-in-out infinite;
+  transform-origin: center;
+}
+
 @keyframes spin-clockwise {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes blink-eye-double {
+  0%, 26%, 31%, 41%, 45%, 100% {
+    transform: scaleY(1);
+  }
+  28.5% {
+    transform: scaleY(0.1);
+  }
+  43% {
+    transform: scaleY(0.1);
   }
 }
 
