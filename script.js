@@ -13,6 +13,7 @@ if (typeof document !== 'undefined') {
     initNewsletterValidation();
     initCounterAnimation();
     initHeroParticles();
+    initScrollReveal();
   });
 }
 
@@ -592,6 +593,32 @@ function initNewsletterValidation() {
       errorSpan.style.display = 'block';
     }
     feedbackSpan.textContent = '';
+  }
+}
+
+
+/**
+ * 06. Scroll Reveal para os Cards de Pilares
+ */
+function initScrollReveal() {
+  const pillarsContainer = document.querySelector('.solution-pillars');
+  
+  if (!pillarsContainer) return;
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          pillarsContainer.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(pillarsContainer);
+  } else {
+    // Fallback se não houver suporte
+    pillarsContainer.classList.add('visible');
   }
 }
 

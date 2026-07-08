@@ -1048,6 +1048,38 @@ section {
   box-shadow: 0 15px 35px -10px rgba(71, 116, 210, 0.15); /* Glow sutil */
 }
 
+/* Revelação e animação de entrada da direita para a esquerda */
+.solution-pillars .pillar-card {
+  opacity: 0;
+}
+
+.solution-pillars.visible .pillar-card {
+  animation: reveal-from-right 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+.solution-pillars.visible .pillar-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.solution-pillars.visible .pillar-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.solution-pillars.visible .pillar-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes reveal-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .pillar-header {
   display: flex;
   align-items: center;
