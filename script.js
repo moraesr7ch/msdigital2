@@ -13,6 +13,7 @@ if (typeof document !== 'undefined') {
     initNewsletterValidation();
     initCounterAnimation();
     initHeroParticles();
+    initScrollReveal();
   });
 }
 
@@ -594,6 +595,38 @@ function initNewsletterValidation() {
     feedbackSpan.textContent = '';
   }
 }
+
+
+/**
+ * 06. Scroll Reveal para os Cards de Pilares (Bidirecional e Stagger Independente)
+ */
+function initScrollReveal() {
+  const cards = document.querySelectorAll('.solution-pillars .pillar-card');
+  
+  if (cards.length === 0) return;
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          // Remove ao sair da tela para poder re-animar no scroll inverso
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -40px 0px" // Dispara um pouco antes de entrar totalmente na tela
+    });
+
+    cards.forEach(card => observer.observe(card));
+  } else {
+    // Fallback se não houver suporte
+    cards.forEach(card => card.classList.add('visible'));
+  }
+}
+
 
 // Exportações para fins de Teste Node.js (TDD de Segurança)
 if (typeof module !== 'undefined' && module.exports) {
