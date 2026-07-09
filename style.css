@@ -1265,15 +1265,27 @@ section {
 
 /* Badge em destaque (Mais contratado) */
 .service-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
   font-family: var(--font-title);
   font-size: 0.75rem;
   font-weight: 700;
   color: white;
-  background-color: var(--secondary-color); /* Laranja/Ouro do site */
+  background-color: var(--primary-color); /* Fundo azul conforme a imagem */
   padding: 0.35rem 0.75rem;
   border-radius: 9999px;
   line-height: 1;
 }
+
+.service-badge .badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--secondary-color); /* Bolinha amarela/laranja */
+  display: inline-block;
+}
+
 
 .service-card-title {
   font-family: var(--font-title);
