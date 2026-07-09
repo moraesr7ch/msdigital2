@@ -161,12 +161,22 @@ section {
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1.25;
-  color: var(--zinc-900);
+  color: var(--zinc-950); /* Contraste máximo absoluto em fundos claros (WCAG AAA) */
 }
 
 .text-light {
-  color: var(--zinc-100) !important;
+  color: var(--zinc-50) !important; /* Contraste máximo em fundos escuros */
 }
+
+/* Regras de proteção e legibilidade automática para seções escuras */
+.dark-bg .section-title {
+  color: var(--zinc-50) !important;
+}
+
+.dark-bg .section-eyebrow {
+  color: var(--secondary-color) !important; /* Destaque laranja no escuro */
+}
+
 
 /* Botões */
 .btn {
@@ -784,7 +794,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--zinc-400);
+  color: var(--zinc-600); /* Aumentado contraste para evitar aparência transparente */
   margin-bottom: 1.25rem;
 }
 
@@ -1211,6 +1221,7 @@ section {
 .service-card {
   background-color: white;
   border: 1px solid var(--zinc-200);
+  border-top: 4px solid var(--primary-color); /* Borda superior azul padrão em todos os cards */
   border-radius: 20px;
   padding: 2.5rem 2rem;
   transition: all var(--transition-normal);
@@ -1218,10 +1229,31 @@ section {
   flex-direction: column;
 }
 
+/* Card Destacado (Criação de Sites) */
+.service-card.featured-card {
+  border: 2px solid var(--primary-color);
+  border-top-width: 4px; /* Mantém a borda do topo em 4px */
+  box-shadow: 0 10px 30px -10px rgba(71, 116, 210, 0.18), var(--shadow-md); /* Glow e blur azul externo sutil */
+}
+
 .service-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-xl);
+  border-color: var(--zinc-300);
+}
+
+.service-card.featured-card:hover {
   border-color: var(--primary-color);
+  box-shadow: 0 20px 40px -10px rgba(71, 116, 210, 0.28), var(--shadow-lg); /* Glow e blur azul externo intensificado no hover */
+}
+
+
+
+.service-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .service-icon-wrapper {
@@ -1231,25 +1263,33 @@ section {
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 14px;
-  background-color: var(--primary-glow);
-  color: var(--primary-color);
-  margin-bottom: 2rem;
-}
-
-.service-card:nth-child(2) .service-icon-wrapper {
-  background-color: var(--secondary-glow);
-  color: var(--secondary-color);
-}
-
-.service-card:nth-child(3) .service-icon-wrapper {
-  background-color: var(--primary-glow);
+  background-color: rgba(71, 116, 210, 0.08); /* Azul translúcido padrão para todos */
   color: var(--primary-color);
 }
 
-.service-card:nth-child(4) .service-icon-wrapper {
-  background-color: var(--secondary-glow);
-  color: var(--secondary-color);
+/* Badge em destaque (Mais contratado) */
+.service-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  background-color: var(--primary-color); /* Fundo azul conforme a imagem */
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  line-height: 1;
 }
+
+.service-badge .badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--secondary-color); /* Bolinha amarela/laranja */
+  display: inline-block;
+}
+
 
 .service-card-title {
   font-family: var(--font-title);
@@ -1260,11 +1300,21 @@ section {
 }
 
 .service-card-desc {
-  font-size: 0.9375rem;
-  color: var(--zinc-600);
-  margin-bottom: 2rem;
+  font-family: var(--font-body);
+  font-size: 1.125rem; /* Copys em destaque */
   line-height: 1.5;
+  margin-bottom: 2rem;
   flex-grow: 1;
+}
+
+.service-card-desc .text-muted {
+  color: var(--zinc-400);
+  font-weight: 500;
+}
+
+.service-card-desc strong {
+  color: var(--zinc-800);
+  font-weight: 700;
 }
 
 .tech-tags {
@@ -1281,7 +1331,16 @@ section {
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   border: 1px solid var(--zinc-200);
+  transition: all var(--transition-fast);
 }
+
+/* Tag Laranja específica do segundo card */
+.tech-tag.tag-orange {
+  color: #F5A623;
+  background-color: rgba(245, 166, 35, 0.08);
+  border-color: rgba(245, 166, 35, 0.15);
+}
+
 
 /* ==========================================================================
    07 COMO FUNCIONA - O PROCESSO
