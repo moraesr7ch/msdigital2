@@ -1229,10 +1229,11 @@ section {
   flex-direction: column;
 }
 
-/* Card Destacado (Tráfego Pago) */
+/* Card Destacado (Criação de Sites) */
 .service-card.featured-card {
   border: 2px solid var(--primary-color);
   border-top-width: 4px; /* Mantém a borda do topo em 4px */
+  box-shadow: 0 10px 30px -10px rgba(71, 116, 210, 0.18), var(--shadow-md); /* Glow e blur azul externo sutil */
 }
 
 .service-card:hover {
@@ -1243,7 +1244,10 @@ section {
 
 .service-card.featured-card:hover {
   border-color: var(--primary-color);
+  box-shadow: 0 20px 40px -10px rgba(71, 116, 210, 0.28), var(--shadow-lg); /* Glow e blur azul externo intensificado no hover */
 }
+
+
 
 .service-icon-row {
   display: flex;
