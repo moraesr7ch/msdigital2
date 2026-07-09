@@ -1229,23 +1229,81 @@ section {
   flex-direction: column;
 }
 
-/* Card Destacado (Criação de Sites) */
-.service-card.featured-card {
-  border: 2px solid var(--primary-color);
-  border-top-width: 4px; /* Mantém a borda do topo em 4px */
-  box-shadow: 0 10px 30px -10px rgba(71, 116, 210, 0.18), var(--shadow-md); /* Glow e blur azul externo sutil */
-}
-
 .service-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-xl);
   border-color: var(--zinc-300);
 }
 
+/* Card Destacado (Criação de Sites) */
+.service-card.featured-card {
+  position: relative;
+  background-color: transparent; /* Deixa transparente para revelar a borda animada por trás */
+  border: none; /* Remove a borda padrão */
+  box-shadow: 0 10px 30px -10px rgba(71, 116, 210, 0.18), var(--shadow-md); /* Glow e blur azul externo sutil */
+}
+
 .service-card.featured-card:hover {
-  border-color: var(--primary-color);
+  border-color: transparent;
   box-shadow: 0 20px 40px -10px rgba(71, 116, 210, 0.28), var(--shadow-lg); /* Glow e blur azul externo intensificado no hover */
 }
+
+/* Conteúdo do Card destacado */
+.service-card-content {
+  position: relative;
+  z-index: 3; /* Fica acima do fundo branco do ::after */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Div para a animação da borda correndo */
+.border-animation-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradiente cônico giratório */
+.border-animation-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg, 
+    var(--primary-color) 0%, 
+    rgba(71, 116, 210, 0.2) 25%, 
+    var(--primary-color) 50%, 
+    rgba(71, 116, 210, 0.2) 75%, 
+    var(--primary-color) 100%
+  );
+  animation: rotate-border-glow 4s linear infinite;
+}
+
+/* Fundo do card (máscara interna) */
+.border-animation-glow::after {
+  content: '';
+  position: absolute;
+  inset: 2px; /* Largura da borda animada de 2px */
+  background-color: white;
+  border-radius: 18px; /* Arredondamento interno ligeiramente menor */
+}
+
+@keyframes rotate-border-glow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 
 
