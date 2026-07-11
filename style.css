@@ -1469,6 +1469,7 @@ section {
    ========================================================================== */
 
 .results-section {
+  position: relative;
   overflow: hidden;
 }
 
@@ -1479,7 +1480,19 @@ section {
   width: 450px;
   height: 450px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 166, 35, 0.1) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.results-glow-blue {
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(71, 116, 210, 0.1) 0%, transparent 60%);
   filter: blur(80px);
   pointer-events: none;
 }
