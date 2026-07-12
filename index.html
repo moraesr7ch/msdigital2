@@ -468,103 +468,128 @@
           <h2 class="section-title">Soluções completas para posicionar e escalar sua marca</h2>
         </div>
 
-        <div class="services-grid">
-          <!-- Serviço 1: Criação de Sites (Destaque) -->
-          <div class="service-card featured-card">
-            <div class="border-animation-glow"></div>
-            <div class="service-card-content">
-              <div class="service-icon-row">
-                <div class="service-icon-wrapper">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="services-drawer-stack">
+          <!-- Card 1: Criação de Sites -->
+          <div class="drawer-card active" data-index="0">
+            <div class="drawer-header clickable" onclick="selectDrawerCard(0)" role="button" aria-expanded="true" tabindex="0">
+              <div class="drawer-header-content">
+                <span class="drawer-icon-wrapper" style="--accent-color: var(--primary-color);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                     <line x1="2" y1="20" x2="22" y2="20"></line>
                     <line x1="12" y1="17" x2="12" y2="20"></line>
                   </svg>
+                </span>
+                <span class="drawer-header-title">Criação de Sites</span>
+                <span class="drawer-badge"><span class="badge-dot"></span>Mais contratado</span>
+              </div>
+            </div>
+            <div class="drawer-body">
+              <div class="drawer-body-content">
+                <h3 class="drawer-content-title">Criação de Sites</h3>
+                <p class="drawer-content-desc">
+                  <span class="text-muted">Seu site manda o cliente embora.</span>
+                  <strong>O nosso não.</strong>
+                </p>
+                <div class="drawer-content-tags">
+                  <span class="drawer-tag">HTML5</span>
+                  <span class="drawer-tag">CSS</span>
+                  <span class="drawer-tag">UX/UI</span>
                 </div>
-                <span class="service-badge"><span class="badge-dot"></span>Mais contratado</span>
-              </div>
-              <h3 class="service-card-title">Criação de Sites</h3>
-              <p class="service-card-desc">
-                <span class="text-muted">Seu site manda o cliente embora.</span>
-                <strong>O nosso não.</strong>
-              </p>
-              <div class="tech-tags">
-                <span class="tech-tag">HTML5</span>
-                <span class="tech-tag">CSS</span>
-                <span class="tech-tag">UX/UI</span>
               </div>
             </div>
           </div>
 
-          <!-- Serviço 2: Tráfego Pago -->
-          <div class="service-card">
-            <div class="service-icon-row">
-              <div class="service-icon-wrapper">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="3" y1="20" x2="21" y2="20"></line>
-                  <path d="M7 20V9"></path>
-                  <path d="M4 12l3-3 3 3"></path>
-                  <line x1="12" y1="20" x2="12" y2="14"></line>
-                  <path d="M17 20V6"></path>
-                  <path d="M14 9l3-3 3 3"></path>
-                </svg>
+          <!-- Card 2: Tráfego Pago -->
+          <div class="drawer-card" data-index="1">
+            <div class="drawer-header clickable" onclick="selectDrawerCard(1)" role="button" aria-expanded="false" tabindex="0">
+              <div class="drawer-header-content">
+                <span class="drawer-icon-wrapper" style="--accent-color: #f5a623;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="3" y1="20" x2="21" y2="20"></line>
+                    <path d="M7 20V9"></path>
+                    <path d="M4 12l3-3 3 3"></path>
+                    <line x1="12" y1="20" x2="12" y2="14"></line>
+                    <path d="M17 20V6"></path>
+                    <path d="M14 9l3-3 3 3"></path>
+                  </svg>
+                </span>
+                <span class="drawer-header-title">Tráfego Pago</span>
               </div>
             </div>
-            <h3 class="service-card-title">Tráfego Pago</h3>
-            <p class="service-card-desc">
-              <strong>Você vai saber</strong>
-              <span class="text-muted">qual anúncio virou venda.</span>
-            </p>
-            <div class="tech-tags">
-              <span class="tech-tag">Google Ads</span>
-              <span class="tech-tag">Meta Ads</span>
+            <div class="drawer-body">
+              <div class="drawer-body-content">
+                <h3 class="drawer-content-title">Tráfego Pago</h3>
+                <p class="drawer-content-desc">
+                  <strong>Você vai saber</strong>
+                  <span class="text-muted">qual anúncio virou venda.</span>
+                </p>
+                <div class="drawer-content-tags">
+                  <span class="drawer-tag">Google Ads</span>
+                  <span class="drawer-tag">Meta Ads</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Serviço 3: Web Apps & Sistemas -->
-          <div class="service-card">
-            <div class="service-icon-row">
-              <div class="service-icon-wrapper">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                  <line x1="14" y1="4" x2="10" y2="20"></line>
-                </svg>
+          <!-- Card 3: Web Apps & Sistemas -->
+          <div class="drawer-card" data-index="2">
+            <div class="drawer-header clickable" onclick="selectDrawerCard(2)" role="button" aria-expanded="false" tabindex="0">
+              <div class="drawer-header-content">
+                <span class="drawer-icon-wrapper" style="--accent-color: #3b82f6;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                    <line x1="14" y1="4" x2="10" y2="20"></line>
+                  </svg>
+                </span>
+                <span class="drawer-header-title">Web Apps & Sistemas</span>
               </div>
             </div>
-            <h3 class="service-card-title">Web Apps & Sistemas</h3>
-            <p class="service-card-desc">
-              <span class="text-muted">Sistemas que</span>
-              <strong>trabalham quando você não está.</strong>
-            </p>
-            <div class="tech-tags">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Node.js</span>
+            <div class="drawer-body">
+              <div class="drawer-body-content">
+                <h3 class="drawer-content-title">Web Apps & Sistemas</h3>
+                <p class="drawer-content-desc">
+                  <span class="text-muted">Sistemas que</span>
+                  <strong>trabalham quando você não está.</strong>
+                </p>
+                <div class="drawer-content-tags">
+                  <span class="drawer-tag">React</span>
+                  <span class="drawer-tag">Node.js</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Serviço 4: Identidade Visual & Branding -->
-          <div class="service-card">
-            <div class="service-icon-row">
-              <div class="service-icon-wrapper">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 22C17.52 22 22 17.52 22 12S17.52 2 12 2 2 6.48 2 12c0 2.21 1.79 4 4 4h.83c.66 0 1.2.54 1.2 1.2v.83c0 2.21 1.79 4 4 4z"></path>
-                  <circle cx="7.5" cy="10.5" r="1.5"></circle>
-                  <circle cx="11.5" cy="7.5" r="1.5"></circle>
-                  <circle cx="16.5" cy="9.5" r="1.5"></circle>
-                  <circle cx="15.5" cy="14.5" r="1.5"></circle>
-                </svg>
+          <!-- Card 4: Identidade Visual & Branding -->
+          <div class="drawer-card" data-index="3">
+            <div class="drawer-header clickable" onclick="selectDrawerCard(3)" role="button" aria-expanded="false" tabindex="0">
+              <div class="drawer-header-content">
+                <span class="drawer-icon-wrapper" style="--accent-color: #8b5cf6;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22C17.52 22 22 17.52 22 12S17.52 2 12 2 2 6.48 2 12c0 2.21 1.79 4 4 4h.83c.66 0 1.2.54 1.2 1.2v.83c0 2.21 1.79 4 4 4z"></path>
+                    <circle cx="7.5" cy="10.5" r="1.5"></circle>
+                    <circle cx="11.5" cy="7.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="9.5" r="1.5"></circle>
+                    <circle cx="15.5" cy="14.5" r="1.5"></circle>
+                  </svg>
+                </span>
+                <span class="drawer-header-title">Identidade Visual & Branding</span>
               </div>
             </div>
-            <h3 class="service-card-title">Identidade Visual & Branding</h3>
-            <p class="service-card-desc">
-              <span class="text-muted">Visual que</span>
-              <strong>diferencia antes de você falar</strong>
-              <span class="text-muted">uma palavra.</span>
-            </p>
-            <div class="tech-tags">
-              <span class="tech-tag">Branding</span>
-              <span class="tech-tag">Canva</span>
+            <div class="drawer-body">
+              <div class="drawer-body-content">
+                <h3 class="drawer-content-title">Identidade Visual & Branding</h3>
+                <p class="drawer-content-desc">
+                  <span class="text-muted">Visual que</span>
+                  <strong>diferencia antes de você falar</strong>
+                  <span class="text-muted">uma palavra.</span>
+                </p>
+                <div class="drawer-content-tags">
+                  <span class="drawer-tag">Branding</span>
+                  <span class="drawer-tag">Canva</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

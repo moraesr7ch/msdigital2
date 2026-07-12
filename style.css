@@ -1206,127 +1206,135 @@ section {
 
 /* ==========================================================================
    06 SERVIÇOS - O QUE OFERECEMOS
+   ===================================================================/* ==========================================================================
+   06. Componente de Gaveta Interativa de Serviços (Drawer Stack)
    ========================================================================== */
 
-.services-section {
-  background-color: var(--zinc-50);
+.services-drawer-stack {
+  position: relative;
+  width: 100%;
+  margin-top: 3rem;
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+/* Modo Desktop - Empilhamento de Abas Tridimensional (Efeito Gaveta) */
+@media (min-width: 768px) {
+  .services-drawer-stack {
+    height: 560px; /* Altura controlada para conter abas + corpo expandido */
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .drawer-card {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: var(--zinc-50);
+    border: 1px solid var(--zinc-200);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    /* Transições ultra fluidas com curva de aceleração bezier suave */
+    transition: 
+      transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
+      z-index 0.45s ease, 
+      background-color 0.45s ease, 
+      border-color 0.45s ease, 
+      box-shadow 0.45s ease;
+    overflow: hidden;
+    /* Variáveis CSS padrão modificadas via JavaScript */
+    transform: translateY(var(--y-pos)) scale(var(--scale, 1));
+    z-index: var(--z-index);
+    transform-origin: center top; /* Perspectiva perfeita de profundidade */
+  }
+
+  /* Efeito de Gaveta Levantando Suavemente no Hover */
+  .drawer-card:not(.active):hover {
+    transform: translateY(calc(var(--y-pos) - 8px)) scale(calc(var(--scale, 1) + 0.015));
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    background-color: white;
+    border-color: var(--zinc-300);
+  }
+  
+  .drawer-card:not(.active) .drawer-header {
+    opacity: 0.95;
+  }
 }
 
-.service-card {
+/* Estilos Globais e Comuns do Card de Gaveta */
+.drawer-card {
+  box-sizing: border-box;
+}
+
+/* Card Ativo (Vem para a frente) */
+.drawer-card.active {
   background-color: white;
-  border: 1px solid var(--zinc-200);
-  border-top: 4px solid var(--primary-color); /* Borda superior azul padrão em todos os cards */
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  transition: all var(--transition-normal);
-  display: flex;
-  flex-direction: column;
+  border-color: var(--zinc-300);
+  box-shadow: var(--shadow-xl);
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
+/* Destaque do Primeiro Card (Criação de Sites) quando Ativo */
+.drawer-card.active[data-index="0"] {
+  border-color: var(--primary-color);
+  box-shadow: 0 12px 35px rgba(71, 116, 210, 0.12), var(--shadow-xl);
+}
+
+/* Cabeçalho Interativo */
+.drawer-header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--zinc-200);
+  border-radius: 12px;
+  margin: 2px 2px 0 2px;
+  background-color: #FAFAFA;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.drawer-card.active .drawer-header {
   border-color: var(--zinc-300);
 }
 
-/* Card Destacado (Criação de Sites) */
-.service-card.featured-card {
-  position: relative;
-  background-color: transparent; /* Deixa transparente para revelar a borda animada por trás */
-  border: none; /* Remove a borda padrão */
-  box-shadow: 0 10px 30px -10px rgba(71, 116, 210, 0.18), var(--shadow-md); /* Glow e blur azul externo sutil */
+.drawer-card.active[data-index="0"] .drawer-header {
+  border-color: rgba(71, 116, 210, 0.4); /* Leve contorno azul no cabeçalho ativo de criação de sites */
 }
 
-.service-card.featured-card:hover {
-  border-color: transparent;
-  box-shadow: 0 20px 40px -10px rgba(71, 116, 210, 0.28), var(--shadow-lg); /* Glow e blur azul externo intensificado no hover */
-}
-
-/* Conteúdo do Card destacado */
-.service-card-content {
-  position: relative;
-  z-index: 3; /* Fica acima do fundo branco do ::after */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Div para a animação da borda correndo */
-.border-animation-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Gradiente cônico giratório */
-.border-animation-glow::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg, 
-    var(--primary-color) 0%, 
-    rgba(71, 116, 210, 0.2) 25%, 
-    var(--primary-color) 50%, 
-    rgba(71, 116, 210, 0.2) 75%, 
-    var(--primary-color) 100%
-  );
-  animation: rotate-border-glow 4s linear infinite;
-}
-
-/* Fundo do card (máscara interna) */
-.border-animation-glow::after {
-  content: '';
-  position: absolute;
-  inset: 2px; /* Largura da borda animada de 2px */
-  background-color: white;
-  border-radius: 18px; /* Arredondamento interno ligeiramente menor */
-}
-
-@keyframes rotate-border-glow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-
-
-.service-icon-row {
+.drawer-header-content {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: 1.15rem;
+  width: 100%;
 }
 
-.service-icon-wrapper {
+.drawer-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 14px;
-  background-color: rgba(71, 116, 210, 0.08); /* Azul translúcido padrão para todos */
-  color: var(--primary-color);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 8px;
+  color: var(--accent-color);
+  background-color: rgba(244, 244, 245, 0.9); /* Neutro claro */
+  border: 1px solid var(--zinc-200);
+  transition: transform var(--transition-normal);
 }
 
-/* Badge em destaque (Mais contratado) */
-.service-badge {
+/* Ao passar o mouse na aba, o ícone dá um leve pulso */
+.drawer-card:not(.active):hover .drawer-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.drawer-header-title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--zinc-900);
+  line-height: 1;
+}
+
+/* Badge estilizado (Mais contratado) */
+.drawer-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -1334,69 +1342,153 @@ section {
   font-size: 0.75rem;
   font-weight: 700;
   color: white;
-  background-color: var(--primary-color); /* Fundo azul conforme a imagem */
+  background-color: var(--primary-color);
   padding: 0.35rem 0.75rem;
   border-radius: 9999px;
   line-height: 1;
+  margin-left: auto; /* Alinha na direita do cabeçalho */
 }
 
-.service-badge .badge-dot {
+.drawer-badge .badge-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--secondary-color); /* Bolinha amarela/laranja */
+  background-color: var(--secondary-color); /* Bolinha amarela */
   display: inline-block;
 }
 
+/* Corpo do Conteúdo */
+.drawer-body {
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease;
+}
 
-.service-card-title {
+@media (min-width: 768px) {
+  .drawer-body {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .drawer-card.active .drawer-body {
+    max-height: 380px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.drawer-body-content {
+  padding: 2.25rem 2.25rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.drawer-content-title {
   font-family: var(--font-title);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--zinc-900);
-  margin-bottom: 0.875rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--zinc-950);
+  margin: 0;
 }
 
-.service-card-desc {
+.drawer-content-desc {
   font-family: var(--font-body);
-  font-size: 1.125rem; /* Copys em destaque */
-  line-height: 1.5;
-  margin-bottom: 2rem;
-  flex-grow: 1;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--zinc-500);
 }
 
-.service-card-desc .text-muted {
+.drawer-content-desc .text-muted {
   color: var(--zinc-400);
-  font-weight: 500;
 }
 
-.service-card-desc strong {
+.drawer-content-desc strong {
   color: var(--zinc-800);
   font-weight: 700;
 }
 
-.tech-tags {
+.drawer-content-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 
-.tech-tag {
+.drawer-tag {
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--zinc-500);
   background-color: var(--zinc-100);
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
-  border: 1px solid var(--zinc-200);
+  line-height: 1;
   transition: all var(--transition-fast);
 }
 
-/* Tag Laranja específica do segundo card */
-.tech-tag.tag-orange {
-  color: #F5A623;
-  background-color: rgba(245, 166, 35, 0.08);
-  border-color: rgba(245, 166, 35, 0.15);
+.drawer-card.active .drawer-tag {
+  background-color: var(--zinc-50);
+  border: 1px solid var(--zinc-200);
+}
+
+/* ==========================================================================
+   Modo Mobile - Acordeão Vertical Simples
+   ========================================================================== */
+@media (max-width: 767px) {
+  .services-drawer-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+  }
+
+  .drawer-card {
+    background-color: var(--zinc-50);
+    border: 1px solid var(--zinc-200);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+    transition: all var(--transition-normal);
+  }
+
+  .drawer-card.active {
+    background-color: white;
+    border-color: var(--zinc-300);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .drawer-card.active[data-index="0"] {
+    border-color: var(--primary-color);
+  }
+
+  .drawer-body {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .drawer-card.active .drawer-body {
+    max-height: 340px;
+    opacity: 1;
+  }
+
+  .drawer-body-content {
+    padding: 1.5rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .drawer-content-title {
+    font-size: 1.25rem;
+  }
+
+  .drawer-content-desc {
+    font-size: 1rem;
+  }
+
+  .drawer-badge {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+  }
 }
 
 

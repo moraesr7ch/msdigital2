@@ -14,6 +14,7 @@ if (typeof document !== 'undefined') {
     initCounterAnimation();
     initHeroParticles();
     initScrollReveal();
+    initDrawerStack();
   });
 }
 
@@ -625,6 +626,40 @@ function initScrollReveal() {
     // Fallback se não houver suporte
     cards.forEach(card => card.classList.add('visible'));
   }
+}
+
+/**
+ * 07. Gerenciamento do Drawer Stack (Gaveta de Serviços)
+ */
+function initDrawerStack() {
+  const cards = document.querySelectorAll('.drawer-card');
+  if (cards.length === 0) return;
+
+  // Inicializa o primeiro card como ativo
+  selectDrawerCard(0);
+}
+
+function selectDrawerCard(index) {
+  const cards = document.querySelectorAll('.drawer-card');
+  if (cards.length === 0) return;
+
+  cards.forEach((card, i) => {
+    if (i === index) {
+      card.classList.add('active');
+      card.style.setProperty('--y-pos', '150px');
+      card.style.setProperty('--z-index', '40');
+      card.style.setProperty('--scale', '1');
+    } else {
+      card.classList.remove('active');
+      // Calcula a posição na pilha baseando-se no índice em relação ao ativo
+      const order = i < index ? i : i - 1;
+      card.style.setProperty('--y-pos', `${order * 50}px`);
+      card.style.setProperty('--z-index', `${10 + order * 10}`);
+      // Escalas dinâmicas em perspectiva de profundidade [atrás, meio, frente]
+      const scales = [0.91, 0.95, 0.98];
+      card.style.setProperty('--scale', scales[order]);
+    }
+  });
 }
 
 
