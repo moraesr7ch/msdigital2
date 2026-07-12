@@ -1219,7 +1219,7 @@ section {
 /* Modo Desktop - Empilhamento de Abas Tridimensional (Efeito Gaveta) */
 @media (min-width: 768px) {
   .services-drawer-stack {
-    height: 520px; /* Altura controlada para conter abas + corpo expandido */
+    height: 560px; /* Altura controlada para conter abas + corpo expandido */
     max-width: 860px;
     margin-left: auto;
     margin-right: auto;

@@ -646,14 +646,14 @@ function selectDrawerCard(index) {
   cards.forEach((card, i) => {
     if (i === index) {
       card.classList.add('active');
-      card.style.setProperty('--y-pos', '108px');
+      card.style.setProperty('--y-pos', '150px');
       card.style.setProperty('--z-index', '40');
       card.style.setProperty('--scale', '1');
     } else {
       card.classList.remove('active');
       // Calcula a posição na pilha baseando-se no índice em relação ao ativo
       const order = i < index ? i : i - 1;
-      card.style.setProperty('--y-pos', `${order * 36}px`);
+      card.style.setProperty('--y-pos', `${order * 50}px`);
       card.style.setProperty('--z-index', `${10 + order * 10}`);
       // Escalas dinâmicas em perspectiva de profundidade [atrás, meio, frente]
       const scales = [0.91, 0.95, 0.98];
