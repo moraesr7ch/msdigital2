@@ -338,12 +338,13 @@ section {
 
 .header-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%; /* Acompanha 100% da largura útil da pílula expandida */
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2.25rem; /* Respiro elegante para não encostar na curva das bordas */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: padding var(--transition-normal);
 }
 
 .brand-logo {
