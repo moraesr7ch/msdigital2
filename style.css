@@ -1280,17 +1280,24 @@ section {
 
 /* Cabeçalho Interativo */
 .drawer-header {
-  padding: 1.15rem 1.75rem;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition-fast);
+  border: 1px solid var(--zinc-200);
+  border-radius: 12px;
+  margin: 2px 2px 0 2px;
+  background-color: #FAFAFA;
+  transition: all var(--transition-fast);
   cursor: pointer;
 }
 
 .drawer-card.active .drawer-header {
-  border-bottom-color: var(--zinc-200);
+  border-color: var(--zinc-300);
+}
+
+.drawer-card.active[data-index="0"] .drawer-header {
+  border-color: rgba(71, 116, 210, 0.4); /* Leve contorno azul no cabeçalho ativo de criação de sites */
 }
 
 .drawer-header-content {
