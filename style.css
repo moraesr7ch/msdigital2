@@ -300,18 +300,40 @@ section {
 
 .main-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5rem;
-  background-color: rgba(250, 250, 250, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(228, 228, 227, 0.5);
+  top: 1rem; /* Começa já flutuando com respiro do topo */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; /* Mais curta e compacta na Hero */
+  max-width: 1000px;
+  height: 4.5rem;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 99px;
   z-index: 1000;
   display: flex;
   align-items: center;
-  transition: background-color var(--transition-normal);
+  /* Transições completas ultra-suaves para expansão lateral e efeitos */
+  transition: 
+    top 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+    width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+    max-width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.main-header.scrolled {
+  top: 1rem;
+  width: 92%; /* Expande horizontalmente nas laterais ao rolar (fica mais comprida) */
+  max-width: 1700px; /* Limite de expansão confortável para o desktop */
+  height: 4.5rem;
+  background-color: rgba(250, 250, 250, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(228, 228, 231, 0.6);
+  border-radius: 99px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .header-container {
@@ -2519,6 +2541,16 @@ section {
 }
 
 @media (max-width: 768px) {
+
+  .main-header {
+    width: 86%;
+    max-width: 440px;
+  }
+
+  .main-header.scrolled {
+    width: 94%;
+    max-width: 520px;
+  }
 
   /* Menu Mobile */
   .mobile-nav-toggle {
