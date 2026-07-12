@@ -15,6 +15,7 @@ if (typeof document !== 'undefined') {
     initHeroParticles();
     initScrollReveal();
     initDrawerStack();
+    initHeaderScroll();
   });
 }
 
@@ -658,6 +659,36 @@ function selectDrawerCard(index) {
       // Escalas dinâmicas em perspectiva de profundidade [atrás, meio, frente]
       const scales = [0.91, 0.95, 0.98];
       card.style.setProperty('--scale', scales[order]);
+    }
+  });
+}
+
+/**
+ * 08. Controle de Rolagem da Página (Sticky Capsule Header)
+ */
+function initHeaderScroll() {
+  const header = document.querySelector('.main-header');
+  if (!header) return;
+
+  const handleScroll = () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  };
+
+  // Inicializa a posição ao carregar
+  handleScroll();
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
     }
   });
 }
