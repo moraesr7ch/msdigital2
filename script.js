@@ -668,13 +668,26 @@ function selectDrawerCard(index) {
  */
 function initHeaderScroll() {
   const header = document.querySelector('.main-header');
-  if (!header) return;
+  const scrollBar = document.getElementById('scroll-bar');
 
   const handleScroll = () => {
-    if (window.scrollY > 40) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+    // 1. Controle do Header
+    if (header) {
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+
+    // 2. Controle da Barra de Scroll Lateral
+    if (scrollBar) {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const totalScroll = documentHeight - windowHeight;
+      const scrollPercent = totalScroll > 0 ? (scrollTop / totalScroll) * 100 : 0;
+      scrollBar.style.height = `${scrollPercent}%`;
     }
   };
 
@@ -719,6 +732,133 @@ function selectPainTab(index) {
   });
 }
 
+
+/**
+ * 10. Inicialização de Animações Premium com GSAP & ScrollTrigger
+ */
+function initGSAPAnimations() {
+  if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
+
+  // Registrar Plugin de Scroll
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  // A. Animação de Entrada da Hero (Sem ScrollTrigger - ao carregar)
+  const heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  
+  heroTimeline
+    .from('.hero-badge', {
+      opacity: 0,
+      y: 20,
+      duration: 0.8,
+      delay: 0.2
+    })
+    .from('.hero-content h1', {
+      opacity: 0,
+      y: 35,
+      duration: 1.0,
+    }, '-=0.6')
+    .from('.hero-content p', {
+      opacity: 0,
+      y: 20,
+      duration: 0.8,
+    }, '-=0.7')
+    .from('.hero-cta-group', {
+      opacity: 0,
+      y: 15,
+      duration: 0.8,
+    }, '-=0.7')
+    .from('.hero-image-container', {
+      opacity: 0,
+      scale: 0.96,
+      y: 30,
+      duration: 1.2,
+      ease: 'power2.out'
+    }, '-=0.9');
+
+  // B. Animações de Entrada de Seção ao Rolar (ScrollTrigger)
+  // 1. Cabeçalhos de Seções (.section-header)
+  const sectionHeaders = document.querySelectorAll('.section-header');
+  sectionHeaders.forEach((header) => {
+    gsap.from(header, {
+      scrollTrigger: {
+        trigger: header,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.9,
+      ease: 'power2.out'
+    });
+  });
+
+  // 2. Tabela de Dores
+  gsap.from('.pain-tabs-container', {
+    scrollTrigger: {
+      trigger: '.pain-tabs-container',
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    },
+    opacity: 0,
+    y: 40,
+    duration: 1.0,
+    ease: 'power3.out'
+  });
+
+  // 3. Seção de Serviços
+  gsap.from('.services-drawer-stack', {
+    scrollTrigger: {
+      trigger: '.services-drawer-stack',
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    },
+    opacity: 0,
+    y: 50,
+    duration: 1.2,
+    ease: 'power3.out'
+  });
+
+  // 4. Cartões de Resultados / Métricas (Cascata / Stagger)
+  const resultCards = document.querySelectorAll('.result-card');
+  if (resultCards.length > 0) {
+    gsap.from(resultCards, {
+      scrollTrigger: {
+        trigger: '.results-grid',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 40,
+      duration: 0.9,
+      stagger: 0.15,
+      ease: 'power2.out'
+    });
+  }
+
+  // 5. Pilares da Metodologia (Cascata / Stagger)
+  const methodologyPillars = document.querySelectorAll('.methodology-pillar');
+  if (methodologyPillars.length > 0) {
+    gsap.from(methodologyPillars, {
+      scrollTrigger: {
+        trigger: '.methodology-grid',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 35,
+      duration: 0.9,
+      stagger: 0.12,
+      ease: 'power2.out'
+    });
+  }
+}
+
+// Inicializar tudo ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  initGSAPAnimations();
+});
 
 // Exportações para fins de Teste Node.js (TDD de Segurança)
 if (typeof module !== 'undefined' && module.exports) {

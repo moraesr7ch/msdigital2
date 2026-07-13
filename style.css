@@ -69,6 +69,12 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
   /* Evita que o header fixo tape o título das seções */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
 }
 
 body {
@@ -91,6 +97,29 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+/* Indicador de Scroll Vertical Lateral (Substitutivo da Scrollbar padrão) */
+.scroll-progress-container {
+  position: fixed;
+  top: 50%;
+  right: 12px; /* Afastado da lateral */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  width: 3px; /* Barrinha fina */
+  height: 60vh; /* Não ocupa a altura inteira */
+  background-color: #E4E4E7; /* Trilho cinza claro */
+  border-radius: 99px; /* Extremidades arredondadas */
+  overflow: hidden; /* Corta a barra de preenchimento nos limites arredondados */
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  width: 100%;
+  height: 0%;
+  background-color: #71717A; /* Preenchimento cinza mais escuro */
+  border-radius: 99px;
+  transition: height 0.1s ease-out;
 }
 
 /* ==========================================================================
