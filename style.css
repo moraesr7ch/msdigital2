@@ -913,73 +913,175 @@ section {
 
 .pain-section {
   background-color: var(--zinc-50);
+  border-bottom: 1px solid var(--zinc-200);
 }
 
-.pain-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3.5rem;
-}
-
-.pain-card {
+.pain-tabs-container {
   background-color: white;
   border: 1px solid var(--zinc-200);
-  border-radius: 16px;
-  padding: 2.25rem 2rem;
-  transition: all var(--transition-normal);
-  display: flex;
-  flex-direction: column;
-}
-
-.pain-card:hover {
-  transform: translateY(-4px);
+  border-radius: 20px;
   box-shadow: var(--shadow-lg);
-  border-color: rgba(71, 116, 210, 0.3);
+  overflow: hidden;
+  margin-top: 3.5rem;
 }
 
-.pain-icon-wrapper {
+/* Navegação das Abas (Header da Tabela) */
+.pain-tabs-nav {
+  display: flex;
+  background-color: white;
+  border-bottom: 1px solid var(--zinc-200);
+  padding: 1.5rem;
+  gap: 1rem;
+  width: 100%;
+}
+
+.pain-tab-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  background-color: #FAFAFA; /* Mini quadrado com fundo na cor #FAFAFA */
+  border: 1px solid rgba(228, 228, 231, 0.5);
+  border-radius: 12px; /* Mini quadrado com cantos arredondados */
+  color: var(--zinc-600);
+  font-family: var(--font-title);
+  font-weight: 500; /* Sem bold nos títulos */
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  outline: none;
+  cursor: pointer;
+}
+
+.pain-tab-trigger:hover:not(.active) {
+  background-color: var(--zinc-100);
+  color: var(--zinc-900);
+}
+
+.pain-tab-trigger.active {
+  background-color: white;
+  color: var(--zinc-950);
+  font-weight: 500; /* Mantém sem bold também no estado ativo */
+  border: 1px solid transparent;
+  /* Borda com degradê colorido conforme a imagem de referência */
+  background-image: linear-gradient(white, white), linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 4px 12px rgba(71, 116, 210, 0.08);
+}
+
+/* Ícones das Abas */
+.pain-tab-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
+  color: var(--zinc-400);
+  transition: color var(--transition-fast);
 }
 
-.pain-icon-wrapper.red-alert {
-  background-color: rgba(234, 67, 53, 0.1);
-  color: #EA4335;
+.pain-tab-trigger.active .pain-tab-icon {
+  color: var(--tab-icon-color);
 }
 
-.pain-card-title {
+/* Painéis de Conteúdo */
+.pain-tabs-content {
+  position: relative;
+}
+
+.pain-tab-panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.pain-tab-panel.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grid do Painel Interno (Duas Colunas de Detalhes no Desktop) */
+.pain-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 3rem;
+}
+
+/* Lado Direito - Detalhes */
+.pain-detail-box {
+  border-left: 3px solid var(--zinc-200);
+  padding-left: 1.5rem;
+  transition: border-color 0.3s ease;
+}
+
+.pain-tab-panel.active .pain-detail-box {
+  border-left-color: var(--zinc-300);
+}
+
+.pain-detail-title {
   font-family: var(--font-title);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 500; /* Sem bold nos títulos */
   color: var(--zinc-900);
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.5rem 0;
 }
 
-.pain-card-desc {
-  font-size: 0.9375rem;
-  color: var(--zinc-600);
-  line-height: 1.5;
+.pain-detail-desc {
+  font-family: var(--font-body);
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: var(--zinc-500);
+  margin: 0;
 }
 
-.pain-footer {
+/* Ponte de Baixo */
+.pain-bridge-sub {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--zinc-900);
+  margin: 2.5rem 0 0 0;
 }
 
-.pain-bridge {
-  font-family: var(--font-title);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--zinc-800);
+/* Responsividade Mobile - Abas de Dor */
+@media (max-width: 768px) {
+  .pain-tabs-nav {
+    flex-wrap: wrap;
+  }
+
+  .pain-tab-trigger {
+    flex: none;
+    width: 50%;
+    padding: 1rem 0.5rem;
+    font-size: 0.85rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .pain-tab-trigger.active {
+    border-bottom-color: var(--primary-color);
+  }
+
+  .pain-panel-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 2.25rem 1.5rem;
+  }
+
+  .pain-panel-left {
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pain-panel-headline {
+    font-size: 1.5rem;
+  }
+
+  .pain-tabs-content {
+    min-height: auto;
+  }
 }
 
 /* ==========================================================================

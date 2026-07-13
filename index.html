@@ -298,67 +298,116 @@
           <h2 class="section-title">Enquanto você lê isso, um cliente seu está fechando com o concorrente</h2>
         </div>
 
-        <div class="pain-grid">
-          <!-- Card de Dor 1 -->
-          <div class="pain-card">
-            <div class="pain-icon-wrapper red-alert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-            </div>
-            <h3 class="pain-card-title">Invisível no Google</h3>
-            <p class="pain-card-desc">Seu concorrente aparece na frente nas buscas locais e orgânicas, capturando os melhores clientes e você nem sabe por quê.</p>
+        <div class="pain-tabs-container">
+          <!-- Abas de Navegação (Menu no Topo) -->
+          <div class="pain-tabs-nav" role="tablist" aria-label="Problemas de crescimento do negócio">
+            <!-- Aba 1 -->
+            <button class="pain-tab-trigger active clickable" role="tab" aria-selected="true" aria-controls="pain-panel-0" id="pain-tab-0" onclick="selectPainTab(0)">
+              <span class="pain-tab-icon" style="--tab-icon-color: #ef4444;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </span>
+              <span class="pain-tab-title">Google & Buscas</span>
+            </button>
+            
+            <!-- Aba 2 -->
+            <button class="pain-tab-trigger clickable" role="tab" aria-selected="false" aria-controls="pain-panel-1" id="pain-tab-1" onclick="selectPainTab(1)">
+              <span class="pain-tab-icon" style="--tab-icon-color: #f5a623;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </span>
+              <span class="pain-tab-title">Site & Performance</span>
+            </button>
+
+            <!-- Aba 3 -->
+            <button class="pain-tab-trigger clickable" role="tab" aria-selected="false" aria-controls="pain-panel-2" id="pain-tab-2" onclick="selectPainTab(2)">
+              <span class="pain-tab-icon" style="--tab-icon-color: #3b82f6;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </span>
+              <span class="pain-tab-title">Sistemas & Processos</span>
+            </button>
+
+            <!-- Aba 4 -->
+            <button class="pain-tab-trigger clickable" role="tab" aria-selected="false" aria-controls="pain-panel-3" id="pain-tab-3" onclick="selectPainTab(3)">
+              <span class="pain-tab-icon" style="--tab-icon-color: #10b981;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </span>
+              <span class="pain-tab-title">Anúncios & ROI</span>
+            </button>
           </div>
 
-          <!-- Card de Dor 2 -->
-          <div class="pain-card">
-            <div class="pain-icon-wrapper red-alert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
-              </svg>
+          <!-- Conteúdo das Abas (Corpo de Baixo) -->
+          <div class="pain-tabs-content">
+            <!-- Painel 1 -->
+            <div class="pain-tab-panel active" id="pain-panel-0" role="tabpanel" aria-labelledby="pain-tab-0">
+              <div class="pain-panel-grid">
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Invisibilidade Orgânica</h4>
+                  <p class="pain-detail-desc">Seu concorrente aparece na frente nas buscas locais e orgânicas, capturando os leads mais qualificados do seu nicho sem pagar por clique.</p>
+                </div>
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Perda de Clientes Prontos</h4>
+                  <p class="pain-detail-desc">Quem busca pelo seu serviço no Google já está na intenção de compra imediata. Se você não aparece ali, você simplesmente não existe para esse público valioso.</p>
+                </div>
+              </div>
             </div>
-            <h3 class="pain-card-title">Site Lento ou Inexistente</h3>
-            <p class="pain-card-desc">Sua empresa não tem um site profissional, ou o site atual é lento, antigo e afasta os potenciais compradores antes mesmo de verem sua oferta.</p>
-          </div>
 
-          <!-- Card de Dor 3 -->
-          <div class="pain-card">
-            <div class="pain-icon-wrapper red-alert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
+            <!-- Painel 2 -->
+            <div class="pain-tab-panel" id="pain-panel-1" role="tabpanel" aria-labelledby="pain-tab-1">
+              <div class="pain-panel-grid">
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Velocidade é Faturamento</h4>
+                  <p class="pain-detail-desc">Sites que demoram mais de 3 segundos para carregar sofrem abandono de até 40% dos visitantes. Seu dinheiro gasto em tráfego é desperdiçado em segundos.</p>
+                </div>
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Design que Desvaloriza</h4>
+                  <p class="pain-detail-desc">Um site antigo, instável ou amador destrói a percepção de autoridade da sua marca, fazendo com que o cliente ache seu preço caro ou duvide da sua entrega.</p>
+                </div>
+              </div>
             </div>
-            <h3 class="pain-card-title">Sistemas e Processos Manuais</h3>
-            <p class="pain-card-desc">Sua equipe perde horas valiosas com planilhas confusas e processos repetitivos porque a empresa não tem uma plataforma ou sistema web integrado.</p>
-          </div>
 
-          <!-- Card de Dor 4 -->
-          <div class="pain-card">
-            <div class="pain-icon-wrapper red-alert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
+            <!-- Painel 3 -->
+            <div class="pain-tab-panel" id="pain-panel-2" role="tabpanel" aria-labelledby="pain-tab-2">
+              <div class="pain-panel-grid">
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Gargalos de Tempo e Erros</h4>
+                  <p class="pain-detail-desc">Sua equipe perde horas valiosas copiando dados e executando tarefas manuais repetitivas, gerando erros e atrasando o fechamento de vendas.</p>
+                </div>
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Desconexão de Informações</h4>
+                  <p class="pain-detail-desc">A ausência de um sistema web integrado ou plataforma customizada faz com que as informações fiquem espalhadas, impedindo a escala e o controle real do negócio.</p>
+                </div>
+              </div>
             </div>
-            <h3 class="pain-card-title">Tráfego que não converte</h3>
-            <p class="pain-card-desc">Você gasta dinheiro com anúncios mas os contatos qualificados simplesmente não chegam ou chegam errados.</p>
+
+            <!-- Painel 4 -->
+            <div class="pain-tab-panel" id="pain-panel-3" role="tabpanel" aria-labelledby="pain-tab-3">
+              <div class="pain-panel-grid">
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Cliques Sem Compras</h4>
+                  <p class="pain-detail-desc">Você gasta orçamento em Meta/Google Ads e recebe apenas cliques irrelevantes ou curiosos que ocupam o tempo do seu comercial sem nenhuma conversão real.</p>
+                </div>
+                <div class="pain-detail-box">
+                  <h4 class="pain-detail-title">Público Desqualificado</h4>
+                  <p class="pain-detail-desc">Sem a segmentação correta e uma oferta irresistível, seus anúncios chegam para pessoas sem perfil de compra, gerando leads caros e improdutivos.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="pain-footer">
-          <p class="pain-bridge">Não é azar, é falta de estratégia.</p>
-          <a href="#contato" class="btn btn-sweep clickable">
-            Quero mudar isso
-            <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-        </div>
+        <p class="pain-bridge-sub">Não é azar, é falta de estratégia.</p>
       </div>
     </section>
 

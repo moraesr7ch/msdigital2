@@ -693,6 +693,32 @@ function initHeaderScroll() {
   });
 }
 
+/**
+ * 09. Gerenciamento do Pain Tabs (Abas Interativas de Dor)
+ */
+function selectPainTab(index) {
+  const triggers = document.querySelectorAll('.pain-tab-trigger');
+  const panels = document.querySelectorAll('.pain-tab-panel');
+
+  triggers.forEach((trigger, i) => {
+    if (i === index) {
+      trigger.classList.add('active');
+      trigger.setAttribute('aria-selected', 'true');
+    } else {
+      trigger.classList.remove('active');
+      trigger.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  panels.forEach((panel, i) => {
+    if (i === index) {
+      panel.classList.add('active');
+    } else {
+      panel.classList.remove('active');
+    }
+  });
+}
+
 
 // Exportações para fins de Teste Node.js (TDD de Segurança)
 if (typeof module !== 'undefined' && module.exports) {
