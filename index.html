@@ -844,14 +844,36 @@
     <!-- 10 Quem somos — Equipe e história -->
     <section class="about-section">
       <div class="section-container about-container">
-        <div class="about-visual" aria-hidden="true">
-          <!-- Representação visual de código/design system premium da agência -->
-          <div class="about-visual-canvas">
-            <div class="visual-circle"></div>
-            <div class="visual-rect"></div>
-            <div class="visual-line-1"></div>
-            <div class="visual-line-2"></div>
-            <div class="visual-badge">MS Digital</div>
+        <div class="about-comparison">
+          <!-- Card de Antes (Atrás/Recuado) -->
+          <div class="comparison-card card-before">
+            <div class="card-badge badge-before">
+              <span class="status-dot-before"></span>
+              Antes
+            </div>
+            <div class="card-image-wrapper">
+              <img src="assets/images/iphocella.webp" alt="Projeto Antes" class="comparison-img" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Card de Depois (Frente/Sobreposto) -->
+          <div class="comparison-card card-after">
+            <div class="card-badge badge-after">
+              <span class="status-dot-after"></span>
+              Depois
+            </div>
+            <div class="card-image-wrapper">
+              <img src="assets/images/iphocelld.webp" alt="Projeto Depois (Exemplo)" class="comparison-img" loading="lazy">
+            </div>
+            <!-- Link de Preview interativo para o site -->
+            <a href="https://iphocell.netlify.app/" target="_blank" class="preview-btn clickable" aria-label="Visualizar site ao vivo">
+              <span>Ver Site</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
           </div>
         </div>
 
