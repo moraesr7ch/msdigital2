@@ -2260,10 +2260,11 @@ section {
 
 .value-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Alinhado ao topo para blocos multilinha */
   gap: 1rem;
   font-size: 1rem;
   color: var(--zinc-800);
+  line-height: 1.65;
 }
 
 .value-icon {
@@ -2276,7 +2277,9 @@ section {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 0.75rem;
+  font-size: 0.85rem; /* Ajustado para a seta → ficar com boa leitura */
+  flex-shrink: 0; /* Impede encolhimento no mobile */
+  margin-top: 0.15rem; /* Respiro para alinhar ao topo do texto */
 }
 
 /* ==========================================================================
