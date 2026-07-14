@@ -2166,74 +2166,164 @@ section {
   align-items: center;
 }
 
-.about-visual-canvas {
-  background-color: var(--zinc-50);
-  border: 1px solid var(--zinc-200);
-  border-radius: 24px;
-  height: 350px;
+.about-comparison {
   position: relative;
+  width: 100%;
+  height: 440px; /* Altura ideal de palco para os cards */
+}
+
+.comparison-card {
+  position: absolute;
+  width: 78%; /* Aumentado de 72% para 78% */
+  aspect-ratio: 4 / 3;
+  background-color: white;
+  border: 1px solid rgba(228, 228, 231, 0.6);
+  border-radius: 20px; /* Cantos arredondados de alta fidelidade */
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  display: flex;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); /* Sombra suave para o card */
+  transition: all var(--transition-normal);
+}
+
+.card-image-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: var(--zinc-50);
+}
+
+.comparison-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card Antes - Posicionado atrás */
+.card-before {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  filter: grayscale(35%) opacity(0.85); /* Efeito cinza e desbotado sutil */
+}
+
+/* Card Depois - Posicionado na frente */
+.card-after {
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15); /* Sombra encorpada para destacar à frente */
+}
+
+/* Etiquetas dos Cards (Design Glassmorphism Moderno) */
+.card-badge {
+  position: absolute;
+  top: 16px; /* Posicionado dentro do card de imagem no canto superior esquerdo */
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: 99px; /* Estilo pílula */
+  font-family: var(--font-title);
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  z-index: 10;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.45rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* Ilustrações abstratas premium em CSS */
-.visual-circle {
-  position: absolute;
-  width: 150px;
-  height: 150px;
+.badge-before {
+  background-color: rgba(239, 68, 68, 0.09); /* Vermelho translúcido e elegante */
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #DC2626;
+}
+
+.badge-after {
+  background-color: rgba(16, 185, 129, 0.09); /* Verde translúcido e elegante */
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #059669;
+}
+
+/* Status Dots nos Badges */
+.status-dot-before {
+  width: 6px;
+  height: 6px;
+  background-color: #EF4444;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-glow));
-  top: 15%;
-  left: 15%;
-  opacity: 0.85;
+  display: inline-block;
 }
 
-.visual-rect {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-glow));
-  bottom: 20%;
-  right: 20%;
-  transform: rotate(15deg);
-  opacity: 0.85;
+.status-dot-after {
+  width: 6px;
+  height: 6px;
+  background-color: #10B981;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-dot 2s infinite;
 }
 
-.visual-line-1 {
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background-color: var(--zinc-200);
-  top: 50%;
-  transform: rotate(-30deg);
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
-.visual-line-2 {
+/* Botão de Preview flutuante */
+.preview-btn {
   position: absolute;
-  width: 100%;
-  height: 2px;
-  background-color: var(--zinc-200);
-  top: 30%;
-  transform: rotate(20deg);
-}
-
-.visual-badge {
-  position: absolute;
+  bottom: 12px;
+  right: 12px;
   background-color: white;
   border: 1px solid var(--zinc-200);
+  padding: 6px 14px;
+  border-radius: 99px;
   font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--zinc-800);
-  padding: 0.75rem 1.5rem;
-  border-radius: 10px;
-  box-shadow: var(--shadow-md);
-  bottom: 10%;
-  left: 10%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  /* Animação infinita de flutuação suave para chamar atenção ao clique */
+  animation: preview-float 2.5s ease-in-out infinite;
+}
+
+.preview-btn:hover {
+  background-color: var(--zinc-900);
+  color: white;
+  border-color: var(--zinc-900);
+  animation-play-state: paused;
+  transform: translateY(-2px) scale(1.04);
+}
+
+@keyframes preview-float {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .about-content {
@@ -2257,10 +2347,11 @@ section {
 
 .value-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Alinhado ao topo para blocos multilinha */
   gap: 1rem;
   font-size: 1rem;
   color: var(--zinc-800);
+  line-height: 1.65;
 }
 
 .value-icon {
@@ -2273,7 +2364,9 @@ section {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 0.75rem;
+  font-size: 0.85rem; /* Ajustado para a seta → ficar com boa leitura */
+  flex-shrink: 0; /* Impede encolhimento no mobile */
+  margin-top: 0.15rem; /* Respiro para alinhar ao topo do texto */
 }
 
 /* ==========================================================================
@@ -2808,5 +2901,12 @@ section {
   .carousel-control {
     width: 2.75rem;
     height: 2.75rem;
+  }
+
+  /* Responsividade da Comparação Antes/Depois */
+  .about-comparison {
+    height: 280px;
+    max-width: 440px;
+    margin: 0 auto 1.5rem auto;
   }
 }

@@ -300,7 +300,7 @@
       <div class="section-container">
         <div class="section-header">
           <span class="section-eyebrow">Você se reconhece nestas situações?</span>
-          <h2 class="section-title">Enquanto você lê isso, um cliente seu está fechando com o concorrente</h2>
+          <h2 class="section-title">Seu próximo cliente está pesquisando agora. Onde ele vai parar?</h2>
         </div>
 
         <div class="pain-tabs-container">
@@ -844,40 +844,71 @@
     <!-- 10 Quem somos — Equipe e história -->
     <section class="about-section">
       <div class="section-container about-container">
-        <div class="about-visual" aria-hidden="true">
-          <!-- Representação visual de código/design system premium da agência -->
-          <div class="about-visual-canvas">
-            <div class="visual-circle"></div>
-            <div class="visual-rect"></div>
-            <div class="visual-line-1"></div>
-            <div class="visual-line-2"></div>
-            <div class="visual-badge">MS Digital</div>
+        <div class="about-comparison">
+          <!-- Card de Antes (Atrás/Recuado) -->
+          <div class="comparison-card card-before">
+            <div class="card-badge badge-before">
+              <span class="status-dot-before"></span>
+              Antes
+            </div>
+            <div class="card-image-wrapper">
+              <img src="assets/images/iphocella.webp" alt="Projeto Antes" class="comparison-img" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Card de Depois (Frente/Sobreposto) -->
+          <div class="comparison-card card-after">
+            <div class="card-badge badge-after">
+              <span class="status-dot-after"></span>
+              Depois
+            </div>
+            <div class="card-image-wrapper">
+              <img src="assets/images/iphocelld.webp" alt="Projeto Depois" class="comparison-img" loading="lazy">
+            </div>
+            <!-- Link de Preview interativo para o site -->
+            <a href="https://iphocell.netlify.app/" target="_blank" class="preview-btn clickable" aria-label="Visualizar site ao vivo">
+              <span>Ver Site</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
           </div>
         </div>
 
         <div class="about-content">
           <span class="section-eyebrow">Quem é a MS Digital?</span>
-          <h2 class="section-title">Pessoas focadas em impulsionar o faturamento de outras pessoas</h2>
-          <p class="about-text">
-            Fundada sob o princípio de que o sucesso digital deve ser previsível e mensurável, a MS Digital nasceu para sanar a maior dor dos empresários modernos: a falta de entrega e o desperdício de verbas com agências de vaidade.
+          <h2 class="section-title">Nascemos de uma frustração.</h2>
+          <p class="about-subtitle" style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 600; color: var(--zinc-800); margin: 0.75rem 0 1.5rem 0; line-height: 1.4;">
+            Uma agência cansada de ver bons negócios pagando caro por resultado ruim.
           </p>
           <p class="about-text">
-            Não somos apenas fornecedores. Nos tornamos parceiros de crescimento dos nossos clientes, projetando e programando cada site, campanha ou web app com a mesma dedicação técnica como se fosse o nosso próprio projeto.
+            Vimos de perto donos de negócio com produto excelente pagando caro por agência que entregava relatório bonito e resultado ruim. E o pior: sem entender por quê.
+          </p>
+          <p class="about-text">
+            A MS Digital nasceu para ser o contrário disso. Sem pacote pronto. Sem promessa de resultado em 30 dias. Só trabalho honesto e uma obsessão com o que realmente move o ponteiro do seu negócio.
           </p>
 
           <!-- Valores da agência -->
           <div class="about-values">
             <div class="value-item">
-              <span class="value-icon">✓</span>
-              <strong>Método Científico</strong>
+              <span class="value-icon">→</span>
+              <div class="value-text">
+                <strong>Método</strong> — Cada estratégia é construída para o seu negócio. Não para o cliente anterior.
+              </div>
             </div>
             <div class="value-item">
-              <span class="value-icon">✓</span>
-              <strong>Transparência Extrema</strong>
+              <span class="value-icon">→</span>
+              <div class="value-text">
+                <strong>Transparência</strong> — Você vai saber o que está sendo feito, quanto custa e o que está gerando. Sempre.
+              </div>
             </div>
             <div class="value-item">
-              <span class="value-icon">✓</span>
-              <strong>Resultados Financeiros Reais</strong>
+              <span class="value-icon">→</span>
+              <div class="value-text">
+                <strong>Resultado</strong> — O objetivo não é te impressionar com o trabalho. É te fazer vender mais.
+              </div>
             </div>
           </div>
         </div>
