@@ -2389,11 +2389,7 @@ section {
   grid-template-columns: 1fr 1fr; /* Duas colunas simétricas */
   gap: 0 5rem; /* Respiro horizontal generoso entre colunas */
   margin-top: 3rem;
-}
-
-.faq-col {
-  display: flex;
-  flex-direction: column;
+  align-items: stretch; /* Estica elementos na mesma linha de grid para altura idêntica */
 }
 
 .faq-item {
@@ -2403,10 +2399,15 @@ section {
   border-radius: 0;
   overflow: visible;
   transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%; /* Garante altura simétrica na mesma linha de grid */
 }
 
-.faq-item:last-child {
-  border-bottom: 1px solid var(--zinc-200); /* Linha de encerramento da coluna */
+/* As duas últimas perguntas na base do grid ganham borda inferior de encerramento */
+.faq-item:nth-last-child(-n+2) {
+  border-bottom: 1px solid var(--zinc-200);
 }
 
 .faq-item[open] {
@@ -2932,7 +2933,11 @@ section {
     gap: 0;
   }
 
-  .faq-col:first-child .faq-item:last-child {
-    border-bottom: none; /* Evita linhas divisórias duplicadas no fluxo vertical */
+  .faq-item:nth-last-child(2) {
+    border-bottom: none; /* Evita bordas divisórias duplicadas no fluxo vertical */
+  }
+
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--zinc-200); /* Garante fechamento inferior no mobile */
   }
 }
