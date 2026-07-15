@@ -855,8 +855,49 @@ function initGSAPAnimations() {
   }
 }
 
+/**
+ * 11. Inicialização do Lenis Smooth Scroll (Integrado com GSAP ScrollTrigger)
+ */
+function initLenisSmoothScroll() {
+  if (typeof Lenis === 'undefined') return;
+
+  // Inicializa o Lenis
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 1.5,
+    infinite: false,
+  });
+
+  // Integrar com o GSAP ScrollTrigger (se carregado)
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    // Sincronizar o ScrollTrigger com o Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Dizer ao GSAP para usar o requestAnimationFrame do Lenis
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000); // Converte para milissegundos
+    });
+
+    // Desativa suavização de lag padrão do GSAP para sincronia ideal
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    // Fallback simples sem GSAP
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+}
+
 // Inicializar tudo ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
+  initLenisSmoothScroll();
   initGSAPAnimations();
 });
 
