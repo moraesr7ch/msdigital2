@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
@@ -977,6 +978,13 @@
 
         <!-- Formulário de proposta seguro, sanitizado e acessível (CWE-601/AppSec Shield) -->
         <div class="form-card-wrapper">
+          <!-- 
+          ==========================================================================
+          FORMULÁRIO DE PROPOSTA (TEMPORARIAMENTE DESATIVADO - WHATSAPP OFF-LINE)
+          Para reativar o formulário:
+          1. Remova o comentário HTML extra abaixo (desta linha até a tag </form>).
+          2. Remova ou comente a div com classe "instagram-redirect-container".
+          ==========================================================================
           <form class="proposta-form" id="proposta-form" novalidate>
             <div class="form-row">
               <div class="form-group">
@@ -1028,6 +1036,35 @@
             <!-- Caixa de resposta de envio segura e acessível -->
             <div class="form-feedback-box" id="form-feedback" role="status" aria-live="polite"></div>
           </form>
+          -->
+
+          <!-- Redirecionamento temporário para o Instagram (Acessível, interativo e moderno) -->
+          <div class="instagram-redirect-container">
+            <div class="instagram-icon-wrapper" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="url(#insta-gradient)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="instagram-redirect-icon">
+                <defs>
+                  <linearGradient id="insta-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f9ce34" />
+                    <stop offset="50%" stop-color="#ee2a7b" />
+                    <stop offset="100%" stop-color="#6228d7" />
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </div>
+            <h3 class="instagram-title">Solicite sua Proposta via Instagram</h3>
+            <p class="instagram-desc">
+              No momento, nosso atendimento via formulário está temporariamente pausado. Mas você pode receber o seu diagnóstico gratuito nos enviando uma mensagem no direct.
+            </p>
+            <a href="https://www.instagram.com/msdigitall.co" target="_blank" rel="noopener" class="btn btn-primary clickable btn-instagram-direct" aria-label="Enviar mensagem no direct do Instagram da MS Digital">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Fale Conosco no Direct</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
