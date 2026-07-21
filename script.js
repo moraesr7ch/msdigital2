@@ -20,6 +20,7 @@ if (typeof document !== 'undefined') {
     initSpotlightCards();
     initScrollFloatAnimations();
     initCtaSequenceAnimation();
+    initSquigglyText();
   });
 }
 
@@ -1196,34 +1197,68 @@ function initScrollFloatAnimations() {
 }
 
 /**
- * 21. Animação Sequencial da Seção CTA Final (#contato)
- * Sequência: 1º Eyebrow + Título -> 2º Parágrafo -> 3º Botão do CTA
+ * 21. Animação de Scroll Fixado por Etapas na Seção CTA Final (#contato)
+ * Etapa 1: Apenas Título -> Etapa 2: Apenas Parágrafo -> Etapa 3: Apenas Botão CTA
  */
 function initCtaSequenceAnimation() {
   if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
 
-  const ctaWrapper = document.querySelector('.cta-animated-wrapper');
-  if (!ctaWrapper) return;
+  const ctaSection = document.querySelector('.cta-final-section');
+  const ctaStep1 = document.querySelector('.cta-step-1');
+  const ctaStep2 = document.querySelector('.cta-step-2');
+  const ctaStep3 = document.querySelector('.cta-step-3');
+
+  if (!ctaSection || !ctaStep1 || !ctaStep2 || !ctaStep3) return;
 
   if (typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  const items = ctaWrapper.querySelectorAll('.cta-step-item');
-  if (items.length === 0) return;
+  // Define os estados iniciais (Apenas Etapa 1 visível)
+  gsap.set(ctaStep1, { opacity: 1, y: 0, scale: 1 });
+  gsap.set(ctaStep2, { opacity: 0, y: 50, scale: 0.95 });
+  gsap.set(ctaStep3, { opacity: 0, y: 50, scale: 0.95 });
 
-  gsap.from(items, {
+  // Timeline GSAP ScrollTrigger amarrada ao Scroll (Pinned)
+  const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: ctaWrapper,
-      start: 'top 80%',
-      toggleActions: 'play none none none'
-    },
-    opacity: 0,
-    y: 45,
-    duration: 0.9,
-    stagger: 0.35, // 1º Eyebrow + Título -> 2º Parágrafo -> 3º Botão
-    ease: 'power3.out'
+      trigger: ctaSection,
+      start: 'top top',
+      end: '+=200%', // Duração de 200vh de rolagem da tela
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
   });
+
+  // Etapa 1 -> Etapa 2: Título sobe e desaparece, Parágrafo entra no centro
+  tl.to(ctaStep1, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
+    .to(ctaStep2, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5')
+
+  // Etapa 2 -> Etapa 3: Parágrafo sobe e desaparece, Botão CTA entra no centro
+    .to(ctaStep2, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
+    .to(ctaStep3, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5');
+}
+
+/**
+ * 22. Efeito SquigglyText (Texto Ondulado Vibrante via Filtros SVG)
+ */
+function initSquigglyText() {
+  const elements = document.querySelectorAll('.squiggly-text');
+  if (elements.length === 0) return;
+
+  const steps = 5;
+  const stepDuration = 80; // Troca de filtro a cada 80ms para efeito fluido
+  let currentStep = 0;
+
+  setInterval(() => {
+    currentStep = (currentStep + 1) % steps;
+    const filterUrl = `url(#squiggly-${currentStep})`;
+
+    elements.forEach(el => {
+      el.style.filter = filterUrl;
+    });
+  }, stepDuration);
 }
 
 // Inicializar tudo ao carregar a página

@@ -3134,23 +3134,46 @@ html.lenis, html.lenis body {
 }
 
 /* ==========================================================================
-   18 SESSÃO CTA ANIMADA SEQUENCIAL (#contato)
+   18 SESSÃO CTA PINNED SCROLL POR ETAPAS (#contato) + SQUIGGLY TEXT
    ========================================================================== */
-.cta-animated-wrapper {
-  max-width: 880px;
+.cta-final-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-pinned-stage {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 380px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-step-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 4rem 1.5rem;
-  position: relative;
-  z-index: 2;
+  justify-content: center;
+  gap: 1.25rem;
+  pointer-events: auto;
+  will-change: opacity, transform;
 }
 
-.cta-animated-title {
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+.cta-pinned-title {
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
   font-weight: 800;
   line-height: 1.15;
   color: var(--zinc-50);
@@ -3158,20 +3181,32 @@ html.lenis, html.lenis body {
   margin: 0;
 }
 
-.cta-animated-desc {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
+.cta-pinned-desc {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   line-height: 1.6;
   color: var(--zinc-300);
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
-}
-
-.cta-animated-btn-wrapper {
-  margin-top: 1rem;
+  font-weight: 400;
 }
 
 .cta-action-btn {
-  padding: 1.125rem 2.5rem;
-  font-size: 1.1rem;
-  box-shadow: 0 12px 35px -5px rgba(71, 116, 210, 0.45);
+  padding: 1.25rem 2.8rem;
+  font-size: 1.15rem;
+  box-shadow: 0 15px 40px -5px rgba(71, 116, 210, 0.5);
+}
+
+/* Efeito SquigglyText (Texto Ondulado/Rabisco Animado) */
+.squiggly-text {
+  display: inline-block;
+  will-change: filter;
+  filter: url(#squiggly-0);
+}
+
+.squiggly-text.accent-warning {
+  color: var(--secondary-color); /* Laranja Ouro MS Digital */
+}
+
+.squiggly-text.accent-blue {
+  color: var(--primary-color); /* Azul MS Digital */
 }

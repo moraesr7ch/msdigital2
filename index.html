@@ -975,17 +975,29 @@
       </div>
     </section>
 
-    <!-- 12 CTA final — Última chamada (Sessão Animada Sequencial) -->
+    <!-- 12 CTA final — Última chamada (Sessão Pinned Scroll por Etapas + SquigglyText) -->
     <section class="cta-final-section dark-bg" id="contato">
       <div class="cta-glow" aria-hidden="true"></div>
       <div class="section-container cta-final-container">
-        <div class="cta-animated-wrapper">
-          <span class="section-eyebrow accent-color cta-step-item">Decisão Estratégica</span>
-          <h2 class="section-title text-light cta-animated-title cta-step-item">Chega de estar na coluna errada. Vamos acelerar seu negócio?</h2>
-          <p class="cta-animated-desc text-light cta-step-item">
-            Sem formulários extensos ou propostas genéricas. Fale diretamente com nosso time e receba um diagnóstico gratuito do seu negócio em até 24 horas.
-          </p>
-          <div class="cta-animated-btn-wrapper cta-step-item">
+        <div class="cta-pinned-stage">
+          
+          <!-- Etapa 1: Apenas o Título com Efeito SquigglyText -->
+          <div class="cta-step-item cta-step-1">
+            <span class="section-eyebrow accent-color">Decisão Estratégica</span>
+            <h2 class="cta-pinned-title">
+              Chega de estar na coluna <span class="squiggly-text accent-warning">errada</span>. Vamos <span class="squiggly-text accent-blue">acelerar</span>seu negócio ?
+            </h2>
+          </div>
+
+          <!-- Etapa 2: Apenas o Parágrafo -->
+          <div class="cta-step-item cta-step-2">
+            <p class="cta-pinned-desc">
+              Sem formulários extensos ou propostas genéricas. Fale diretamente com nosso time e receba um diagnóstico gratuito do seu negócio em até 24 horas.
+            </p>
+          </div>
+
+          <!-- Etapa 3: Apenas o Botão CTA -->
+          <div class="cta-step-item cta-step-3">
             <a href="https://www.instagram.com/msdigitall.co" target="_blank" rel="noopener" class="btn btn-primary btn-lg btn-sweep clickable cta-action-btn" aria-label="Solicitar diagnóstico gratuito via Instagram">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -993,6 +1005,7 @@
               <span>Quero meu diagnóstico gratuito</span>
             </a>
           </div>
+
         </div>
       </div>
     </section>
@@ -1063,6 +1076,32 @@
       </div>
     </div>
   </footer>
+
+  <!-- Filtros SVG Globais para o Efeito SquigglyText -->
+  <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="squiggly-0">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="0" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+      </filter>
+      <filter id="squiggly-1">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="1" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" />
+      </filter>
+      <filter id="squiggly-2">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="2" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+      </filter>
+      <filter id="squiggly-3">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="3" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" />
+      </filter>
+      <filter id="squiggly-4">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="4" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" />
+      </filter>
+    </defs>
+  </svg>
 
   <!-- GSAP e ScrollTrigger para animações premium -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
