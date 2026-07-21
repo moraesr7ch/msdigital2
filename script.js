@@ -17,6 +17,7 @@ if (typeof document !== 'undefined') {
     initDrawerStack();
     initHeaderScroll();
     initVariableProximity();
+    initSpotlightCards();
   });
 }
 
@@ -1088,6 +1089,25 @@ function initVariableProximity() {
   };
 
   requestAnimationFrame(loop);
+}
+
+/**
+ * 19. Efeito SpotlightCard (Iluminação Dinâmica nos Cards)
+ */
+function initSpotlightCards() {
+  const cards = document.querySelectorAll('.card-spotlight, .pillar-card');
+  if (cards.length === 0) return;
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    }, { passive: true });
+  });
 }
 
 // Inicializar tudo ao carregar a página
