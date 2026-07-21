@@ -16,6 +16,7 @@ if (typeof document !== 'undefined') {
     initScrollReveal();
     initDrawerStack();
     initHeaderScroll();
+    initVariableProximity();
   });
 }
 
@@ -893,6 +894,200 @@ function initLenisSmoothScroll() {
     }
     requestAnimationFrame(raf);
   }
+}
+
+/**
+ * 18. Efeito de Proximidade Variável (VariableProximity) no Título
+ */
+function prepareTextForProximity(element) {
+  const letters = [];
+  
+  function traverse(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.nodeValue;
+      if (text.trim() === '') return;
+      
+      const fragment = document.createDocumentFragment();
+      // 🔒 SEGURANÇA: tokenização segura usando delimitador regex sem injeção de HTML no DOM
+      const tokens = text.split(/(\s+)/);
+      
+      tokens.forEach(token => {
+        if (token.trim() === '') {
+          fragment.appendChild(document.createTextNode(token));
+        } else {
+          const wordSpan = document.createElement('span');
+          wordSpan.className = 'vp-word';
+          wordSpan.style.display = 'inline-block';
+          wordSpan.style.whiteSpace = 'nowrap';
+          
+          token.split('').forEach(char => {
+            const charSpan = document.createElement('span');
+            charSpan.className = 'vp-letter';
+            charSpan.style.display = 'inline-block';
+            charSpan.style.fontVariationSettings = "'wght' 800, 'opsz' 14"; // Valor de variação padrão em Bold (800)
+            charSpan.setAttribute('aria-hidden', 'true'); // 🔒 ACESSIBILIDADE: oculta caracteres individuais de leitores de tela
+            charSpan.textContent = char;
+            
+            wordSpan.appendChild(charSpan);
+            letters.push(charSpan);
+          });
+          fragment.appendChild(wordSpan);
+        }
+      });
+      
+      node.parentNode.replaceChild(fragment, node);
+    } else {
+      // Ignora elementos de marcação e decoração para preservar layout Figma
+      if (
+        node.tagName === 'svg' || 
+        node.classList.contains('selection-handle') || 
+        node.classList.contains('selection-border') ||
+        node.classList.contains('selection-cursor')
+      ) {
+        return;
+      }
+      const children = Array.from(node.childNodes);
+      children.forEach(traverse);
+    }
+  }
+  
+  traverse(element);
+  return letters;
+}
+
+function initVariableProximity() {
+  const headline = document.querySelector('.hero-headline');
+  if (!headline) return;
+
+  // 🔒 ACESSIBILIDADE: extrai texto limpo para leitura por leitores de tela no span oculto
+  const fullText = headline.textContent.trim().replace(/\s+/g, ' ');
+
+  // Definições de eixos e limites de variação (from: wght 800, opsz 14 -> to: wght 1000, opsz 40)
+  const fromFontVariationSettings = "'wght' 800, 'opsz' 14";
+  const toFontVariationSettings = "'wght' 1000, 'opsz' 40";
+  const radius = 120;
+  const falloff = 'exponential';
+
+  const parseSettings = (settingsStr) => {
+    const map = new Map();
+    settingsStr.split(',').forEach(s => {
+      const parts = s.trim().split(/\s+/);
+      if (parts.length === 2) {
+        const name = parts[0].replace(/['"]/g, '');
+        const value = parseFloat(parts[1]);
+        map.set(name, value);
+      }
+    });
+    return map;
+  };
+
+  const fromSettings = parseSettings(fromFontVariationSettings);
+  const toSettings = parseSettings(toFontVariationSettings);
+
+  const parsedSettings = Array.from(fromSettings.entries()).map(([axis, fromValue]) => ({
+    axis,
+    fromValue,
+    toValue: toSettings.has(axis) ? toSettings.get(axis) : fromValue
+  }));
+
+  const letters = prepareTextForProximity(headline);
+  if (letters.length === 0) return;
+
+  headline.classList.add('variable-proximity');
+
+  // 🔒 ACESSIBILIDADE: insere span invisível legível por leitores de tela
+  const srOnlySpan = document.createElement('span');
+  srOnlySpan.className = 'sr-only';
+  srOnlySpan.textContent = fullText;
+  headline.appendChild(srOnlySpan);
+
+  let mouseX = null;
+  let mouseY = null;
+  let active = false;
+
+  const updatePosition = (clientX, clientY) => {
+    mouseX = clientX;
+    mouseY = clientY;
+    active = true;
+  };
+
+  const handleMouseMove = (e) => {
+    updatePosition(e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches && e.touches[0]) {
+      updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    active = false;
+  };
+
+  window.addEventListener('mousemove', handleMouseMove, { passive: true });
+  window.addEventListener('touchmove', handleTouchMove, { passive: true });
+  document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+
+  const calculateDistance = (x1, y1, x2, y2) => Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
+  const calculateFalloff = (distance) => {
+    const norm = Math.min(Math.max(1 - distance / radius, 0), 1);
+    if (falloff === 'exponential') {
+      return norm ** 2;
+    } else if (falloff === 'gaussian') {
+      return Math.exp(-((distance / (radius / 2)) ** 2) / 2);
+    } else {
+      return norm; // linear
+    }
+  };
+
+  let lastX = null;
+  let lastY = null;
+
+  const loop = () => {
+    requestAnimationFrame(loop);
+
+    if (!active) {
+      if (lastX === null && lastY === null) return;
+      letters.forEach(letter => {
+        letter.style.fontVariationSettings = fromFontVariationSettings;
+      });
+      lastX = null;
+      lastY = null;
+      return;
+    }
+
+    if (lastX === mouseX && lastY === mouseY) return;
+    lastX = mouseX;
+    lastY = mouseY;
+
+    letters.forEach(letter => {
+      const rect = letter.getBoundingClientRect();
+      // 🔒 PERFORMANCE: usa posições absolutas na viewport para evitar recálculo de BoundingRect do container
+      const letterCenterX = rect.left + rect.width / 2;
+      const letterCenterY = rect.top + rect.height / 2;
+
+      const distance = calculateDistance(mouseX, mouseY, letterCenterX, letterCenterY);
+
+      if (distance >= radius) {
+        letter.style.fontVariationSettings = fromFontVariationSettings;
+        return;
+      }
+
+      const falloffValue = calculateFalloff(distance);
+      const newSettings = parsedSettings
+        .map(({ axis, fromValue, toValue }) => {
+          const interpolatedValue = fromValue + (toValue - fromValue) * falloffValue;
+          return `'${axis}' ${interpolatedValue}`;
+        })
+        .join(', ');
+
+      letter.style.fontVariationSettings = newSettings;
+    });
+  };
+
+  requestAnimationFrame(loop);
 }
 
 // Inicializar tudo ao carregar a página
