@@ -2324,35 +2324,76 @@ section {
   z-index: 15;
 }
 
-/* Botão de Preview flutuante */
-.preview-btn {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 25;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 6px 14px;
-  border-radius: 99px;
-  font-family: var(--font-title);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--zinc-900);
+/* Container de Ação abaixo do Card de Comparação */
+.about-compare-action {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  text-decoration: none;
-  transition: all var(--transition-fast);
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-.preview-btn:hover {
+/* Botão Personalizado HoverBorderGradient (Aceternity UI Port) */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.hover-border-gradient-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 2rem;
+  border-radius: 99px;
   background-color: var(--zinc-950);
-  color: white;
-  border-color: var(--zinc-700);
-  transform: translateY(-2px) scale(1.05);
+  color: var(--zinc-50);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.hover-border-gradient-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 99px;
+  padding: 2px;
+  background: conic-gradient(from var(--border-angle, 0deg), transparent 50%, rgba(71, 116, 210, 0.9), #ffffff, rgba(71, 116, 210, 0.9));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.75;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  animation: rotate-border 4s linear infinite;
+  pointer-events: none;
+}
+
+.hover-border-gradient-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 15px 35px -5px rgba(71, 116, 210, 0.4);
+  color: #ffffff;
+}
+
+.hover-border-gradient-btn:hover::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(71, 116, 210, 0.85));
+}
+
+@keyframes rotate-border {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
 }
 
 /* Linha divisória e Alça de ajuste */
