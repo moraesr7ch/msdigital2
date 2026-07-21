@@ -3129,3 +3129,97 @@ html.lenis, html.lenis body {
   display: inline-block;
   will-change: opacity, transform;
 }
+
+/* ==========================================================================
+   18 SESSÃO CTA PINNED SCROLL POR ETAPAS (#contato) + SQUIGGLY TEXT
+   ========================================================================== */
+.cta-final-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-side-rays-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cta-side-rays-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cta-pinned-stage {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-step-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  pointer-events: auto;
+  will-change: opacity, transform;
+}
+
+.cta-pinned-title {
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--zinc-50);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.cta-pinned-desc {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  line-height: 1.6;
+  color: var(--zinc-300);
+  max-width: 720px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.cta-action-btn {
+  padding: 1.25rem 2.8rem;
+  font-size: 1.15rem;
+  box-shadow: 0 15px 40px -5px rgba(71, 116, 210, 0.5);
+}
+
+/* Efeito SquigglyText (Texto Ondulado/Rabisco Animado) */
+.squiggly-text {
+  display: inline-block;
+  will-change: filter;
+  filter: url(#squiggly-0);
+}
+
+.squiggly-text.accent-warning {
+  color: var(--secondary-color); /* Laranja Ouro MS Digital */
+}
+
+.squiggly-text.accent-blue {
+  color: var(--primary-color); /* Azul MS Digital */
+}
