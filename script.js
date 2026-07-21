@@ -18,6 +18,7 @@ if (typeof document !== 'undefined') {
     initHeaderScroll();
     initVariableProximity();
     initSpotlightCards();
+    initScrollFloatAnimations();
   });
 }
 
@@ -1107,6 +1108,89 @@ function initSpotlightCards() {
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
     }, { passive: true });
+  });
+}
+
+/**
+ * 20. Efeito ScrollFloat (Animação de Texto Flutuante com GSAP ScrollTrigger)
+ */
+function initScrollFloatAnimations() {
+  if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
+
+  const elements = document.querySelectorAll('.scroll-float');
+  if (elements.length === 0) return;
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  elements.forEach(element => {
+    if (element.classList.contains('scroll-float-initialized')) return;
+    element.classList.add('scroll-float-initialized');
+
+    const fullText = element.textContent.trim().replace(/\s+/g, ' ');
+
+    // 🔒 ACESSIBILIDADE & SEO: cria span invisível legível por leitores de tela
+    const srOnlySpan = document.createElement('span');
+    srOnlySpan.className = 'sr-only';
+    srOnlySpan.textContent = fullText;
+
+    const fragment = document.createDocumentFragment();
+    const tokens = fullText.split(/(\s+)/);
+    const charElements = [];
+
+    tokens.forEach(token => {
+      if (token.trim() === '') {
+        fragment.appendChild(document.createTextNode(token));
+      } else {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'scroll-float-word';
+
+        token.split('').forEach(char => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.setAttribute('aria-hidden', 'true');
+          charSpan.textContent = char;
+
+          wordSpan.appendChild(charSpan);
+          charElements.push(charSpan);
+        });
+        fragment.appendChild(wordSpan);
+      }
+    });
+
+    element.innerHTML = '';
+    element.appendChild(fragment);
+    element.appendChild(srOnlySpan);
+
+    // Animação GSAP ScrollFloat
+    gsap.fromTo(
+      charElements,
+      {
+        willChange: 'opacity, transform',
+        opacity: 0,
+        yPercent: 120,
+        scaleY: 2.3,
+        scaleX: 0.7,
+        transformOrigin: '50% 0%'
+      },
+      {
+        duration: 50,
+        ease: 'back.inOut(2)',
+        opacity: 1,
+        yPercent: 0,
+        scaleY: 1,
+        scaleX: 1,
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: element,
+          scroller: window,
+          start: 'top bottom-=5%',
+          end: 'bottom center+=20%',
+          scrub: 1
+        }
+      }
+    );
   });
 }
 
