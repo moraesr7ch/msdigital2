@@ -21,6 +21,7 @@ if (typeof document !== 'undefined') {
     initScrollFloatAnimations();
     initCtaSequenceAnimation();
     initSquigglyText();
+    initSideRays();
   });
 }
 
@@ -1259,6 +1260,228 @@ function initSquigglyText() {
       el.style.filter = filterUrl;
     });
   }, stepDuration);
+}
+
+/**
+ * 23. Efeito SideRays (Feixes de Luz WebGL no Fundo da Seção CTA Final EXCLUSIVAMENTE)
+ */
+function initSideRays() {
+  const container = document.getElementById('cta-side-rays');
+  if (!container) return;
+
+  const config = {
+    speed: 2.0,
+    rayColor1: '#F5A623', // Laranja Ouro MS Digital
+    rayColor2: '#4774D2', // Azul MS Digital
+    intensity: 2.0,
+    spread: 2.0,
+    origin: 'top-right',
+    tilt: 0,
+    saturation: 1.5,
+    blend: 0.75,
+    falloff: 1.6,
+    opacity: 0.85
+  };
+
+  const hexToRgb = (hex) => {
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return m ? [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255] : [1, 1, 1];
+  };
+
+  const originToFlip = (origin) => {
+    switch (origin) {
+      case 'top-left': return [1, 0];
+      case 'bottom-right': return [0, 1];
+      case 'bottom-left': return [1, 1];
+      default: return [0, 0]; // top-right
+    }
+  };
+
+  const canvas = document.createElement('canvas');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  container.appendChild(canvas);
+
+  const vertShaderSource = `
+    attribute vec2 position;
+    void main() {
+      gl_Position = vec4(position, 0.0, 1.0);
+    }
+  `;
+
+  const fragShaderSource = `
+    precision highp float;
+
+    uniform float iTime;
+    uniform vec2 iResolution;
+    uniform float iSpeed;
+    uniform vec3 iRayColor1;
+    uniform vec3 iRayColor2;
+    uniform float iIntensity;
+    uniform float iSpread;
+    uniform float iFlipX;
+    uniform float iFlipY;
+    uniform float iTilt;
+    uniform float iSaturation;
+    uniform float iBlend;
+    uniform float iFalloff;
+    uniform float iOpacity;
+
+    float rayStrength(vec2 raySource, vec2 rayRefDirection, vec2 coord, float seedA, float seedB, float speed) {
+      vec2 sourceToCoord = coord - raySource;
+      float cosAngle = dot(normalize(sourceToCoord), rayRefDirection);
+      return clamp(
+        (0.45 + 0.15 * sin(cosAngle * seedA + iTime * speed)) +
+        (0.3 + 0.2 * cos(-cosAngle * seedB + iTime * speed)),
+        0.0, 1.0) *
+        clamp((iResolution.x - length(sourceToCoord)) / iResolution.x, 0.5, 1.0);
+    }
+
+    void main() {
+      vec2 fragCoord = gl_FragCoord.xy;
+      if (iFlipX > 0.5) fragCoord.x = iResolution.x - fragCoord.x;
+      if (iFlipY > 0.5) fragCoord.y = iResolution.y - fragCoord.y;
+
+      vec2 coord = vec2(fragCoord.x, iResolution.y - fragCoord.y);
+      vec2 rayPos = vec2(iResolution.x * 1.1, -0.5 * iResolution.y);
+
+      float tiltRad = iTilt * 3.14159265 / 180.0;
+      float cs = cos(tiltRad);
+      float sn = sin(tiltRad);
+      vec2 rel = coord - rayPos;
+      vec2 tiltedCoord = vec2(rel.x * cs - rel.y * sn, rel.x * sn + rel.y * cs) + rayPos;
+
+      float halfSpread = iSpread * 0.275;
+      vec2 rayRefDir1 = normalize(vec2(cos(0.785398 + halfSpread), sin(0.785398 + halfSpread)));
+      vec2 rayRefDir2 = normalize(vec2(cos(0.785398 - halfSpread), sin(0.785398 - halfSpread)));
+
+      vec4 rays1 = vec4(iRayColor1, 1.0) * rayStrength(rayPos, rayRefDir1, tiltedCoord, 36.2214, 21.11349, iSpeed);
+      vec4 rays2 = vec4(iRayColor2, 1.0) * rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.3991, 18.0234, iSpeed * 0.2);
+
+      vec4 color = rays1 * (1.0 - iBlend) * 0.9 + rays2 * iBlend * 0.9;
+
+      float distanceToLight = length(fragCoord.xy - vec2(rayPos.x, iResolution.y - rayPos.y)) / iResolution.y;
+      float brightness = iIntensity * 0.4 / pow(max(distanceToLight, 0.001), iFalloff);
+      color.rgb *= brightness;
+
+      float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+      color.rgb = mix(vec3(gray), color.rgb, iSaturation);
+
+      color.a = max(color.r, max(color.g, color.b)) * iOpacity;
+      gl_FragColor = color;
+    }
+  `;
+
+  const createShader = (gl, type, source) => {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  };
+
+  const vertShader = createShader(gl, gl.VERTEX_SHADER, vertShaderSource);
+  const fragShader = createShader(gl, gl.FRAGMENT_SHADER, fragShaderSource);
+  if (!vertShader || !fragShader) return;
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vertShader);
+  gl.attachShader(program, fragShader);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+
+  gl.useProgram(program);
+
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1, -1,
+     1, -1,
+    -1,  1,
+    -1,  1,
+     1, -1,
+     1,  1,
+  ]), gl.STATIC_DRAW);
+
+  const positionLocation = gl.getAttribLocation(program, 'position');
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(program, 'iTime');
+  const uResolution = gl.getUniformLocation(program, 'iResolution');
+  const uSpeed = gl.getUniformLocation(program, 'iSpeed');
+  const uRayColor1 = gl.getUniformLocation(program, 'iRayColor1');
+  const uRayColor2 = gl.getUniformLocation(program, 'iRayColor2');
+  const uIntensity = gl.getUniformLocation(program, 'iIntensity');
+  const uSpread = gl.getUniformLocation(program, 'iSpread');
+  const uFlipX = gl.getUniformLocation(program, 'iFlipX');
+  const uFlipY = gl.getUniformLocation(program, 'iFlipY');
+  const uTilt = gl.getUniformLocation(program, 'iTilt');
+  const uSaturation = gl.getUniformLocation(program, 'iSaturation');
+  const uBlend = gl.getUniformLocation(program, 'iBlend');
+  const uFalloff = gl.getUniformLocation(program, 'iFalloff');
+  const uOpacity = gl.getUniformLocation(program, 'iOpacity');
+
+  const [flipX, flipY] = originToFlip(config.origin);
+
+  gl.uniform1f(uSpeed, config.speed);
+  gl.uniform3fv(uRayColor1, hexToRgb(config.rayColor1));
+  gl.uniform3fv(uRayColor2, hexToRgb(config.rayColor2));
+  gl.uniform1f(uIntensity, config.intensity);
+  gl.uniform1f(uSpread, config.spread);
+  gl.uniform1f(uFlipX, flipX);
+  gl.uniform1f(uFlipY, flipY);
+  gl.uniform1f(uTilt, config.tilt);
+  gl.uniform1f(uSaturation, config.saturation);
+  gl.uniform1f(uBlend, config.blend);
+  gl.uniform1f(uFalloff, config.falloff);
+  gl.uniform1f(uOpacity, config.opacity);
+
+  let animFrameId = null;
+  let isVisible = false;
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uResolution, canvas.width, canvas.height);
+    }
+  };
+
+  const render = (time) => {
+    if (!isVisible) return;
+    resize();
+    gl.uniform1f(uTime, time * 0.001);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    animFrameId = requestAnimationFrame(render);
+  };
+
+  window.addEventListener('resize', resize);
+
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[0];
+    isVisible = entry.isIntersecting;
+    if (isVisible) {
+      if (!animFrameId) {
+        animFrameId = requestAnimationFrame(render);
+      }
+    } else {
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+    }
+  }, { threshold: 0.05 });
+
+  observer.observe(container);
 }
 
 // Inicializar tudo ao carregar a página

@@ -3145,6 +3145,22 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
+.cta-side-rays-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cta-side-rays-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .cta-pinned-stage {
   position: relative;
   width: 100%;
