@@ -2229,141 +2229,173 @@ section {
   align-items: center;
 }
 
+/* ==========================================================================
+   27 CARD DE COMPARAÇÃO ANTES VS DEPOIS (COMPARE SLIDER)
+   ========================================================================== */
 .about-comparison {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.compare-slider-card {
   position: relative;
   width: 100%;
-  height: 440px; /* Altura ideal de palco para os cards */
-}
-
-.comparison-card {
-  position: absolute;
-  width: 78%; /* Aumentado de 72% para 78% */
-  aspect-ratio: 4 / 3;
-  background-color: white;
-  border: 1px solid rgba(228, 228, 231, 0.6);
-  border-radius: 20px; /* Cantos arredondados de alta fidelidade */
+  aspect-ratio: 16 / 10;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); /* Sombra suave para o card */
-  transition: all var(--transition-normal);
+  background-color: var(--zinc-950);
+  border: 1px solid var(--zinc-800);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+  user-select: none;
+  cursor: col-resize;
+  touch-action: pan-y;
 }
 
-.card-image-wrapper {
+.compare-layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--zinc-50);
+  overflow: hidden;
 }
 
-.comparison-img {
-  width: 450px;
+.compare-img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top left;
   display: block;
+  user-select: none;
+  pointer-events: none;
 }
 
-/* Card Antes - Posicionado atrás */
-.card-before {
-  top: 0;
-  left: 0;
-  z-index: 1;
-  filter: grayscale(35%) opacity(0.85); /* Efeito cinza e desbotado sutil */
+.layer-after {
+  z-index: 10;
 }
 
-/* Card Depois - Posicionado na frente */
-.card-after {
-  bottom: 0;
-  right: 0;
-  z-index: 2;
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15); /* Sombra encorpada para destacar à frente */
+.layer-before {
+  z-index: 20;
+  width: 50%;
+  will-change: width;
+  border-right: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Etiquetas dos Cards (Design Glassmorphism Moderno) */
+.layer-before .compare-img {
+  width: 100%;
+  max-width: none;
+}
+
+/* Badges de Identificação Clara: ANTES vs DEPOIS */
 .card-badge {
   position: absolute;
-  top: 16px; /* Posicionado dentro do card de imagem no canto superior esquerdo */
-  left: 16px;
-  padding: 6px 14px;
-  border-radius: 99px; /* Estilo pílula */
+  top: 1.25rem;
+  padding: 8px 16px;
+  border-radius: 99px;
   font-family: var(--font-title);
-  font-size: 0.725rem;
+  font-size: 0.775rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  gap: 0.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .badge-before {
-  background-color: rgba(239, 68, 68, 0.09); /* Vermelho translúcido e elegante */
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  color: #DC2626;
+  left: 1.25rem;
+  z-index: 30;
+  background-color: rgba(220, 38, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
 }
 
 .badge-after {
-  background-color: rgba(16, 185, 129, 0.09); /* Verde translúcido e elegante */
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: #059669;
-}
-
-/* Status Dots nos Badges */
-.status-dot-before {
-  width: 6px;
-  height: 6px;
-  background-color: #EF4444;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.status-dot-after {
-  width: 6px;
-  height: 6px;
-  background-color: #10B981;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 15;
 }
 
 /* Botão de Preview flutuante */
 .preview-btn {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background-color: white;
-  border: 1px solid var(--zinc-200);
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 25;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 6px 14px;
   border-radius: 99px;
   font-family: var(--font-title);
   font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--zinc-800);
+  font-weight: 700;
+  color: var(--zinc-900);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 10;
+  gap: 0.45rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   text-decoration: none;
   transition: all var(--transition-fast);
-  /* Animação infinita de flutuação suave para chamar atenção ao clique */
-  animation: preview-float 2.5s ease-in-out infinite;
+}
+
+.preview-btn:hover {
+  background-color: var(--zinc-950);
+  color: white;
+  border-color: var(--zinc-700);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Linha divisória e Alça de ajuste */
+.compare-handlebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: left;
+}
+
+.compare-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.95), rgba(71, 116, 210, 0.95), transparent);
+  box-shadow: 0 0 12px rgba(71, 116, 210, 0.85);
+}
+
+.compare-handle-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--zinc-950);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(71, 116, 210, 0.6);
+  cursor: col-resize;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.compare-slider-card:hover .compare-handle-button {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(71, 116, 210, 0.8);
 }
 
 .preview-btn:hover {

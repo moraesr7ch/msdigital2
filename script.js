@@ -23,6 +23,7 @@ if (typeof document !== 'undefined') {
     initSquigglyText();
     initSideRays();
     initClickSpark();
+    initCompareSlider();
   });
 }
 
@@ -1576,6 +1577,91 @@ function initClickSpark() {
       animId = requestAnimationFrame(draw);
     }
   }, { passive: true });
+}
+
+/**
+ * 26. Efeito Compare Slider (Card de Comparação Interativo Antes vs Depois)
+ */
+function initCompareSlider() {
+  const container = document.getElementById('compare-slider');
+  const layerBefore = document.getElementById('compare-layer-before');
+  const handlebar = document.getElementById('compare-handlebar');
+
+  if (!container || !layerBefore || !handlebar) return;
+
+  const imgBefore = layerBefore.querySelector('.compare-img');
+  let autoplayAnimId = null;
+  let isMouseOver = false;
+
+  const updatePosition = (percent) => {
+    const clamped = Math.max(0, Math.min(100, percent));
+    layerBefore.style.width = `${clamped}%`;
+    handlebar.style.left = `${clamped}%`;
+
+    if (imgBefore) {
+      imgBefore.style.width = `${container.clientWidth}px`;
+    }
+  };
+
+  const handleMove = (clientX) => {
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = (x / rect.width) * 100;
+    updatePosition(percent);
+  };
+
+  container.addEventListener('mousemove', (e) => {
+    handleMove(e.clientX);
+  });
+
+  container.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      handleMove(e.touches[0].clientX);
+    }
+  }, { passive: true });
+
+  container.addEventListener('mouseenter', () => {
+    isMouseOver = true;
+    stopAutoplay();
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isMouseOver = false;
+    updatePosition(50);
+  });
+
+  const resizeHandler = () => {
+    if (imgBefore) {
+      imgBefore.style.width = `${container.clientWidth}px`;
+    }
+  };
+
+  window.addEventListener('resize', resizeHandler);
+  resizeHandler();
+
+  let startTime = null;
+  const autoplayDuration = 3500;
+
+  const animateAutoplay = (timestamp) => {
+    if (isMouseOver) return;
+    if (!startTime) startTime = timestamp;
+
+    const elapsed = timestamp - startTime;
+    const progress = (elapsed % (autoplayDuration * 2)) / autoplayDuration;
+    const percent = progress <= 1 ? 35 + progress * 30 : 65 - (progress - 1) * 30;
+
+    updatePosition(percent);
+    autoplayAnimId = requestAnimationFrame(animateAutoplay);
+  };
+
+  function stopAutoplay() {
+    if (autoplayAnimId) {
+      cancelAnimationFrame(autoplayAnimId);
+      autoplayAnimId = null;
+    }
+  }
+
+  autoplayAnimId = requestAnimationFrame(animateAutoplay);
 }
 
 // Inicializar tudo ao carregar a página
