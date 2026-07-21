@@ -852,31 +852,38 @@
     <!-- 10 Quem somos — Equipe e história -->
     <section class="about-section" id="about">
       <div class="section-container about-container">
+        <!-- Card de Comparação Antes e Depois (Interactive Compare Slider Clean) -->
         <div class="about-comparison">
-          <!-- Card de Antes (Atrás/Recuado) -->
-          <div class="comparison-card card-before">
-            <div class="card-badge badge-before">
-              <span class="status-dot-before"></span>
-              Antes
+          <div class="compare-slider-card star-border" id="compare-slider" role="region" aria-label="Comparativo de Transformação Antes e Depois">
+            
+            <!-- Camada Base: DEPOIS (Transformação com MS Digital) -->
+            <div class="compare-layer layer-after">
+              <img src="assets/images/iphocelld.webp" alt="Projeto Transformado pela MS Digital (Depois)" class="compare-img" loading="lazy">
             </div>
-            <div class="card-image-wrapper">
-              <img src="assets/images/iphocella.webp" alt="Projeto Antes" class="comparison-img" loading="lazy">
+
+            <!-- Camada Revelada via Divisória: ANTES (Site Antigo) -->
+            <div class="compare-layer layer-before" id="compare-layer-before">
+              <img src="assets/images/iphocella.webp" alt="Projeto Antigo (Antes)" class="compare-img" loading="lazy">
             </div>
+
+            <!-- Linha Divisória Interativa com Alça / Handlebar -->
+            <div class="compare-handlebar" id="compare-handlebar" aria-hidden="true">
+              <div class="compare-line"></div>
+              <div class="compare-handle-button" title="Arraste para comparar Antes e Depois">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Card de Depois (Frente/Sobreposto) -->
-          <div class="comparison-card card-after">
-            <div class="card-badge badge-after">
-              <span class="status-dot-after"></span>
-              Depois
-            </div>
-            <div class="card-image-wrapper">
-              <img src="assets/images/iphocelld.webp" alt="Projeto Depois" class="comparison-img" loading="lazy">
-            </div>
-            <!-- Link de Preview interativo para o site -->
-            <a href="https://iphocell.netlify.app/" target="_blank" class="preview-btn clickable" aria-label="Visualizar site ao vivo">
-              <span>Ver Site</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Botão Personalizado HoverBorderGradient abaixo do card -->
+          <div class="about-compare-action">
+            <a href="https://iphocell.netlify.app/" target="_blank" rel="noopener" class="hover-border-gradient-btn clickable" aria-label="Visualizar site iPhoCell ao vivo">
+              <span>Ver Site ao Vivo</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                 <polyline points="15 3 21 3 21 9"></polyline>
                 <line x1="10" y1="14" x2="21" y2="3"></line>

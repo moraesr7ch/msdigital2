@@ -22,6 +22,8 @@ if (typeof document !== 'undefined') {
     initCtaSequenceAnimation();
     initSquigglyText();
     initSideRays();
+    initClickSpark();
+    initCompareSlider();
   });
 }
 
@@ -1482,6 +1484,184 @@ function initSideRays() {
   }, { threshold: 0.05 });
 
   observer.observe(container);
+}
+
+/**
+ * 24. Efeito ClickSpark Global (Faíscas Dinâmicas de Alta Performance ao Clicar no Site)
+ */
+function initClickSpark() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'click-spark-canvas';
+  canvas.style.cssText = 'position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; display: block;';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let sparks = [];
+  let animId = null;
+
+  const sparkSize = 14;   // Comprimento inicial de cada faísca
+  const sparkRadius = 28; // Distância total do centro do clique
+  const sparkCount = 8;   // Número de faíscas radiantes por clique
+  const duration = 450;   // Duração da animação em milissegundos
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+  };
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  const easeOut = (t) => t * (2 - t);
+
+  const draw = (timestamp) => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+    sparks = sparks.filter(spark => {
+      const elapsed = timestamp - spark.startTime;
+      if (elapsed >= duration) return false;
+
+      const progress = elapsed / duration;
+      const eased = easeOut(progress);
+
+      const distance = eased * sparkRadius;
+      const lineLength = sparkSize * (1 - eased);
+
+      const x1 = spark.x + distance * Math.cos(spark.angle);
+      const y1 = spark.y + distance * Math.sin(spark.angle);
+      const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+      const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+
+      ctx.save();
+      ctx.strokeStyle = spark.color;
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+
+      return true;
+    });
+
+    if (sparks.length > 0) {
+      animId = requestAnimationFrame(draw);
+    } else {
+      animId = null;
+    }
+  };
+
+  window.addEventListener('pointerdown', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    const now = performance.now();
+
+    // Paleta harmônica da MS Digital: Azul MS, Laranja Ouro e Azul Claro
+    const colors = ['#4774D2', '#F5A623', '#60A5FA'];
+
+    for (let i = 0; i < sparkCount; i++) {
+      sparks.push({
+        x,
+        y,
+        angle: (2 * Math.PI * i) / sparkCount,
+        startTime: now,
+        color: colors[i % colors.length]
+      });
+    }
+
+    if (!animId) {
+      animId = requestAnimationFrame(draw);
+    }
+  }, { passive: true });
+}
+
+/**
+ * 26. Efeito Compare Slider (Card de Comparação Interativo Antes vs Depois)
+ */
+function initCompareSlider() {
+  const container = document.getElementById('compare-slider');
+  const layerBefore = document.getElementById('compare-layer-before');
+  const handlebar = document.getElementById('compare-handlebar');
+
+  if (!container || !layerBefore || !handlebar) return;
+
+  const imgBefore = layerBefore.querySelector('.compare-img');
+  let autoplayAnimId = null;
+  let isMouseOver = false;
+
+  const updatePosition = (percent) => {
+    const clamped = Math.max(0, Math.min(100, percent));
+    layerBefore.style.width = `${clamped}%`;
+    handlebar.style.left = `${clamped}%`;
+
+    if (imgBefore) {
+      imgBefore.style.width = `${container.clientWidth}px`;
+    }
+  };
+
+  const handleMove = (clientX) => {
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = (x / rect.width) * 100;
+    updatePosition(percent);
+  };
+
+  container.addEventListener('mousemove', (e) => {
+    handleMove(e.clientX);
+  });
+
+  container.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      handleMove(e.touches[0].clientX);
+    }
+  }, { passive: true });
+
+  container.addEventListener('mouseenter', () => {
+    isMouseOver = true;
+    stopAutoplay();
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isMouseOver = false;
+    updatePosition(50);
+  });
+
+  const resizeHandler = () => {
+    if (imgBefore) {
+      imgBefore.style.width = `${container.clientWidth}px`;
+    }
+  };
+
+  window.addEventListener('resize', resizeHandler);
+  resizeHandler();
+
+  let startTime = null;
+  const autoplayDuration = 3500;
+
+  const animateAutoplay = (timestamp) => {
+    if (isMouseOver) return;
+    if (!startTime) startTime = timestamp;
+
+    const elapsed = timestamp - startTime;
+    const progress = (elapsed % (autoplayDuration * 2)) / autoplayDuration;
+    const percent = progress <= 1 ? 35 + progress * 30 : 65 - (progress - 1) * 30;
+
+    updatePosition(percent);
+    autoplayAnimId = requestAnimationFrame(animateAutoplay);
+  };
+
+  function stopAutoplay() {
+    if (autoplayAnimId) {
+      cancelAnimationFrame(autoplayAnimId);
+      autoplayAnimId = null;
+    }
+  }
+
+  autoplayAnimId = requestAnimationFrame(animateAutoplay);
 }
 
 // Inicializar tudo ao carregar a página
