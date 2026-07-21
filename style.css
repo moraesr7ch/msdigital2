@@ -1235,13 +1235,18 @@ section {
   flex-direction: column;
   gap: 0.75rem;
   transition: all var(--transition-normal);
+}
+
+/* Efeito de Iluminação Dinâmica SpotlightCard Reutilizável */
+.card-spotlight {
+  position: relative;
+  overflow: hidden;
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-color: rgba(71, 116, 210, 0.22); /* Azul MS Digital sutil */
 }
 
-/* Efeito de Iluminação Dinâmica SpotlightCard */
-.pillar-card::before {
+.card-spotlight::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1252,13 +1257,13 @@ section {
   z-index: 1;
 }
 
-.pillar-card:hover::before,
-.pillar-card:focus-within::before {
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
   opacity: 1;
 }
 
 /* Garantia de Legibilidade: elementos internos ficam acima do efeito de iluminação */
-.pillar-card > * {
+.card-spotlight > * {
   position: relative;
   z-index: 2;
 }
@@ -3105,4 +3110,22 @@ html.lenis, html.lenis body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ==========================================================================
+   17 SCROLL FLOAT EFFECT (React Bits Port to Vanilla JS & GSAP)
+   ========================================================================== */
+.scroll-float {
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-float-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.scroll-float .char {
+  display: inline-block;
+  will-change: opacity, transform;
 }
