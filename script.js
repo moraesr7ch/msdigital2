@@ -19,6 +19,7 @@ if (typeof document !== 'undefined') {
     initVariableProximity();
     initSpotlightCards();
     initScrollFloatAnimations();
+    initCtaSequenceAnimation();
   });
 }
 
@@ -1191,6 +1192,37 @@ function initScrollFloatAnimations() {
         }
       }
     );
+  });
+}
+
+/**
+ * 21. Animação Sequencial da Seção CTA Final (#contato)
+ * Sequência: 1º Eyebrow + Título -> 2º Parágrafo -> 3º Botão do CTA
+ */
+function initCtaSequenceAnimation() {
+  if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
+
+  const ctaWrapper = document.querySelector('.cta-animated-wrapper');
+  if (!ctaWrapper) return;
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  const items = ctaWrapper.querySelectorAll('.cta-step-item');
+  if (items.length === 0) return;
+
+  gsap.from(items, {
+    scrollTrigger: {
+      trigger: ctaWrapper,
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    },
+    opacity: 0,
+    y: 45,
+    duration: 0.9,
+    stagger: 0.35, // 1º Eyebrow + Título -> 2º Parágrafo -> 3º Botão
+    ease: 'power3.out'
   });
 }
 

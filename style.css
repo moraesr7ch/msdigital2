@@ -3132,3 +3132,46 @@ html.lenis, html.lenis body {
   display: inline-block;
   will-change: opacity, transform;
 }
+
+/* ==========================================================================
+   18 SESSÃO CTA ANIMADA SEQUENCIAL (#contato)
+   ========================================================================== */
+.cta-animated-wrapper {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 4rem 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-animated-title {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--zinc-50);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.cta-animated-desc {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--zinc-300);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.cta-animated-btn-wrapper {
+  margin-top: 1rem;
+}
+
+.cta-action-btn {
+  padding: 1.125rem 2.5rem;
+  font-size: 1.1rem;
+  box-shadow: 0 12px 35px -5px rgba(71, 116, 210, 0.45);
+}
