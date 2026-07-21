@@ -150,6 +150,8 @@ body {
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 section {
@@ -161,6 +163,25 @@ section {
 .dark-bg {
   background-color: var(--zinc-950);
   color: var(--zinc-100);
+}
+
+/* Malha de grade sutil em quadradinhos para seções claras (Canvas Design System) */
+.grid-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(to bottom, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 95%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Cabeçalho padrão de seções */
@@ -1077,19 +1098,18 @@ section {
 /* Responsividade Mobile - Abas de Dor */
 @media (max-width: 768px) {
   .pain-tabs-nav {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
   }
 
   .pain-tab-trigger {
-    flex: none;
-    width: 50%;
-    padding: 1rem 0.5rem;
+    width: 100%;
+    padding: 0.875rem 0.5rem;
     font-size: 0.85rem;
-    border-bottom: 2px solid transparent;
-  }
-
-  .pain-tab-trigger.active {
-    border-bottom-color: var(--primary-color);
+    justify-content: center;
+    text-align: center;
   }
 
   .pain-panel-grid {
@@ -3022,4 +3042,28 @@ html.lenis, html.lenis body {
   .faq-item:last-child {
     border-bottom: 1px solid var(--zinc-200); /* Garante fechamento inferior no mobile */
   }
+}
+
+/* ==========================================================================
+   16 VARIABLE PROXIMITY EFFECT (React Bits Port to Vanilla JS)
+   ========================================================================== */
+.variable-proximity {
+  font-family: 'Roboto Flex', sans-serif !important;
+  font-weight: 800 !important;
+}
+
+.vp-letter {
+  font-weight: 800;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
