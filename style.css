@@ -1739,6 +1739,40 @@ section {
   line-height: 1.5;
 }
 
+/* Responsividade Mobile para Grade 2x2 na Seção de Etapas */
+@media (max-width: 768px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr) !important; /* Força grade de 2 colunas */
+    gap: 1.75rem 1.25rem; /* Espaçamento ideal para grid 2x2 */
+  }
+
+  .process-step {
+    padding: 0.25rem;
+  }
+
+  .step-header {
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+  }
+
+  .step-num {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .step-title {
+    font-size: 1.05rem;
+  }
+
+  .step-desc {
+    font-size: 0.825rem;
+    line-height: 1.45;
+  }
+}
+
 /* ==========================================================================
    08 RESULTADOS - NÚMEROS E CASES (Fundo Escuro)
    ========================================================================== */
@@ -1895,25 +1929,22 @@ section {
   transform: scale(1.04); /* Zoom leve */
 }
 
-/* Responsividade Avançada da Grade de Métricas */
-@media (max-width: 479px) {
-  .metric-card.metric-card-prova {
-    max-height: 480px; /* Permite exibir o print de celular quase por inteiro */
-    aspect-ratio: 9 / 16; /* Proporção nativa de tela vertical de smartphone */
-  }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
+/* Responsividade Avançada da Grade de Métricas (Formato em T no Mobile e Tablet) */
+@media (max-width: 1024px) {
   .metrics-grid {
-    grid-template-columns: 1fr 1fr !important; /* Duas colunas no tablet */
+    grid-template-columns: 1fr 1fr !important; /* 2 colunas */
+    gap: 1rem; /* Gap compacto ideal para celulares */
     align-items: center;
   }
+  
   .metric-card.metric-card-dashboard {
-    grid-column: 1 / span 2; /* Card do dashboard ocupa toda a largura superior */
+    grid-column: 1 / span 2; /* Dashboard horizontal em cima preenchendo a linha inteira */
   }
+  
   .metric-card.metric-card-prova {
-    max-height: 480px; /* Proporcional para tablets */
-    aspect-ratio: 9 / 16; /* Proporção de smartphone vertical */
+    grid-column: span 1; /* Prints do WhatsApp lado a lado embaixo */
+    max-height: 380px; /* Altura confortável para caber no celular */
+    aspect-ratio: 9 / 16; /* Retrato de smartphone perfeito */
   }
 }
 
@@ -3490,5 +3521,10 @@ html.lenis, html.lenis body {
     width: 100%;
     max-width: 320px;
     padding: 0.8rem 1.5rem;
+  }
+
+  /* Afasta o botão "Ver Site ao Vivo" do texto de baixo (Quem é a MS Digital) no mobile */
+  .about-compare-action {
+    margin-bottom: 2.25rem !important;
   }
 }
