@@ -257,12 +257,12 @@ function initShapeGrid() {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  // Configurações do ShapeGrid
+  // Configurações do ShapeGrid (Estilo Light Glass)
   const direction = 'diagonal';
   const speed = 0.6;
   const squareSize = 42;
-  const borderColor = 'rgba(212, 212, 216, 0.22)';
-  const hoverFillColor = 'rgba(71, 116, 210, 0.25)';
+  const borderColor = 'rgba(9, 9, 11, 0.06)';
+  const hoverFillColor = 'rgba(71, 116, 210, 0.15)';
   const hoverTrailAmount = 6;
 
   let requestAnimId = null;
@@ -312,7 +312,7 @@ function initShapeGrid() {
       }
     }
 
-    // Gradiente radial central que suaviza as bordas externas do canvas
+    // Gradiente radial central que suaviza as bordas externas do canvas contra o fundo claro (branco)
     const gradient = ctx.createRadialGradient(
       canvas.width / 2,
       canvas.height / 2,
@@ -322,8 +322,8 @@ function initShapeGrid() {
       Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
     );
     gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-    gradient.addColorStop(0.85, 'rgba(255, 255, 255, 0.45)');
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.85)');
+    gradient.addColorStop(0.75, 'rgba(255, 255, 255, 0.45)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.95)');
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);

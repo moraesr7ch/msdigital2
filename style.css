@@ -3266,3 +3266,167 @@ html.lenis, html.lenis body {
 .squiggly-text.accent-blue {
   color: var(--primary-color); /* Azul MS Digital */
 }
+
+/* ==========================================================================
+   29 HERO GLASSMORPHISM LIGHT STYLE (React Bits ShapeGrid + Fundo Branco)
+   ========================================================================== */
+.hero-section.hero-light-glass {
+  background-color: #ffffff; /* Fundo branco solicitado */
+  position: relative;
+  overflow: hidden;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+}
+
+/* Conteúdo Interno da Hero Centralizado */
+.hero-light-glass .hero-content {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Pílula de Badge Superior */
+.hero-light-glass .hero-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 5px 16px 5px 6px;
+  border-radius: 9999px;
+  background-color: rgba(9, 9, 11, 0.04);
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  margin-bottom: 2rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.hero-light-glass .hero-pill-badge:hover {
+  border-color: rgba(9, 9, 11, 0.15);
+  background-color: rgba(9, 9, 11, 0.06);
+}
+
+.hero-light-glass .pill-tag {
+  background-color: var(--zinc-900);
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-light-glass .pill-text {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zinc-800);
+}
+
+/* Título e Subtítulo no Card de Vidro */
+.hero-light-glass .hero-headline {
+  font-family: var(--font-title);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--zinc-950);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.hero-light-glass .hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--zinc-600);
+  max-width: 720px;
+  margin: 0 auto 2.5rem auto;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Botões do Card de Vidro */
+.hero-light-glass .hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: var(--primary-color); /* Azul MS Digital */
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 25px -5px rgba(71, 116, 210, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: #3b63b8;
+  box-shadow: 0 15px 30px -5px rgba(71, 116, 210, 0.45);
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid var(--zinc-200);
+  color: var(--zinc-800);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-btn-secondary:hover {
+  transform: translateY(-2px);
+  background-color: var(--zinc-50);
+  border-color: var(--zinc-300);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsividade do Card de Vidro no Mobile */
+@media (max-width: 768px) {
+  .hero-glass-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 24px;
+    margin: 0 1rem;
+  }
+  
+  .hero-light-glass .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.8rem 1.5rem;
+  }
+}

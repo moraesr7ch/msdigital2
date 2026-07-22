@@ -56,84 +56,47 @@
   </header>
 
   <main>
-    <!-- 02 Hero — A primeira impressão -->
-    <section class="hero-section" id="home">
-      <!-- Glows visuais e canvas do ShapeGrid (React Bits Port) -->
-      <div class="hero-glow-1" aria-hidden="true"></div>
-      <div class="hero-glow-2" aria-hidden="true"></div>
+    <!-- 02 Hero — A primeira impressão (Glassmorphism Light Style) -->
+    <section class="hero-section hero-light-glass" id="home">
+      <!-- Canvas interativo do ShapeGrid (React Bits) -->
       <canvas id="hero-shape-grid-canvas" class="shapegrid-canvas" aria-hidden="true"></canvas>
 
       <div class="section-container hero-container">
         <div class="hero-content">
-          <span class="eyebrow fade-in">Agência de resultados reais</span>
+          <!-- Badge Pílula Composta Superior -->
+          <div class="hero-pill-badge fade-in">
+            <span class="pill-tag">FOCADA</span>
+            <span class="pill-text">Agência de resultados reais</span>
+          </div>
           
-          <!-- Headline Clean sem quadradinhos nas laterais -->
+          <!-- Headline Centralizada e Impactante com Caixa de Seleção Figma -->
           <h1 class="hero-headline fade-in">
             Criamos 
-            <span class="text-highlight">sites e sistemas</span>
+            <span class="design-selection-box">
+              <span class="selection-border"></span>
+              <span class="selection-handle top-left"></span>
+              <span class="selection-handle top-right"></span>
+              <span class="selection-handle bottom-left"></span>
+              <span class="selection-handle bottom-right"></span>
+              <svg class="selection-cursor" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4.5 3V19.5L9.75 14.25H18L4.5 3Z" fill="var(--primary-color)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-highlight">sites e sistemas</span>
+            </span><br>
             que vendem todos os dias
           </h1>
           
+          <!-- Copy / Subtítulo -->
           <p class="hero-subtitle fade-in">
             Aceleramos o crescimento do seu negócio através de tráfego pago de alta conversão,<br>
             sites de ultra performance e sistemas personalizados sob medida.
           </p>
 
+          <!-- Botões CTA (Azul e Branco) -->
           <div class="hero-actions fade-in">
-            <a href="#contato" class="btn btn-primary btn-lg clickable">Solicitar proposta</a>
-            <a href="#servicos" class="btn btn-secondary btn-lg clickable">Conhecer serviços</a>
+            <a href="#contato" class="hero-btn-primary clickable">Solicitar proposta</a>
+            <a href="#servicos" class="hero-btn-secondary clickable">Conhecer serviços</a>
           </div>
-
-          <!-- Badges flutuantes baseados no feedback do Figma/Canvas da Hero de referência -->
-          <div class="floating-badge badge-design" aria-hidden="true">
-            <div class="badge-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 20h9"/>
-                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
-              </svg>
-            </div>
-            <div class="badge-text">
-              <strong>Design</strong>
-              <span>Focado em conversão</span>
-            </div>
-          </div>
-
-          <div class="floating-badge badge-conversion" aria-hidden="true">
-            <div class="badge-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              </svg>
-            </div>
-            <div class="badge-text">
-              <strong>Conversão</strong>
-              <span>Mais leads e vendas</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Números de prova da Hero -->
-        <div class="hero-proof-bar fade-in">
-          <div class="proof-item">
-            <span class="proof-number">+110</span>
-            <span class="proof-label">projetos entregues</span>
-          </div>
-          <div class="divider" aria-hidden="true"></div>
-          <div class="proof-item">
-            <span class="proof-number">98%</span>
-            <span class="proof-label">satisfação de clientes</span>
-          </div>
-          <div class="divider" aria-hidden="true"></div>
-          <div class="proof-item">
-            <span class="proof-number">+2</span> 
-            <span class="proof-label">Anos de experiência</span>
-          </div> 
-        </div> 
- 
-        <!-- Pontos de prova rápidos inferiores -->
-        <div class="hero-bullets-bar fade-in" aria-label="Benefícios imediatos">
-          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Entrega rápida e planejada</span>
-          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Garantia de satisfação de entrega</span>
-          <span class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span> Pagamento Facilitado
         </div>
       </div>
     </section>
