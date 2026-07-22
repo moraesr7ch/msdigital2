@@ -263,7 +263,7 @@ function initShapeGrid() {
   const squareSize = 42;
   const borderColor = 'rgba(9, 9, 11, 0.06)';
   const hoverFillColor = 'rgba(71, 116, 210, 0.15)';
-  const hoverTrailAmount = 6;
+  const hoverTrailAmount = 1;
 
   let requestAnimId = null;
   const gridOffset = { x: 0, y: 0 };
