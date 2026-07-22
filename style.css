@@ -488,52 +488,19 @@ section {
 }
 
 /* Malha de grade sutil no fundo CSS (Design System / Canvas) */
-.hero-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to right, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px,
-    linear-gradient(to bottom, rgba(228, 228, 231, 0.4) 1px, transparent 1px) 0 0 / 40px 40px;
-  mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
-  pointer-events: none;
-}
-
-/* Efeitos de Luz de Fundo Desfocadas (Glows) */
-.hero-glow-1 {
-  position: absolute;
-  top: 15%;
-  left: 20%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.hero-glow-2 {
-  position: absolute;
-  bottom: 20%;
-  right: 15%;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 70%);
-  filter: blur(50px);
-  pointer-events: none;
-}
-
-.hero-particles-canvas {
+/* ==========================================================================
+   28 COMPONENTE SHAPEGRID (React Bits Port para Vanilla JS + Canvas)
+   ========================================================================== */
+.shapegrid-canvas {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  /* Fica abaixo dos textos/botões e badges, mas acima da malha de grade */
+  border: none;
   display: block;
+  pointer-events: auto;
+  z-index: 1;
 }
 
 .hero-container {
@@ -1772,6 +1739,40 @@ section {
   line-height: 1.5;
 }
 
+/* Responsividade Mobile para Grade 2x2 na Seção de Etapas */
+@media (max-width: 768px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr) !important; /* Força grade de 2 colunas */
+    gap: 1.75rem 1.25rem; /* Espaçamento ideal para grid 2x2 */
+  }
+
+  .process-step {
+    padding: 0.25rem;
+  }
+
+  .step-header {
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+  }
+
+  .step-num {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .step-title {
+    font-size: 1.05rem;
+  }
+
+  .step-desc {
+    font-size: 0.825rem;
+    line-height: 1.45;
+  }
+}
+
 /* ==========================================================================
    08 RESULTADOS - NÚMEROS E CASES (Fundo Escuro)
    ========================================================================== */
@@ -1928,25 +1929,22 @@ section {
   transform: scale(1.04); /* Zoom leve */
 }
 
-/* Responsividade Avançada da Grade de Métricas */
-@media (max-width: 479px) {
-  .metric-card.metric-card-prova {
-    max-height: 480px; /* Permite exibir o print de celular quase por inteiro */
-    aspect-ratio: 9 / 16; /* Proporção nativa de tela vertical de smartphone */
-  }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
+/* Responsividade Avançada da Grade de Métricas (Formato em T no Mobile e Tablet) */
+@media (max-width: 1024px) {
   .metrics-grid {
-    grid-template-columns: 1fr 1fr !important; /* Duas colunas no tablet */
+    grid-template-columns: 1fr 1fr !important; /* 2 colunas */
+    gap: 1rem; /* Gap compacto ideal para celulares */
     align-items: center;
   }
+  
   .metric-card.metric-card-dashboard {
-    grid-column: 1 / span 2; /* Card do dashboard ocupa toda a largura superior */
+    grid-column: 1 / span 2; /* Dashboard horizontal em cima preenchendo a linha inteira */
   }
+  
   .metric-card.metric-card-prova {
-    max-height: 480px; /* Proporcional para tablets */
-    aspect-ratio: 9 / 16; /* Proporção de smartphone vertical */
+    grid-column: span 1; /* Prints do WhatsApp lado a lado embaixo */
+    max-height: 380px; /* Altura confortável para caber no celular */
+    aspect-ratio: 9 / 16; /* Retrato de smartphone perfeito */
   }
 }
 
@@ -2363,7 +2361,7 @@ section {
   inset: -2px;
   border-radius: 99px;
   padding: 2px;
-  background: conic-gradient(from var(--border-angle, 0deg), transparent 50%, rgba(71, 116, 210, 0.9), #ffffff, rgba(71, 116, 210, 0.9));
+  background: conic-gradient(from var(--border-angle, 0deg), transparent 50%, rgba(60, 98, 180, 0.9), #ffffff, rgba(71, 116, 210, 0.9));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -3207,12 +3205,24 @@ html.lenis, html.lenis body {
    18 SESSÃO CTA PINNED SCROLL POR ETAPAS (#contato) + SQUIGGLY TEXT
    ========================================================================== */
 .cta-final-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 200vh; /* Altura ideal da pista de rolagem */
   position: relative;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: visible !important; /* 🔒 SEGURANÇA: Destrava o position: sticky do container interno */
+}
+
+.cta-final-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh; /* Suporte a viewports dinâmicas no mobile */
+  display: flex;
+  align-items: center; /* Centralização vertical rígida */
+  justify-content: center;
   overflow: hidden;
+  z-index: 10;
+  width: 100%;
 }
 
 .cta-side-rays-container {
@@ -3235,18 +3245,17 @@ html.lenis, html.lenis body {
   position: relative;
   width: 100%;
   max-width: 900px;
-  min-height: 380px;
+  min-height: 400px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
 }
 
 .cta-step-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
   width: 100%;
   text-align: center;
   display: flex;
@@ -3254,8 +3263,49 @@ html.lenis, html.lenis body {
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
-  pointer-events: auto;
+  pointer-events: none;
+  opacity: 0;
   will-change: opacity, transform;
+}
+
+@media (max-width: 768px) {
+  .cta-pinned-stage {
+    min-height: 450px;
+  }
+}
+
+/* Indicadores de Etapa do CTA (Bullets Premium) */
+.cta-step-indicators {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 20;
+}
+
+.cta-indicator-dot {
+  width: 24px;
+  height: 4px;
+  border-radius: 99px;
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.cta-indicator-dot.active {
+  background-color: var(--primary-color); /* Azul MS Digital */
+  width: 42px;
+  box-shadow: 0 0 10px rgba(71, 116, 210, 0.5);
+}
+
+@media (max-width: 768px) {
+  .cta-pinned-stage {
+    min-height: 420px;
+  }
 }
 
 .cta-pinned-title {
@@ -3295,4 +3345,183 @@ html.lenis, html.lenis body {
 
 .squiggly-text.accent-blue {
   color: var(--primary-color); /* Azul MS Digital */
+}
+
+/* ==========================================================================
+   29 HERO GLASSMORPHISM LIGHT STYLE (React Bits ShapeGrid + Fundo Branco)
+   ========================================================================== */
+.hero-section.hero-light-glass {
+  background-color: #ffffff; /* Fundo branco solicitado */
+  position: relative;
+  overflow: hidden;
+  height: 100vh; /* Ocupa exatamente 100% da altura da tela */
+  height: 100dvh; /* Suporte a viewports dinâmicas em dispositivos móveis */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5rem; /* Altura segura para o Header fixo superior */
+  padding-bottom: 2rem;
+}
+
+/* Card de Vidro Translúcido sem Borda de Contorno */
+.hero-glass-card {
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: none;
+  border-radius: 32px;
+  padding: 3.5rem 3rem;
+  max-width: 840px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 
+    0 25px 50px -12px rgba(9, 9, 11, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Pílula de Badge Superior */
+.hero-light-glass .hero-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 5px 16px 5px 6px;
+  border-radius: 9999px;
+  background-color: rgba(9, 9, 11, 0.04);
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  margin-bottom: 2rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.hero-light-glass .hero-pill-badge:hover {
+  border-color: rgba(9, 9, 11, 0.15);
+  background-color: rgba(9, 9, 11, 0.06);
+}
+
+.hero-light-glass .pill-tag {
+  background-color: var(--zinc-900);
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-light-glass .pill-text {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zinc-800);
+}
+
+/* Título e Subtítulo no Card de Vidro */
+.hero-light-glass .hero-headline {
+  font-family: var(--font-title);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--zinc-950);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.hero-light-glass .hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--zinc-600);
+  max-width: 720px;
+  margin: 0 auto 2.5rem auto;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Botões do Card de Vidro */
+.hero-light-glass .hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: var(--primary-color); /* Azul MS Digital */
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 25px -5px rgba(71, 116, 210, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: #3b63b8;
+  box-shadow: 0 15px 30px -5px rgba(71, 116, 210, 0.45);
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid var(--zinc-200);
+  color: var(--zinc-800);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-btn-secondary:hover {
+  transform: translateY(-2px);
+  background-color: var(--zinc-50);
+  border-color: var(--zinc-300);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsividade do Card de Vidro no Mobile */
+@media (max-width: 768px) {
+  .hero-glass-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 24px;
+    margin: 0 1rem;
+  }
+  
+  .hero-light-glass .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.8rem 1.5rem;
+  }
+
+  /* Afasta o botão "Ver Site ao Vivo" do texto de baixo (Quem é a MS Digital) no mobile */
+  .about-compare-action {
+    margin-bottom: 2.25rem !important;
+  }
 }

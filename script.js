@@ -12,7 +12,7 @@ if (typeof document !== 'undefined') {
     initFormValidation();
     initNewsletterValidation();
     initCounterAnimation();
-    initHeroParticles();
+    initShapeGrid();
     initScrollReveal();
     initDrawerStack();
     initHeaderScroll();
@@ -246,166 +246,193 @@ function initCounterAnimation() {
   });
 }
 
-function initHeroParticles() {
-  const heroSection = document.getElementById('home');
-  const canvas = document.getElementById('hero-particles-canvas');
-  if (!heroSection || !canvas) return;
+/**
+ * 02. Componente ShapeGrid (React Bits Port para Vanilla JS + Canvas)
+ * Animação contínua de malha geométrica com rastro de cursor e efeito de iluminação no hover
+ */
+function initShapeGrid() {
+  const canvas = document.getElementById('hero-shape-grid-canvas');
+  if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
-  
-  let width = canvas.width = heroSection.offsetWidth;
-  let height = canvas.height = heroSection.offsetHeight;
+  if (!ctx) return;
 
-  const particles = [];
-  const spacing = 20; // Espaçamento entre os quadradinhos em pixels
+  // Configurações do ShapeGrid (Estilo Light Glass)
+  const direction = 'diagonal';
+  const speed = 0.6;
+  const squareSize = 42;
+  const borderColor = 'rgba(9, 9, 11, 0.06)';
+  const hoverFillColor = 'rgba(71, 116, 210, 0.15)';
+  const hoverTrailAmount = 1;
 
-  const mouse = {
-    x: null,
-    y: null
+  let requestAnimId = null;
+  const gridOffset = { x: 0, y: 0 };
+  const hoveredSquare = { current: null };
+  const trailCells = [];
+  const cellOpacities = new Map();
+
+  const resizeCanvas = () => {
+    const heroSection = document.getElementById('home');
+    if (heroSection) {
+      canvas.width = heroSection.offsetWidth;
+      canvas.height = heroSection.offsetHeight;
+    }
   };
 
-  class GridDot {
-    constructor(baseX, baseY) {
-      this.baseX = baseX;
-      this.baseY = baseY;
-      this.x = baseX;
-      this.y = baseY;
-      this.vx = 0;
-      this.vy = 0;
-      this.size = 3.5; // Tamanho do quadradinho em pixels
-      
-      // Propriedades físicas da mola (sensação de tecido elástico)
-      this.spring = 0.045;
-      this.friction = 0.88;
-      
-      // Opacidade base e oscilação
-      this.baseAlpha = 0.12; // Suave para não competir com os textos
-      this.alpha = this.baseAlpha;
-      
-      // Atraso de fase para a onda luminosa baseado na sua posição
-      this.waveOffset = (this.baseX + this.baseY) * 0.005;
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const drawGrid = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
+    const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
+
+    const cols = Math.ceil(canvas.width / squareSize) + 3;
+    const rows = Math.ceil(canvas.height / squareSize) + 3;
+
+    for (let col = -2; col < cols; col++) {
+      for (let row = -2; row < rows; row++) {
+        const sx = col * squareSize + offsetX;
+        const sy = row * squareSize + offsetY;
+
+        const cellKey = `${col},${row}`;
+        const alpha = cellOpacities.get(cellKey);
+
+        if (alpha) {
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = hoverFillColor;
+          ctx.fillRect(sx, sy, squareSize, squareSize);
+          ctx.globalAlpha = 1;
+        }
+
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(sx, sy, squareSize, squareSize);
+      }
     }
 
-    update(time) {
-      // 1. Onda sutil de brilho cruzando diagonalmente
-      const wave = Math.sin(time * 0.002 + this.waveOffset);
-      let targetAlpha = this.baseAlpha + (wave + 1) * 0.06; // Flutua suavemente
+    // Gradiente radial central que suaviza as bordas externas do canvas contra o fundo claro (branco)
+    const gradient = ctx.createRadialGradient(
+      canvas.width / 2,
+      canvas.height / 2,
+      0,
+      canvas.width / 2,
+      canvas.height / 2,
+      Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
+    );
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    gradient.addColorStop(0.75, 'rgba(255, 255, 255, 0.45)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.95)');
 
-      // Posição alvo (sua âncora original)
-      const targetX = this.baseX;
-      const targetY = this.baseY;
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  };
 
-      // 2. Interação magnética elástica com o mouse
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const distance = Math.hypot(dx, dy);
-        const activeRadius = 130;
+  const updateCellOpacities = () => {
+    const targets = new Map();
 
-        if (distance < activeRadius) {
-          const force = (activeRadius - distance) / activeRadius;
-          
-          // Empurrão físico elástico leve (afastamento sutil de até ~8px)
-          this.vx -= (dx / distance) * force * 0.85;
-          this.vy -= (dy / distance) * force * 0.85;
-          
-          // Brilho iluminado de acordo com a proximidade do cursor
-          targetAlpha += force * 0.5;
+    if (hoveredSquare.current) {
+      targets.set(`${hoveredSquare.current.x},${hoveredSquare.current.y}`, 1);
+    }
+
+    if (hoverTrailAmount > 0) {
+      for (let i = 0; i < trailCells.length; i++) {
+        const t = trailCells[i];
+        const key = `${t.x},${t.y}`;
+        if (!targets.has(key)) {
+          targets.set(key, (trailCells.length - i) / (trailCells.length + 1));
         }
       }
-
-      // 3. Força elástica de retorno (mola)
-      const dxTarget = targetX - this.x;
-      const dyTarget = targetY - this.y;
-      
-      this.vx += dxTarget * this.spring;
-      this.vy += dyTarget * this.spring;
-      
-      this.vx *= this.friction;
-      this.vy *= this.friction;
-      
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // Suaviza a transição da opacidade
-      this.alpha += (targetAlpha - this.alpha) * 0.1;
     }
 
-    draw() {
-      // Tom cinza neutro (Zinc-400) com opacidade dinâmica
-      ctx.fillStyle = `rgba(161, 161, 170, ${this.alpha})`;
-      ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
-    }
-  }
-
-  function createParticles() {
-    particles.length = 0;
-    
-    // Oculta e não cria quadradinhos em telas pequenas para evitar sobreposição nos textos
-    if (window.innerWidth < 992) {
-      return;
-    }
-
-    // Grade Esquerda: Ocupa de 3% a 20% da largura, e de 15% a 85% da altura
-    const leftMinX = Math.round(width * 0.03);
-    const leftMaxX = Math.round(width * 0.20);
-    const leftMinY = Math.round(height * 0.15);
-    const leftMaxY = Math.round(height * 0.85);
-
-    // Grade Direita: Ocupa de 80% a 97% da largura, e de 15% a 85% da altura
-    const rightMinX = Math.round(width * 0.80);
-    const rightMaxX = Math.round(width * 0.97);
-    const rightMinY = Math.round(height * 0.15);
-    const rightMaxY = Math.round(height * 0.85);
-
-    // Preenche lateral esquerda
-    for (let px = leftMinX; px <= leftMaxX; px += spacing) {
-      for (let py = leftMinY; py <= leftMaxY; py += spacing) {
-        particles.push(new GridDot(px, py));
+    for (const [key] of targets) {
+      if (!cellOpacities.has(key)) {
+        cellOpacities.set(key, 0);
       }
     }
 
-    // Preenche lateral direita
-    for (let px = rightMinX; px <= rightMaxX; px += spacing) {
-      for (let py = rightMinY; py <= rightMaxY; py += spacing) {
-        particles.push(new GridDot(px, py));
+    for (const [key, opacity] of cellOpacities) {
+      const target = targets.get(key) || 0;
+      const next = opacity + (target - opacity) * 0.15;
+      if (next < 0.005) {
+        cellOpacities.delete(key);
+      } else {
+        cellOpacities.set(key, next);
       }
     }
-  }
+  };
 
-  // Monitora redimensionamento
-  window.addEventListener('resize', () => {
-    width = canvas.width = heroSection.offsetWidth;
-    height = canvas.height = heroSection.offsetHeight;
-    createParticles();
-  });
+  const updateAnimation = () => {
+    const effectiveSpeed = Math.max(speed, 0.1);
+    const wrapX = squareSize;
+    const wrapY = squareSize;
 
-  // Eventos do mouse
-  heroSection.addEventListener('mousemove', (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
+    switch (direction) {
+      case 'right':
+        gridOffset.x = (gridOffset.x - effectiveSpeed + wrapX) % wrapX;
+        break;
+      case 'left':
+        gridOffset.x = (gridOffset.x + effectiveSpeed + wrapX) % wrapX;
+        break;
+      case 'up':
+        gridOffset.y = (gridOffset.y + effectiveSpeed + wrapY) % wrapY;
+        break;
+      case 'down':
+        gridOffset.y = (gridOffset.y - effectiveSpeed + wrapY) % wrapY;
+        break;
+      case 'diagonal':
+        gridOffset.x = (gridOffset.x - effectiveSpeed + wrapX) % wrapX;
+        gridOffset.y = (gridOffset.y - effectiveSpeed + wrapY) % wrapY;
+        break;
+      default:
+        break;
+    }
 
-  heroSection.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
+    updateCellOpacities();
+    drawGrid();
+    requestAnimId = requestAnimationFrame(updateAnimation);
+  };
 
-  let lastTime = 0;
-  function animate(timestamp) {
-    ctx.clearRect(0, 0, width, height);
+  const handleMouseMove = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
 
-    particles.forEach(particle => {
-      particle.update(timestamp);
-      particle.draw();
-    });
+    const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
+    const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
 
-    requestAnimationFrame(animate);
-  }
+    const adjustedX = mouseX - offsetX;
+    const adjustedY = mouseY - offsetY;
 
-  createParticles();
-  requestAnimationFrame(animate);
+    const col = Math.floor(adjustedX / squareSize);
+    const row = Math.floor(adjustedY / squareSize);
+
+    if (
+      !hoveredSquare.current ||
+      hoveredSquare.current.x !== col ||
+      hoveredSquare.current.y !== row
+    ) {
+      if (hoveredSquare.current && hoverTrailAmount > 0) {
+        trailCells.unshift({ ...hoveredSquare.current });
+        if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
+      }
+      hoveredSquare.current = { x: col, y: row };
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (hoveredSquare.current && hoverTrailAmount > 0) {
+      trailCells.unshift({ ...hoveredSquare.current });
+      if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
+    }
+    hoveredSquare.current = null;
+  };
+
+  window.addEventListener('mousemove', handleMouseMove, { passive: true });
+  canvas.addEventListener('mouseleave', handleMouseLeave);
+
+  requestAnimId = requestAnimationFrame(updateAnimation);
 }
 
 /**
@@ -1200,8 +1227,10 @@ function initScrollFloatAnimations() {
 }
 
 /**
- * 21. Animação de Scroll Fixado por Etapas na Seção CTA Final (#contato)
- * Etapa 1: Apenas Título -> Etapa 2: Apenas Parágrafo -> Etapa 3: Apenas Botão CTA
+ * 21. Sequência Narrativa por Etapas Amarrada ao Scroll na Seção CTA Final (#contato)
+ * Controla as etapas (Título -> Parágrafo -> Botão) diretamente pela rolagem do usuário,
+ * garantindo que a etapa anterior desapareça completamente antes de a próxima surgir.
+ * Utiliza o position: sticky nativo no CSS para não prender ou travar a rolagem da página.
  */
 function initCtaSequenceAnimation() {
   if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
@@ -1217,30 +1246,60 @@ function initCtaSequenceAnimation() {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  // Define os estados iniciais (Apenas Etapa 1 visível)
-  gsap.set(ctaStep1, { opacity: 1, y: 0, scale: 1 });
-  gsap.set(ctaStep2, { opacity: 0, y: 50, scale: 0.95 });
-  gsap.set(ctaStep3, { opacity: 0, y: 50, scale: 0.95 });
+  // Define os estados iniciais (Etapa 1 ativa no centro, o restante oculto)
+  gsap.set(ctaStep1, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' });
+  gsap.set(ctaStep2, { opacity: 0, y: 40, scale: 0.98, pointerEvents: 'none' });
+  gsap.set(ctaStep3, { opacity: 0, y: 40, scale: 0.98, pointerEvents: 'none' });
 
-  // Timeline GSAP ScrollTrigger amarrada ao Scroll (Pinned)
+  // Timeline ScrollTrigger com scrub mais responsivo amarrada à pista de 200vh
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: ctaSection,
       start: 'top top',
-      end: '+=200%', // Duração de 200vh de rolagem da tela
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1
+      end: 'bottom bottom',
+      scrub: 0.3, // Scrub mais responsivo para sincronia imediata
+      invalidateOnRefresh: true
     }
   });
 
-  // Etapa 1 -> Etapa 2: Título sobe e desaparece, Parágrafo entra no centro
-  tl.to(ctaStep1, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
-    .to(ctaStep2, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5')
-
-  // Etapa 2 -> Etapa 3: Parágrafo sobe e desaparece, Botão CTA entra no centro
-    .to(ctaStep2, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
-    .to(ctaStep3, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5');
+  // 1. Etapa 1 (Título) desaparece
+  tl.to(ctaStep1, {
+    opacity: 0,
+    y: -40,
+    scale: 0.98,
+    pointerEvents: 'none',
+    duration: 0.8
+  })
+  
+  // 2. Etapa 2 (Parágrafo) entra no centro exato da tela
+  .to(ctaStep2, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    pointerEvents: 'auto',
+    duration: 0.8
+  }, '-=0.1')
+  
+  // 3. Etapa 2 (Parágrafo) desaparece
+  .to(ctaStep2, {
+    opacity: 0,
+    y: -40,
+    scale: 0.98,
+    pointerEvents: 'none',
+    duration: 0.8
+  }, '+=0.6') // Período em que o parágrafo permanece 100% visível na tela
+  
+  // 4. Etapa 3 (Botão CTA) entra no centro exato da tela
+  .to(ctaStep3, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    pointerEvents: 'auto',
+    duration: 0.8
+  }, '-=0.1')
+  
+  // 5. Garante que o botão fique visível pelo restante do percurso final do scroll
+  .to({}, { duration: 0.5 }); 
 }
 
 /**
@@ -1270,6 +1329,9 @@ function initSquigglyText() {
 function initSideRays() {
   const container = document.getElementById('cta-side-rays');
   if (!container) return;
+
+  // 🔒 SEGURANÇA / PERFORMANCE: Não inicializa o WebGL no mobile (largura <= 768px) para prevenir lentidão e bugs
+  if (window.innerWidth <= 768) return;
 
   const config = {
     speed: 2.0,
@@ -1448,15 +1510,23 @@ function initSideRays() {
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    // Fallbacks seguros de tamanho para evitar canvas 0x0
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || 600;
     if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uResolution, canvas.width, canvas.height);
     }
   };
+
+  // Garante o tamanho correto e realiza um render estático imediato para evitar piscadas (flash de carregamento)
+  resize();
+  gl.uniform1f(uTime, 0);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
 
   const render = (time) => {
     if (!isVisible) return;
@@ -1466,7 +1536,7 @@ function initSideRays() {
     animFrameId = requestAnimationFrame(render);
   };
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
   const observer = new IntersectionObserver((entries) => {
     const entry = entries[0];
@@ -1481,7 +1551,7 @@ function initSideRays() {
         animFrameId = null;
       }
     }
-  }, { threshold: 0.05 });
+  }, { threshold: 0.01 }); // Dispara o render assim que o topo do container surgir sutilmente
 
   observer.observe(container);
 }
