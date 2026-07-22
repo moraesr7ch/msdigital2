@@ -58,30 +58,19 @@
   <main>
     <!-- 02 Hero — A primeira impressão -->
     <section class="hero-section" id="home">
-      <!-- Grid de fundo e glow visual CSS -->
-      <div class="hero-grid-overlay" aria-hidden="true"></div>
+      <!-- Glows visuais e canvas do ShapeGrid (React Bits Port) -->
       <div class="hero-glow-1" aria-hidden="true"></div>
       <div class="hero-glow-2" aria-hidden="true"></div>
-      <canvas id="hero-particles-canvas" class="hero-particles-canvas" aria-hidden="true"></canvas>
+      <canvas id="hero-shape-grid-canvas" class="shapegrid-canvas" aria-hidden="true"></canvas>
 
       <div class="section-container hero-container">
         <div class="hero-content">
           <span class="eyebrow fade-in">Agência de resultados reais</span>
           
-          <!-- Headline com Estética de Design Canvas -->
+          <!-- Headline Clean sem quadradinhos nas laterais -->
           <h1 class="hero-headline fade-in">
             Criamos 
-            <span class="design-selection-box">
-              <span class="selection-border"></span>
-              <span class="selection-handle top-left"></span>
-              <span class="selection-handle top-right"></span>
-              <span class="selection-handle bottom-left"></span>
-              <span class="selection-handle bottom-right"></span>
-              <svg class="selection-cursor" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M4.5 3V19.5L9.75 14.25H18L4.5 3Z" fill="black" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-              <span class="text-highlight">sites e sistemas</span>
-            </span>
+            <span class="text-highlight">sites e sistemas</span>
             que vendem todos os dias
           </h1>
           
