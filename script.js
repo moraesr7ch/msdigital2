@@ -1227,8 +1227,10 @@ function initScrollFloatAnimations() {
 }
 
 /**
- * 21. Animação de Scroll Fixado por Etapas na Seção CTA Final (#contato)
- * Etapa 1: Apenas Título -> Etapa 2: Apenas Parágrafo -> Etapa 3: Apenas Botão CTA
+ * 21. Sequência Narrativa por Etapas Amarrada ao Scroll na Seção CTA Final (#contato)
+ * Controla as etapas (Título -> Parágrafo -> Botão) diretamente pela rolagem do usuário,
+ * garantindo que a etapa anterior desapareça completamente antes de a próxima surgir.
+ * Utiliza o position: sticky nativo no CSS para não prender ou travar a rolagem da página.
  */
 function initCtaSequenceAnimation() {
   if (typeof window === 'undefined' || typeof gsap === 'undefined') return;
@@ -1244,30 +1246,60 @@ function initCtaSequenceAnimation() {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  // Define os estados iniciais (Apenas Etapa 1 visível)
-  gsap.set(ctaStep1, { opacity: 1, y: 0, scale: 1 });
-  gsap.set(ctaStep2, { opacity: 0, y: 50, scale: 0.95 });
-  gsap.set(ctaStep3, { opacity: 0, y: 50, scale: 0.95 });
+  // Define os estados iniciais (Etapa 1 ativa no centro, o restante oculto)
+  gsap.set(ctaStep1, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' });
+  gsap.set(ctaStep2, { opacity: 0, y: 40, scale: 0.98, pointerEvents: 'none' });
+  gsap.set(ctaStep3, { opacity: 0, y: 40, scale: 0.98, pointerEvents: 'none' });
 
-  // Timeline GSAP ScrollTrigger amarrada ao Scroll (Pinned)
+  // Timeline ScrollTrigger com scrub mais responsivo amarrada à pista de 200vh
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: ctaSection,
       start: 'top top',
-      end: '+=200%', // Duração de 200vh de rolagem da tela
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1
+      end: 'bottom bottom',
+      scrub: 0.3, // Scrub mais responsivo para sincronia imediata
+      invalidateOnRefresh: true
     }
   });
 
-  // Etapa 1 -> Etapa 2: Título sobe e desaparece, Parágrafo entra no centro
-  tl.to(ctaStep1, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
-    .to(ctaStep2, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5')
-
-  // Etapa 2 -> Etapa 3: Parágrafo sobe e desaparece, Botão CTA entra no centro
-    .to(ctaStep2, { opacity: 0, y: -50, scale: 0.95, duration: 1 })
-    .to(ctaStep3, { opacity: 1, y: 0, scale: 1, duration: 1 }, '-=0.5');
+  // 1. Etapa 1 (Título) desaparece
+  tl.to(ctaStep1, {
+    opacity: 0,
+    y: -40,
+    scale: 0.98,
+    pointerEvents: 'none',
+    duration: 0.8
+  })
+  
+  // 2. Etapa 2 (Parágrafo) entra no centro exato da tela
+  .to(ctaStep2, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    pointerEvents: 'auto',
+    duration: 0.8
+  }, '-=0.1')
+  
+  // 3. Etapa 2 (Parágrafo) desaparece
+  .to(ctaStep2, {
+    opacity: 0,
+    y: -40,
+    scale: 0.98,
+    pointerEvents: 'none',
+    duration: 0.8
+  }, '+=0.6') // Período em que o parágrafo permanece 100% visível na tela
+  
+  // 4. Etapa 3 (Botão CTA) entra no centro exato da tela
+  .to(ctaStep3, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    pointerEvents: 'auto',
+    duration: 0.8
+  }, '-=0.1')
+  
+  // 5. Garante que o botão fique visível pelo restante do percurso final do scroll
+  .to({}, { duration: 0.5 }); 
 }
 
 /**
@@ -1297,6 +1329,9 @@ function initSquigglyText() {
 function initSideRays() {
   const container = document.getElementById('cta-side-rays');
   if (!container) return;
+
+  // 🔒 SEGURANÇA / PERFORMANCE: Não inicializa o WebGL no mobile (largura <= 768px) para prevenir lentidão e bugs
+  if (window.innerWidth <= 768) return;
 
   const config = {
     speed: 2.0,
@@ -1475,15 +1510,23 @@ function initSideRays() {
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    // Fallbacks seguros de tamanho para evitar canvas 0x0
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || 600;
     if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uResolution, canvas.width, canvas.height);
     }
   };
+
+  // Garante o tamanho correto e realiza um render estático imediato para evitar piscadas (flash de carregamento)
+  resize();
+  gl.uniform1f(uTime, 0);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
 
   const render = (time) => {
     if (!isVisible) return;
@@ -1493,7 +1536,7 @@ function initSideRays() {
     animFrameId = requestAnimationFrame(render);
   };
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
   const observer = new IntersectionObserver((entries) => {
     const entry = entries[0];
@@ -1508,7 +1551,7 @@ function initSideRays() {
         animFrameId = null;
       }
     }
-  }, { threshold: 0.05 });
+  }, { threshold: 0.01 }); // Dispara o render assim que o topo do container surgir sutilmente
 
   observer.observe(container);
 }

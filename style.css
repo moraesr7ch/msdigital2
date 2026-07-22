@@ -3177,12 +3177,24 @@ html.lenis, html.lenis body {
    18 SESSÃO CTA PINNED SCROLL POR ETAPAS (#contato) + SQUIGGLY TEXT
    ========================================================================== */
 .cta-final-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 200vh; /* Altura ideal da pista de rolagem */
   position: relative;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: visible !important; /* 🔒 SEGURANÇA: Destrava o position: sticky do container interno */
+}
+
+.cta-final-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh; /* Suporte a viewports dinâmicas no mobile */
+  display: flex;
+  align-items: center; /* Centralização vertical rígida */
+  justify-content: center;
   overflow: hidden;
+  z-index: 10;
+  width: 100%;
 }
 
 .cta-side-rays-container {
@@ -3205,18 +3217,17 @@ html.lenis, html.lenis body {
   position: relative;
   width: 100%;
   max-width: 900px;
-  min-height: 380px;
+  min-height: 400px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
 }
 
 .cta-step-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
   width: 100%;
   text-align: center;
   display: flex;
@@ -3224,8 +3235,49 @@ html.lenis, html.lenis body {
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
-  pointer-events: auto;
+  pointer-events: none;
+  opacity: 0;
   will-change: opacity, transform;
+}
+
+@media (max-width: 768px) {
+  .cta-pinned-stage {
+    min-height: 450px;
+  }
+}
+
+/* Indicadores de Etapa do CTA (Bullets Premium) */
+.cta-step-indicators {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 20;
+}
+
+.cta-indicator-dot {
+  width: 24px;
+  height: 4px;
+  border-radius: 99px;
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.cta-indicator-dot.active {
+  background-color: var(--primary-color); /* Azul MS Digital */
+  width: 42px;
+  box-shadow: 0 0 10px rgba(71, 116, 210, 0.5);
+}
+
+@media (max-width: 768px) {
+  .cta-pinned-stage {
+    min-height: 420px;
+  }
 }
 
 .cta-pinned-title {
